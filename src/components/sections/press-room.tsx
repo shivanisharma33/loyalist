@@ -41,7 +41,7 @@ export function PressRoom({ releases }: { releases: PressRelease[] }) {
 
   return (
     <div className="on-light">
-      <div className="sticky top-[var(--header-h)] z-20 -mx-[var(--gutter)] mb-10 border-b border-ink-900/10 bg-paper/92 px-[var(--gutter)] py-4 backdrop-blur-lg">
+      <div className="sticky top-[var(--header-h)] z-20 -mx-[var(--gutter)] mb-s5 border-b border-hair bg-paper/92 px-[var(--gutter)] py-4 backdrop-blur-lg">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div role="group" aria-label="Filter press releases" className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 md:pb-0">
             {FILTERS.map((f) => (
@@ -50,8 +50,8 @@ export function PressRoom({ releases }: { releases: PressRelease[] }) {
                 type="button"
                 onClick={() => setFilter(f.id)}
                 aria-pressed={filter === f.id}
-                className={`inline-flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${
-                  filter === f.id ? "bg-ink-900 text-ivory" : "text-ink-800 hover:bg-ink-900/5"
+                className={`tech inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
+                  filter === f.id ? "border-ink-900 bg-ink-900 text-ivory" : "border-hair text-ink-800 hover:border-hair-strong"
                 }`}
               >
                 {f.label}
@@ -67,7 +67,7 @@ export function PressRoom({ releases }: { releases: PressRelease[] }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search headlines"
-              className="h-11 w-full rounded-full border border-ink-900/15 bg-white pl-11 pr-4 text-base outline-none placeholder:text-stone-600 focus:border-gold-ink"
+              className="h-11 w-full border border-hair-strong bg-white pl-11 pr-4 text-base outline-none placeholder:text-stone-600 focus:border-gold-ink"
             />
           </label>
         </div>
@@ -79,13 +79,13 @@ export function PressRoom({ releases }: { releases: PressRelease[] }) {
 
       {byYear.length === 0 && <p className="py-16 text-center text-stone-600">No press releases match “{query}”.</p>}
 
-      <div className="grid gap-14">
+      <div className="grid gap-s6">
         {byYear.map(([year, items]) => (
           <section key={year} aria-labelledby={`year-${year}`} className="grid gap-6 md:grid-cols-12">
             <h2 id={`year-${year}`} className="numeral text-5xl text-ink-900/15 md:col-span-2 md:text-6xl">
               {year}
             </h2>
-            <ul className="divide-y divide-ink-900/10 border-y border-ink-900/10 md:col-span-10">
+            <ul className="divide-y divide-hair border-y border-hair md:col-span-10">
               {items.map((r) => (
                 <li key={r.id}>
                   <ReleaseRow release={r} />
@@ -107,8 +107,8 @@ export function ReleaseRow({ release: r }: { release: PressRelease }) {
         <time dateTime={r.date} className="font-semibold text-ink-800 tabular-nums">
           {formatDate(r.date)}
         </time>
-        <span aria-hidden="true" className="h-3 w-px bg-ink-900/20" />
-        <span className="eyebrow text-gold-ink">{r.kind}</span>
+        <span aria-hidden="true" className="h-3 w-px bg-hair-strong" />
+        <span className="tech text-gold-ink">{r.kind}</span>
         {r.external && <span className="text-stone-600">PDF</span>}
       </span>
       <span className="mt-2 block font-display text-[1.0625rem] font-semibold leading-snug text-ink-900 transition-colors group-hover:text-gold-ink sm:text-lg">
@@ -118,7 +118,7 @@ export function ReleaseRow({ release: r }: { release: PressRelease }) {
   );
   const cls = "group flex items-start justify-between gap-6 py-5 sm:py-6";
   const icon = (
-    <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink-900/15 text-ink-900 transition-colors group-hover:border-gold-ink group-hover:bg-gold-bright">
+    <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center border border-hair-strong text-ink-900 transition-colors group-hover:border-gold-ink group-hover:bg-gold-bright">
       <Icon size={16} />
       <span className="sr-only">{r.external ? "(opens PDF in a new tab)" : ""}</span>
     </span>

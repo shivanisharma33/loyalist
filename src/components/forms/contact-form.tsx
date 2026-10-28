@@ -14,7 +14,7 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div role="status" className="rounded-[1.5rem] border border-gold-ink/30 bg-ivory p-8">
+      <div role="status" className="border-l-2 border-gold bg-ivory p-8">
         <p className="display-sm text-ink-900">Message sent</p>
         <p className="mt-3 text-stone-600">{state.message}</p>
       </div>
@@ -24,8 +24,8 @@ export function ContactForm() {
   const field = (name: FieldName, label: string, opts: { required?: boolean; type?: string; autoComplete?: string; placeholder: string; textarea?: boolean }) => {
     const error = state.fieldErrors?.[name];
     const inputId = `${id}-${name}`;
-    const cls = `w-full rounded-2xl border bg-white px-4 text-base text-ink-900 outline-none transition-colors placeholder:text-stone focus:border-gold-ink ${
-      error ? "border-[#a13a22]" : "border-ink-900/15"
+    const cls = `w-full border bg-white px-4 text-base text-ink-900 outline-none transition-colors placeholder:text-stone focus:border-gold-ink ${
+      error ? "border-[#a13a22]" : "border-hair-strong"
     }`;
     const common = {
       id: inputId,
@@ -38,7 +38,7 @@ export function ContactForm() {
     };
     return (
       <div className={opts.textarea ? "sm:col-span-2" : undefined}>
-        <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-ink-800">
+        <label htmlFor={inputId} className="tech mb-2 block text-stone-600">
           {label}
           {opts.required ? <span className="text-gold-ink"> *</span> : <span className="text-stone-600"> (optional)</span>}
         </label>
@@ -70,10 +70,10 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex h-12 shrink-0 items-center justify-center gap-3 rounded-full bg-ink-900 px-7 text-[0.9375rem] font-semibold text-ivory transition-colors hover:bg-ink-700 disabled:opacity-60"
+          className="group inline-flex h-12 shrink-0 items-center justify-center gap-3 border border-ink-900 bg-ink-900 px-7 text-[0.8125rem] font-semibold uppercase tracking-[0.11em] text-ivory transition-colors hover:bg-transparent hover:text-ink-900 disabled:opacity-60"
         >
           {pending ? "Sending…" : "Send Message"}
-          <ArrowRight size={16} className="text-gold-bright transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </button>
       </div>
     </form>

@@ -17,7 +17,7 @@ export default function DisclaimerPage() {
         lede="Important legal information regarding the use of this website and our public disclosures."
         crumbs={[{ name: "Disclaimer", path: "/disclaimer" }]}
       />
-      <section className="on-light bg-paper py-20 sm:py-24">
+      <section className="on-light section bg-paper">
         <div className="shell max-w-3xl">
           <div className="prose-article">
             <p>{disclaimerText}</p>

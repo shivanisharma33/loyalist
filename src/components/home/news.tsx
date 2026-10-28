@@ -1,8 +1,7 @@
 import { ReleaseRow } from "@/components/sections/press-room";
 import { EventsList } from "@/components/sections/events-list";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
-import { ButtonLink, SectionIndex, SplitHeading } from "@/components/ui/primitives";
-import { Contours } from "@/components/ui/contours";
+import { ArrowLink, SectionIndex, SplitHeading } from "@/components/ui/primitives";
 import { company } from "@/content/site";
 import { getPressReleases } from "@/lib/api";
 import { formatDate } from "@/lib/format";
@@ -13,49 +12,52 @@ export async function NewsSection() {
   const FeaturedIcon = featured?.external ? ArrowUpRight : ArrowRight;
 
   return (
-    <section aria-labelledby="news-title" className="on-light bg-paper py-24 sm:py-32">
+    <section aria-labelledby="news-title" className="on-light section bg-paper">
       <div className="shell">
-        <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-s5 flex flex-col gap-s3 border-b border-hair pb-s4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <SectionIndex index="08" label="Media Hub" />
-            <SplitHeading id="news-title" className="display-lg mt-6 text-ink-900" lines={["Latest Press Releases"]} />
+            <SplitHeading id="news-title" className="display-lg mt-s4 text-ink-900" lines={["Latest Press Releases"]} />
           </div>
-          <div className="flex flex-wrap items-center gap-4" data-reveal="">
-            <a href={company.quoteUrl} target="_blank" rel="noopener noreferrer" className="eyebrow inline-flex min-h-11 items-center text-gold-ink hover:underline">
+          <div className="flex flex-wrap items-center gap-s4" data-reveal="">
+            <a
+              href={company.quoteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tech inline-flex min-h-11 items-center text-stone-600 hover:text-gold-ink"
+            >
               {company.ticker}
             </a>
-            <ButtonLink href="/press-release" variant="ghostLight">
-              All Press Releases
-            </ButtonLink>
+            <ArrowLink href="/press-release">All press releases</ArrowLink>
           </div>
         </div>
 
         {featured && (
-          <div className="grid gap-10 lg:grid-cols-12">
+          <div className="grid gap-s5 lg:grid-cols-12 lg:gap-s5">
+            {/* Lead story, set as an editorial opener rather than a panel. */}
             <a
               href={featured.href}
               {...(featured.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group grain relative isolate flex min-h-[24rem] flex-col justify-between overflow-hidden rounded-[1.75rem] bg-ink-950 p-7 text-ivory sm:p-10 lg:col-span-6"
+              className="group block lg:col-span-7"
               data-reveal=""
             >
-              <Contours className="absolute inset-0 -z-10 h-full w-full opacity-70" lines={12} seed={52} strokeClassName="stroke-gold-bright/20" />
-              <div className="relative z-[2] flex items-center justify-between gap-4">
-                <span className="eyebrow text-gold-bright">Latest · {featured.kind}</span>
-                <time dateTime={featured.date} className="text-sm text-stone-300">
+              <p className="tech flex flex-wrap items-center gap-x-3 gap-y-1 text-gold-ink">
+                <span aria-hidden="true" className="h-px w-8 bg-gold" />
+                Latest · {featured.kind}
+                <time dateTime={featured.date} className="text-stone-600">
                   {formatDate(featured.date)}
                 </time>
-              </div>
-              <div className="relative z-[2]">
-                <h3 className="display-sm text-balance sm:text-[2rem] sm:leading-[1.15]">{featured.title}</h3>
-                <span className="mt-8 inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-gold-bright">
-                  Read the article{featured.external && <span className="sr-only"> (PDF, opens in a new tab)</span>}
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold-bright/50 transition-colors group-hover:bg-gold-bright group-hover:text-ink-950">
-                    <FeaturedIcon size={16} />
-                  </span>
+              </p>
+              <h3 className="display-md measure-lg mt-s3 text-balance text-ink-900 transition-colors group-hover:text-gold-ink">{featured.title}</h3>
+              <span className="mt-s4 inline-flex min-h-11 items-center gap-3 text-sm font-semibold text-ink-900 group-hover:text-gold-ink">
+                Read the article{featured.external && <span className="sr-only"> (PDF, opens in a new tab)</span>}
+                <span className="flex h-10 w-10 items-center justify-center border border-hair-strong transition-colors group-hover:border-gold-ink group-hover:bg-gold-bright">
+                  <FeaturedIcon size={16} />
                 </span>
-              </div>
+              </span>
             </a>
-            <ul className="divide-y divide-ink-900/10 border-y border-ink-900/10 lg:col-span-6" data-reveal="">
+
+            <ul className="divide-y divide-hair border-t border-hair lg:col-span-4 lg:col-start-9" data-reveal="">
               {rest.slice(0, 4).map((r) => (
                 <li key={r.id}>
                   <ReleaseRow release={r} />
@@ -65,7 +67,7 @@ export async function NewsSection() {
           </div>
         )}
 
-        <div id="events" className="mt-20 grid gap-8 border-t border-ink-900/10 pt-12 lg:grid-cols-12" data-reveal="">
+        <div id="events" className="mt-s7 grid gap-s4 border-t border-hair pt-s5 lg:grid-cols-12" data-reveal="">
           <div className="lg:col-span-4">
             <h2 className="display-md text-ink-900">Upcoming Events</h2>
           </div>
@@ -77,4 +79,3 @@ export async function NewsSection() {
     </section>
   );
 }
-

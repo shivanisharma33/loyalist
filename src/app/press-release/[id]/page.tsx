@@ -44,18 +44,18 @@ export default async function PressReleaseArticle({ params }: PageProps<"/press-
           { name: article.title.length > 48 ? `${article.title.slice(0, 46)}…` : article.title, path },
         ]}
       />
-      <article className="on-light bg-paper py-16 sm:py-20">
-        <div className="shell grid gap-12 lg:grid-cols-12">
+      <article className="on-light section-tight bg-paper">
+        <div className="shell grid gap-s5 lg:grid-cols-12">
           <aside className="lg:col-span-3">
             <dl className="grid gap-4 text-sm lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
               <div>
-                <dt className="eyebrow text-gold-ink">Published</dt>
+                <dt className="tech text-gold-ink">Published</dt>
                 <dd className="mt-1 font-semibold text-ink-900">
                   <time dateTime={article.date}>{formatDate(article.date)}</time>
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow text-gold-ink">Issuer</dt>
+                <dt className="tech text-gold-ink">Issuer</dt>
                 <dd className="mt-1 text-ink-800">Loyalist Exploration Limited (CSE: PNGC)</dd>
               </div>
               <div>

@@ -22,8 +22,8 @@ export function DocumentLibrary({ docs }: { docs: FinancialDoc[] }) {
             type="button"
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
-            className={`inline-flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${
-              filter === f ? "bg-ink-900 text-ivory" : "border border-ink-900/10 text-ink-800 hover:border-ink-900/25"
+            className={`tech inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
+              filter === f ? "border-ink-900 bg-ink-900 text-ivory" : "border-hair text-ink-800 hover:border-hair-strong"
             }`}
           >
             {f}
@@ -34,7 +34,7 @@ export function DocumentLibrary({ docs }: { docs: FinancialDoc[] }) {
       <p className="sr-only" aria-live="polite">
         {visible.length} documents shown
       </p>
-      <ul className="divide-y divide-ink-900/10 border-y border-ink-900/10">
+      <ul className="divide-y divide-hair border-y border-hair">
         {visible.map((d) => (
           <li key={d.id}>
             <DocumentRow href={d.href} type={d.type} title={d.title} date={d.date} description={d.description} />

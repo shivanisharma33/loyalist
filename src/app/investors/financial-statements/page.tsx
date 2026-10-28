@@ -26,10 +26,10 @@ export default async function FinancialStatementsPage() {
         ]}
       />
       <InvestorNav current="/investors/financial-statements" />
-      <section aria-label="Financial documents" className="bg-paper py-16 sm:py-20">
+      <section aria-label="Financial documents" className="section-tight bg-paper">
         <div className="shell max-w-5xl">
           <DocumentLibrary docs={docs} />
-          <p className="mt-8 text-sm text-stone-600">Documents open as PDFs in a new tab. Complete filings are available on SEDAR+.</p>
+          <p className="mt-s4 text-sm text-stone-600">Documents open as PDFs in a new tab. Complete filings are available on SEDAR+.</p>
         </div>
       </section>
     </>

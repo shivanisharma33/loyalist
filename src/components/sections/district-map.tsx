@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { ArrowRight } from "@/components/ui/icons";
 
 export type MapProject = {
@@ -23,34 +23,42 @@ const HWY_101 = "M325,643 L388,557 L450,550 L563,550 L688,488 L719,450 L875,460 
 const W = 1000;
 const H = 643;
 
-export function DistrictMap({ projects, contours }: { projects: MapProject[]; contours: string[] }) {
+/**
+ * Split composition: the schematic map takes the wide column and the section heading shares
+ * the rail with the selector, so the map reads as the subject of the spread rather than an
+ * illustration dropped under a heading.
+ */
+export function DistrictMap({ projects, contours, header }: { projects: MapProject[]; contours?: string[]; header?: ReactNode }) {
   const [active, setActive] = useState(projects[0].slug);
   const current = projects.find((p) => p.slug === active) ?? projects[0];
   const panelId = useId();
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-      <figure className="relative overflow-hidden rounded-[1.75rem] border border-ink-900/10 bg-ink-950 lg:col-span-8">
+    /* Reading order is heading → map → readout → selector on every width. On lg the
+       heading and selector stack in the left rail while the map spans both rows. */
+    <div className="grid gap-s4 lg:grid-cols-12 lg:items-start lg:gap-x-s5">
+      <div className="order-1 lg:col-span-5 lg:col-start-1 lg:row-start-1 xl:col-span-4">{header}</div>
+
+      <div className="order-2 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 xl:col-span-8 xl:col-start-5">
+      <figure className="relative overflow-hidden border border-hair bg-ink-950">
         <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full" role="img" aria-labelledby={`${panelId}-title`}>
           <title id={`${panelId}-title`}>
             Schematic map of Loyalist Exploration&apos;s four projects around Timmins, Ontario: Loveland to the northwest, Tully to the
             northeast, Gold Rush to the west and DeSantis southwest of Timmins.
           </title>
           <defs>
-            <pattern id={`${panelId}-grid`} width="50" height="50" patternUnits="userSpaceOnUse">
-              <path d="M50 0H0V50" fill="none" stroke="rgba(212,178,72,0.07)" strokeWidth="1" />
-            </pattern>
             <radialGradient id={`${panelId}-glow`}>
               <stop offset="0" stopColor="rgba(212,178,72,0.35)" />
               <stop offset="1" stopColor="rgba(212,178,72,0)" />
             </radialGradient>
           </defs>
-          <rect width={W} height={H} fill={`url(#${panelId}-grid)`} />
-          <g transform={`scale(${W / 1600} ${H / 900})`}>
-            {contours.map((d, i) => (
-              <path key={i} d={d} fill="none" stroke="rgba(212,178,72,0.13)" strokeWidth={i % 4 === 0 ? 1.2 : 0.7} vectorEffect="non-scaling-stroke" />
-            ))}
-          </g>
+          {contours && contours.length > 0 && (
+            <g transform={`scale(${W / 1600} ${H / 900})`}>
+              {contours.map((d, i) => (
+                <path key={i} d={d} fill="none" stroke="rgba(212,178,72,0.13)" strokeWidth={i % 4 === 0 ? 1.2 : 0.7} vectorEffect="non-scaling-stroke" />
+              ))}
+            </g>
+          )}
 
           {/* Highway 101 (schematic) */}
           <path d={HWY_101} fill="none" stroke="rgba(244,241,233,0.28)" strokeWidth="2" strokeDasharray="1 6" strokeLinecap="round" />
@@ -122,12 +130,12 @@ export function DistrictMap({ projects, contours }: { projects: MapProject[]; co
             aria-pressed={p.slug === active}
             aria-controls={panelId}
             aria-label={`Show ${p.name} details (${i + 1} of ${projects.length})`}
-            className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2"
             style={{ left: `${p.x}%`, top: `${p.y}%` }}
           />
         ))}
 
-        <figcaption className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 px-5 py-3 text-xs text-stone-300">
+        <figcaption className="caption flex flex-wrap items-center justify-between gap-2 border-t border-hair-dark px-5 py-3 text-stone-300">
           <span>Schematic — relative positions based on the Company&apos;s regional setting map; not to scale.</span>
           <a href="/projects/tully/regional-setting.jpeg" className="inline-flex min-h-8 items-center text-gold-bright underline-offset-4 hover:underline">
             View source map
@@ -135,68 +143,64 @@ export function DistrictMap({ projects, contours }: { projects: MapProject[]; co
         </figcaption>
       </figure>
 
-      <div className="flex flex-col lg:col-span-4">
-        <h3 className="eyebrow mb-3 text-gold-ink">Select a project</h3>
-        <ul className="grid gap-2" aria-label="Projects on the map">
+      {/* Readout for the selected marker: a measured strip under the map, so the
+          rail stays text and the map column carries the instrumentation. */}
+      <div id={panelId} aria-live="polite" className="mt-px bg-ink-950 p-6 text-ivory sm:p-7">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-s4 gap-y-2">
+          <p className="display-sm">{current.name}</p>
+          <p className="tech text-gold-bright">{current.ownership}</p>
+        </div>
+        <dl className="mt-s3 grid grid-cols-2 gap-x-s4 gap-y-s3 border-t border-hair-dark pt-s3 text-sm sm:grid-cols-4">
+          {[
+            ["Area", current.area],
+            ["Commodities", current.commodities],
+            ["Stage", current.stage],
+            ["Location", current.distance],
+          ].map(([k, v]) => (
+            <div key={k}>
+              <dt className="tech text-stone">{k}</dt>
+              <dd className="mt-1 font-display font-semibold">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <Link
+          href={`/projects/${current.slug}`}
+          className="group mt-s3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold-bright"
+        >
+          Explore {current.name}
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
+      </div>
+
+      <div className="order-3 flex flex-col lg:col-span-5 lg:col-start-1 lg:row-start-2 xl:col-span-4">
+        <h3 className="tech mb-s2 mt-s3 text-stone-600 lg:mt-s4">Select a project</h3>
+        <ul className="border-t border-hair" aria-label="Projects on the map">
           {projects.map((p, i) => {
             const selected = p.slug === active;
             return (
-              <li key={p.slug}>
+              <li key={p.slug} className="border-b border-hair">
                 <button
                   type="button"
                   onClick={() => setActive(p.slug)}
                   aria-pressed={selected}
                   aria-controls={panelId}
-                  className={`flex min-h-14 w-full items-center gap-4 rounded-2xl border px-4 py-3 text-left transition-colors ${
-                    selected ? "border-gold-ink/40 bg-ivory" : "border-ink-900/10 hover:border-ink-900/25"
+                  className={`flex min-h-14 w-full items-center gap-s3 border-l-2 py-3 pl-4 text-left transition-colors ${
+                    selected ? "border-gold bg-ivory" : "border-transparent hover:bg-ivory/60"
                   }`}
                 >
-                  <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs font-bold ${
-                      selected ? "border-gold bg-gold-bright text-ink-950" : "border-gold-ink/40 text-gold-ink"
-                    }`}
-                  >
-                    {i + 1}
+                  <span className={`numeral w-6 shrink-0 text-lg ${selected ? "text-gold-ink" : "text-stone"}`}>
+                    {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="min-w-0">
                     <span className="block font-display text-[0.9375rem] font-semibold text-ink-900">{p.name}</span>
-                    <span className="block text-xs text-stone-600">{p.distance}</span>
+                    <span className="caption block text-stone-600">{p.distance}</span>
                   </span>
                 </button>
               </li>
             );
           })}
         </ul>
-
-        <div id={panelId} aria-live="polite" className="mt-4 rounded-2xl bg-ink-950 p-6 text-ivory">
-          <p className="eyebrow text-gold-bright">{current.ownership}</p>
-          <p className="display-sm mt-2">{current.name}</p>
-          <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-white/10 pt-5 text-sm">
-            <div>
-              <dt className="text-xs text-stone-300">Area</dt>
-              <dd className="mt-1 font-display font-semibold">{current.area}</dd>
-            </div>
-            <div>
-              <dt className="text-xs text-stone-300">Commodities</dt>
-              <dd className="mt-1 font-display font-semibold">{current.commodities}</dd>
-            </div>
-            <div>
-              <dt className="text-xs text-stone-300">Stage</dt>
-              <dd className="mt-1 font-display font-semibold">{current.stage}</dd>
-            </div>
-            <div>
-              <dt className="text-xs text-stone-300">Location</dt>
-              <dd className="mt-1 font-display font-semibold">{current.distance}</dd>
-            </div>
-          </dl>
-          <Link
-            href={`/projects/${current.slug}`}
-            className="group mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold-bright"
-          >
-            Explore {current.name}
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
       </div>
     </div>
   );

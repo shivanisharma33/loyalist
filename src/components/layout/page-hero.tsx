@@ -34,17 +34,17 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
           preload
           sizes="100vw"
           quality={70}
-          className="hero-media object-cover opacity-55"
+          className="hero-media graded object-cover opacity-55"
           style={{ objectPosition: imagePosition }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,16,15,0.82)_0%,rgba(16,16,15,0.55)_45%,rgba(16,16,15,0.96)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_15%_100%,rgba(212,178,72,0.10),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_12%_100%,rgba(212,178,72,0.09),transparent_72%)]" />
         <Contours className="absolute inset-0 h-full w-full opacity-60" lines={12} seed={seed} draw />
       </div>
 
-      <div className="shell relative z-[2] pb-14 pt-[calc(var(--header-h)+3.5rem)] sm:pb-20 sm:pt-[calc(var(--header-h)+5.5rem)] lg:pb-24">
-        <nav aria-label="Breadcrumb" className="hero-enter mb-8 sm:mb-12" style={{ ["--d" as string]: 0 }}>
-          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-stone-300">
+      <div className="shell relative z-[2] pb-s6 pt-[calc(var(--header-h)+3.5rem)] sm:pt-[calc(var(--header-h)+5.5rem)] lg:pb-s7">
+        <nav aria-label="Breadcrumb" className="hero-enter mb-s5 sm:mb-s6" style={{ ["--d" as string]: 0 }}>
+          <ol className="tech flex flex-wrap items-center gap-x-2 gap-y-1 text-stone-300">
             <li>
               <Link href="/" className="inline-flex min-h-8 items-center hover:text-gold-bright">
                 Home
@@ -68,23 +68,23 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
         </nav>
 
         {eyebrow && (
-          <p className="eyebrow hero-enter mb-5 flex items-center gap-3 text-gold-bright" style={{ ["--d" as string]: 80 }}>
-            <span aria-hidden="true" className="h-px w-8 bg-gold-bright/60" />
+          <p className="tech hero-enter mb-s3 flex items-center gap-3 text-gold-bright" style={{ ["--d" as string]: 80 }}>
+            <span aria-hidden="true" className="hero-rule h-px w-10 bg-gold" style={{ ["--d" as string]: 80 }} />
             {eyebrow}
           </p>
         )}
-        <h1 className={size === "lg" ? "display-lg max-w-[18ch] text-balance" : "display-md max-w-[32ch] text-balance"} aria-label={titleText}>
+        <h1 className={size === "lg" ? "display-xl max-w-[16ch] text-balance" : "display-md max-w-[30ch] text-balance"} aria-label={titleText}>
           <span className="hero-line">
             <span style={{ ["--line" as string]: 0 }}>{title}</span>
           </span>
         </h1>
         {lede && (
-          <div className="lede hero-enter mt-6 max-w-2xl text-stone-300" style={{ ["--d" as string]: 260 }}>
+          <div className="lede hero-enter measure mt-s4 text-stone-300" style={{ ["--d" as string]: 260 }}>
             {lede}
           </div>
         )}
         {children && (
-          <div className="hero-enter mt-10" style={{ ["--d" as string]: 380 }}>
+          <div className="hero-enter mt-s5" style={{ ["--d" as string]: 380 }}>
             {children}
           </div>
         )}

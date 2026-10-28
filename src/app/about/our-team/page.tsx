@@ -26,25 +26,25 @@ export default function TeamPage() {
       >
         <ul className="flex -space-x-3" aria-label="Featured team members">
           {strip.map((id) => (
-            <li key={id} className="relative h-16 w-14 overflow-hidden rounded-xl border-2 border-ink-950 sm:h-20 sm:w-16">
-              <Image src={people[id].image!} alt={people[id].name} fill sizes="64px" className="object-cover object-top" />
+            <li key={id} className="relative h-16 w-14 overflow-hidden border-2 border-ink-950 sm:h-20 sm:w-16">
+              <Image src={people[id].image!} alt={people[id].name} fill sizes="64px" className="graded object-cover object-top" />
             </li>
           ))}
         </ul>
       </PageHero>
 
-      <section aria-label="Team directory" className="on-light bg-paper py-24 sm:py-28">
+      <section aria-label="Team directory" className="on-light section bg-paper">
         <div className="shell">
           <TeamDirectory groups={teamGroups} people={people} />
         </div>
       </section>
 
-      <section aria-labelledby="mission-title" className="grain relative isolate bg-ink-950 py-24 text-ivory sm:py-28">
+      <section aria-labelledby="mission-title" className="grain section relative isolate bg-ink-950 text-ivory">
         <div className="shell relative z-[2] max-w-5xl">
-          <h2 id="mission-title" className="eyebrow text-gold-bright">
+          <h2 id="mission-title" className="tech text-gold-bright">
             Our Mission &amp; Values
           </h2>
-          <blockquote className="mt-8" data-reveal="">
+          <blockquote className="mt-s4" data-reveal="">
             <p className="serif-accent text-[clamp(1.5rem,1.1rem+1.6vw,2.5rem)] leading-[1.35]">“{missionStatement}”</p>
           </blockquote>
         </div>

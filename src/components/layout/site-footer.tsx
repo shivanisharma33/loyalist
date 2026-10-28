@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { company, disclaimerText, navigation, socials } from "@/content/site";
 import { projects } from "@/content/projects";
-import { Contours } from "@/components/ui/contours";
 
 async function CopyrightYear() {
   "use cache";
@@ -29,7 +28,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="eyebrow mb-4 text-gold-bright">{title}</h2>
+      <h2 className="tech mb-4 border-b border-hair-dark pb-2 text-stone-300">{title}</h2>
       <ul className="grid gap-0.5">{children}</ul>
     </div>
   );
@@ -38,17 +37,16 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
 export function SiteFooter() {
   return (
     <footer className="grain relative isolate overflow-hidden bg-ink-950 text-ivory">
-      <Contours className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[60%] w-full opacity-40" lines={10} seed={31} strokeClassName="stroke-gold-bright/15" />
-      <div className="shell relative z-[2] pt-20 sm:pt-24">
-        <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-12 lg:gap-8">
+      <div className="shell relative z-[2] pt-s7">
+        <div className="grid gap-s5 border-b border-hair-dark pb-s6 lg:grid-cols-12 lg:gap-s4">
           <div className="lg:col-span-4">
             <Image src="/logo-light-trim.webp" alt="Loyalist Exploration" width={2329} height={446} className="h-10 w-auto" sizes="210px" />
-            <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-stone-300">{company.description}</p>
+            <p className="measure-sm mt-s3 text-[0.9375rem] leading-relaxed text-stone-300">{company.description}</p>
             <a
               href={company.quoteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-full border border-gold-bright/40 px-4 text-xs font-semibold uppercase tracking-[0.16em] text-gold-bright transition-colors hover:bg-gold-bright hover:text-ink-950"
+              className="tech mt-6 inline-flex min-h-11 items-center gap-3 border border-gold-bright/40 px-4 text-gold-bright transition-colors hover:bg-gold-bright hover:text-ink-950"
             >
               {company.ticker} · {company.exchange}
             </a>
@@ -88,9 +86,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="grid gap-10 border-b border-white/10 py-12 md:grid-cols-12">
+        <div className="grid gap-s4 border-b border-hair-dark py-s5 md:grid-cols-12">
           <address className="not-italic md:col-span-5">
-            <h2 className="eyebrow mb-4 text-gold-bright">Contact</h2>
+            <h2 className="tech mb-4 border-b border-hair-dark pb-2 text-stone-300">Contact</h2>
             <p className="text-[0.9375rem] leading-relaxed text-stone-300">
               {company.address.street}
               <br />
@@ -106,19 +104,19 @@ export function SiteFooter() {
             </p>
           </address>
           <div className="md:col-span-7">
-            <h2 className="eyebrow mb-4 text-gold-bright">Disclaimer</h2>
+            <h2 className="tech mb-4 border-b border-hair-dark pb-2 text-stone-300">Disclaimer</h2>
             <p className="text-sm leading-relaxed text-stone-300">{disclaimerText}</p>
-            <p className="mt-3 text-sm leading-relaxed text-stone">
+            <p className="caption mt-3 leading-relaxed text-stone">
               Landscape and mineral photography on this website is illustrative. Maps and figures captioned on project pages are Company materials.
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 py-8 text-xs text-stone sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 py-s4 text-xs text-stone sm:flex-row sm:items-center sm:justify-between">
           <p>
             © <CopyrightYear /> {company.legalName}. All rights reserved.
           </p>
-          <p className="eyebrow text-stone-300">{company.ticker}</p>
+          <p className="tech text-stone-300">{company.ticker}</p>
         </div>
       </div>
     </footer>

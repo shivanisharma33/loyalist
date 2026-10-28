@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-/* ───────────────────────── Design tokens ───────────────────────── */
+/* ───────────────────────── Design tokens ─────────────────────────
+   Quiet-luxury system: a narrow tonal palette, one accent used sparingly, a
+   fixed spacing scale and an explicitly flat geometry (no decorative radii).
+   Depth comes from tone, rule weight and image grading — never from shadows. */
 @theme {
   --color-ink-950: #10100f;
   --color-ink-900: #171714;
@@ -24,6 +27,12 @@
   --color-gold-antique: #b69552;
   --color-gold-ink: #6f5810;
 
+  /* Hairlines. One weight per surface, so every rule on the site matches. */
+  --color-hair: rgb(16 16 15 / 0.11);
+  --color-hair-strong: rgb(16 16 15 / 0.22);
+  --color-hair-dark: rgb(255 255 255 / 0.12);
+  --color-hair-dark-strong: rgb(255 255 255 / 0.24);
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-dm-serif), Georgia, serif;
@@ -31,13 +40,28 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 
+  /* Vertical/horizontal rhythm. Every margin and gap on the site resolves to one
+     of these steps (mt-s4, gap-s3 …) instead of being chosen per section. */
+  --spacing-s1: 0.5rem;
+  --spacing-s2: 1rem;
+  --spacing-s3: 1.5rem;
+  --spacing-s4: 2rem;
+  --spacing-s5: 3rem;
+  --spacing-s6: 4rem;
+  --spacing-s7: 6rem;
+  --spacing-s8: 8rem;
+
+  /* Flat by default. 1px reads as a cut edge, not a rounded card. */
+  --radius-none: 0px;
+  --radius-xs: 1px;
+
   --breakpoint-xs: 30rem;
   --breakpoint-3xl: 112rem;
 }
 
 :root {
   --header-h: 4.5rem;
-  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
   color-scheme: light;
 }
 
@@ -70,7 +94,7 @@ body.menu-open {
 :focus-visible {
   outline: 2px solid var(--color-gold-bright);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .on-light :focus-visible,
@@ -78,14 +102,82 @@ body.menu-open {
   outline-color: var(--color-gold-ink);
 }
 
-/* ───────────────────────── Layout & type ───────────────────────── */
+/* ───────────────────────── Layout ───────────────────────── */
 @utility shell {
   width: 100%;
-  max-width: 90rem;
+  max-width: 96rem;
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
 
+/* Narrower measure for long-form editorial columns inside the shell. */
+@utility shell-narrow {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* One section rhythm, two densities. Sections never set their own py-* values. */
+@utility section {
+  padding-block: clamp(4.5rem, 2.6rem + 6.4vw, 9.5rem);
+}
+
+@utility section-tight {
+  padding-block: clamp(3.25rem, 2.2rem + 3.6vw, 6rem);
+}
+
+/* Breaks an element out of `shell` to the full viewport width. */
+@utility bleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* ───────────────────────── Type scale ─────────────────────────
+   Large sizes are set lighter than small ones: at display size, weight reads as
+   shouting, so the hierarchy is carried by size and measure instead. */
+@utility display-2xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 1.1rem + 7.1vw, 8rem);
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 1.4rem + 5.2vw, 6.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 1.35rem + 2.9vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.033em;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.625rem, 1.2rem + 1.7vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.026em;
+}
+
+@utility display-sm {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.1875rem, 1.03rem + 0.7vw, 1.625rem);
+  line-height: 1.22;
+  letter-spacing: -0.016em;
+}
+
+/* Section eyebrow: wide, quiet, display face. */
 @utility eyebrow {
   font-family: var(--font-display);
   font-size: 0.6875rem;
@@ -95,36 +187,22 @@ body.menu-open {
   line-height: 1.4;
 }
 
-@utility display-xl {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.5rem, 1.4rem + 5.2vw, 6.5rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+/* Technical annotation — coordinates, figure numbers, map labels, data keys.
+   Deliberately the text face, not the display face, so it reads as instrumentation. */
+@utility tech {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
 }
 
-@utility display-lg {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.125rem, 1.4rem + 3.1vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-}
-
-@utility display-md {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.75rem, 1.25rem + 1.9vw, 3rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-
-@utility display-sm {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+@utility caption {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  letter-spacing: 0.002em;
 }
 
 @utility numeral {
@@ -135,37 +213,84 @@ body.menu-open {
   line-height: 0.95;
 }
 
+/* Annual-report figure: the big typeset number in a data block. */
+@utility figure-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+@utility figure-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: clamp(1.875rem, 1.4rem + 1.6vw, 2.75rem);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
 @utility lede {
-  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  line-height: 1.65;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  line-height: 1.62;
+  letter-spacing: -0.004em;
+}
+
+@utility body-text {
+  font-size: 1.0625rem;
+  line-height: 1.72;
+}
+
+/* Reading measures. */
+@utility measure {
+  max-width: 36em;
+}
+
+@utility measure-sm {
+  max-width: 28em;
+}
+
+@utility measure-lg {
+  max-width: 44em;
 }
 
 @utility serif-accent {
   font-family: var(--font-serif);
   font-weight: 400;
   font-style: italic;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
-@utility hairline {
-  height: 1px;
-  background: linear-gradient(90deg, var(--color-gold) 0, var(--color-gold) 3rem, currentColor 3rem);
-  opacity: 0.9;
-}
+/* ───────────────────────── Geological language ───────────────────────── */
 
-/* Fine geological grid used behind technical panels. */
+/* Fine coordinate grid used behind technical panels. */
 @utility geo-grid {
   background-image:
-    linear-gradient(to right, rgb(212 178 72 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(212 178 72 / 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(to right, rgb(212 178 72 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(212 178 72 / 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
 }
 
 @utility geo-grid-light {
   background-image:
-    linear-gradient(to right, rgb(111 88 16 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(111 88 16 / 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(to right, rgb(111 88 16 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(111 88 16 / 0.055) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Survey tick row — a measured edge, used at section boundaries. */
+@utility ticks {
+  background-image: linear-gradient(90deg, currentColor 0 1px, transparent 1px 100%);
+  background-size: 12px 100%;
+  background-repeat: repeat-x;
+  opacity: 0.35;
+}
+
+/* Cross-section hatch for the "inferred" encoding and schematic fills. */
+@utility hatch {
+  background-image: repeating-linear-gradient(135deg, rgb(16 16 15 / 0.35) 0 2px, transparent 2px 7px);
 }
 
 /* Subtle film grain for dark cinematic sections (static, GPU-cheap). */
@@ -178,13 +303,19 @@ body.menu-open {
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.06;
+    opacity: 0.055;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
-/* Article body from the CMS. */
+/* Cinematic grade applied to photography: lifts contrast, cools the shadows a
+   touch and keeps highlights controlled, so every image on the site matches. */
+@utility graded {
+  filter: saturate(0.88) contrast(1.06) brightness(0.97);
+}
+
+/* ───────────────────────── Article body from the CMS ───────────────────────── */
 .prose-article {
   font-size: 1.0625rem;
   line-height: 1.75;
@@ -209,53 +340,77 @@ body.menu-open {
 
 /* ───────────────────────── Motion ─────────────────────────
    Everything below is progressive: content is fully visible without JS (no .js class)
-   and for visitors who prefer reduced motion. */
+   and for visitors who prefer reduced motion. Transforms and opacity only. */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 
   .js [data-reveal] {
     opacity: 0;
-    transform: translate3d(0, 28px, 0);
-    transition: opacity 0.9s var(--ease-out-expo), transform 1.1s var(--ease-out-expo);
+    transform: translate3d(0, 20px, 0);
+    transition: opacity 0.85s var(--ease-out-expo), transform 1s var(--ease-out-expo);
     transition-delay: calc(var(--reveal-delay, 0) * 1ms);
   }
   .js [data-reveal="fade"] { transform: none; }
-  .js [data-reveal="left"] { transform: translate3d(-32px, 0, 0); }
+  .js [data-reveal="left"] { transform: translate3d(-24px, 0, 0); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
 
-  /* Image curtain reveal */
+  /* Image curtain reveal — an ink panel wipes upward off the frame.
+     The wipe lives on a pseudo-element rather than a clip-path on the element
+     itself: clipping the target to zero height also zeroes its intersection
+     ratio, so an observer with a non-zero threshold would never fire and the
+     image would stay hidden for good. Requires a positioned ancestor box. */
   .js [data-reveal="curtain"] {
     opacity: 1;
     transform: none;
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 1.4s var(--ease-in-out-quart);
   }
-  .js [data-reveal="curtain"].is-in { clip-path: inset(0 0 0 0); }
+  .js [data-reveal="curtain"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: var(--color-ink-950);
+    transform-origin: bottom center;
+    transition: transform 1.25s var(--ease-in-out-quart);
+  }
+  .js [data-reveal="curtain"].is-in::before { transform: scaleY(0); }
+
+  /* A rule that draws itself along its own axis. */
+  .js [data-reveal="rule"] {
+    opacity: 1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.3s var(--ease-in-out-quart);
+    transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+  }
+  .js [data-reveal="rule"].is-in { transform: none; }
 
   /* Headline line masks */
-  .js .line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .js .line-mask { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
   .js .line-mask > span {
     display: block;
     transform: translate3d(0, 105%, 0);
-    transition: transform 1.2s var(--ease-out-expo);
-    transition-delay: calc(var(--line, 0) * 90ms + var(--reveal-delay, 0) * 1ms);
+    transition: transform 1.15s var(--ease-out-expo);
+    transition-delay: calc(var(--line, 0) * 80ms + var(--reveal-delay, 0) * 1ms);
   }
   .js .is-in .line-mask > span, .js .line-mask.is-in > span { transform: none; }
 
-  /* Hero entrance (runs once on load, no JS required) */
-  .hero-media { animation: hero-settle 2.6s var(--ease-out-expo) both; }
-  .hero-enter { animation: rise 1.2s var(--ease-out-expo) both; animation-delay: calc(var(--d, 0) * 1ms + 200ms); }
-  .hero-line > span { display: block; animation: line-up 1.3s var(--ease-out-expo) both; animation-delay: calc(var(--line, 0) * 110ms + 250ms); }
-  .hero-line { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+  /* Hero entrance (runs once on load, no JS required). The image settles to its
+     true scale so the composition is never left soft or cropped. */
+  .hero-media { animation: hero-settle 2.4s var(--ease-out-expo) both; }
+  .hero-enter { animation: rise 1.1s var(--ease-out-expo) both; animation-delay: calc(var(--d, 0) * 1ms + 180ms); }
+  .hero-line > span { display: block; animation: line-up 1.25s var(--ease-out-expo) both; animation-delay: calc(var(--line, 0) * 100ms + 240ms); }
+  .hero-line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .hero-rule { animation: rule-in 1.4s var(--ease-in-out-quart) both; animation-delay: calc(var(--d, 0) * 1ms + 180ms); transform-origin: left center; }
 
   /* Contour lines draw themselves */
   .contour-draw path {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: draw 3.2s var(--ease-out-expo) forwards;
-    animation-delay: calc(var(--i, 0) * 120ms + 400ms);
+    animation: draw 3s var(--ease-out-expo) forwards;
+    animation-delay: calc(var(--i, 0) * 110ms + 350ms);
   }
-  .contour-drift { animation: drift 28s ease-in-out infinite alternate; }
+  .contour-drift { animation: drift 34s ease-in-out infinite alternate; }
 
   .scroll-cue::after {
     content: "";
@@ -263,20 +418,21 @@ body.menu-open {
     left: 0;
     top: 0;
     width: 100%;
-    height: 40%;
+    height: 45%;
     background: var(--color-gold-bright);
-    animation: cue 2.4s var(--ease-in-out-quart) infinite;
+    animation: cue 2.6s var(--ease-in-out-quart) infinite;
   }
 
   .pulse-ring { animation: pulse 2.8s var(--ease-out-expo) infinite; transform-origin: center; transform-box: fill-box; }
 }
 
-@keyframes hero-settle { from { transform: scale(1.14); opacity: 0; } to { transform: scale(1.04); opacity: 1; } }
-@keyframes rise { from { opacity: 0; transform: translate3d(0, 24px, 0); } to { opacity: 1; transform: none; } }
+@keyframes hero-settle { from { transform: scale(1.08); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: none; } }
 @keyframes line-up { from { transform: translate3d(0, 105%, 0); } to { transform: none; } }
+@keyframes rule-in { from { transform: scaleX(0); } to { transform: none; } }
 @keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes drift { from { transform: translate3d(-1.5%, 0, 0); } to { transform: translate3d(1.5%, -1%, 0); } }
-@keyframes cue { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(250%); } }
+@keyframes drift { from { transform: translate3d(-1.2%, 0, 0); } to { transform: translate3d(1.2%, -0.8%, 0); } }
+@keyframes cue { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(230%); } }
 @keyframes pulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.4); opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {

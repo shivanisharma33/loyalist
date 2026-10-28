@@ -28,14 +28,14 @@ export default async function AnnualMeetingPage() {
         ]}
       />
       <InvestorNav current="/investors/annual-meeting" />
-      <section aria-label="Meeting documents" className="on-light bg-paper py-16 sm:py-20">
-        <div className="shell grid max-w-5xl gap-14">
+      <section aria-label="Meeting documents" className="on-light section-tight bg-paper">
+        <div className="shell grid max-w-5xl gap-s6">
           {[...years.entries()].map(([year, items]) => (
             <section key={year} aria-labelledby={`y-${year}`} className="grid gap-6 md:grid-cols-[8rem_1fr]">
               <h2 id={`y-${year}`} className="numeral text-5xl text-ink-900/20">
                 {year}
               </h2>
-              <ul className="divide-y divide-ink-900/10 border-y border-ink-900/10">
+              <ul className="divide-y divide-hair border-y border-hair">
                 {items.map((d) => (
                   <li key={d.id}>
                     <DocumentRow href={d.href} type="Meeting Document" title={d.title} dateLabel="PDF" description={d.description} />

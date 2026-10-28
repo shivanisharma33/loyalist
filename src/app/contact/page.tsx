@@ -20,14 +20,14 @@ export default function ContactPage() {
         image="/projects/desantis.png"
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
-      <section aria-labelledby="form-title" className="on-light bg-ivory py-20 sm:py-24">
-        <div className="shell grid gap-12 lg:grid-cols-12">
-          <div className="rounded-[1.75rem] bg-paper p-6 shadow-[0_40px_80px_-50px_rgba(16,16,15,0.35)] sm:p-10 lg:col-span-7">
+      <section aria-labelledby="form-title" className="on-light section bg-ivory">
+        <div className="shell grid gap-s6 lg:grid-cols-12 lg:gap-s5">
+          <div className="border-t-2 border-gold bg-paper p-6 sm:p-10 lg:col-span-7">
             <h2 id="form-title" className="display-md text-ink-900">
               Get in Touch
             </h2>
-            <p className="mt-3 text-stone-600">Fields marked * are required.</p>
-            <div className="mt-8">
+            <p className="caption mt-2 text-stone-600">Fields marked * are required.</p>
+            <div className="mt-s4">
               <ContactForm />
             </div>
           </div>

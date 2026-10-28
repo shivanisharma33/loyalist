@@ -111,13 +111,13 @@ export function SiteHeader() {
     <>
       <a
         href="#main"
-        className="fixed left-4 top-3 z-[70] -translate-y-24 rounded-full bg-gold-bright px-4 py-2 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
+        className="fixed left-4 top-3 z-[70] -translate-y-24 bg-gold-bright px-4 py-2 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
-          solid ? "border-b border-white/10 bg-ink-950/88 backdrop-blur-xl" : "border-b border-transparent bg-transparent"
+          solid ? "border-b border-hair-dark bg-ink-950/90 backdrop-blur-xl" : "border-b border-transparent bg-transparent"
         }`}
       >
         <div className="shell flex h-[var(--header-h)] items-center justify-between gap-6">
@@ -169,19 +169,19 @@ export function SiteHeader() {
                             : "invisible -translate-y-1 opacity-0 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
                         }`}
                       >
-                        <ul className="overflow-hidden rounded-2xl border border-white/10 bg-ink-900/96 p-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+                        <ul className="overflow-hidden border border-hair-dark bg-ink-900/97 backdrop-blur-xl">
                           {item.children.map((child) => (
                             <li key={child.href}>
                               <NavLink
                                 href={child.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="group/item flex items-start justify-between gap-4 rounded-xl px-4 py-3 transition-colors hover:bg-white/[0.05] focus-visible:bg-white/[0.05]"
+                                className="group/item flex items-start justify-between gap-4 border-b border-hair-dark px-5 py-3.5 transition-colors last:border-b-0 hover:bg-white/[0.04] focus-visible:bg-white/[0.04]"
                               >
                                 <span>
                                   <span className={`block text-sm font-semibold ${pathname === child.href ? "text-gold-bright" : "text-ivory"}`}>
                                     {child.label}
                                   </span>
-                                  {child.description && <span className="mt-0.5 block text-xs text-stone-300">{child.description}</span>}
+                                  {child.description && <span className="caption mt-0.5 block text-stone-300">{child.description}</span>}
                                 </span>
                                 <ArrowUpRight size={15} className="mt-0.5 shrink-0 text-stone transition-colors group-hover/item:text-gold-bright" />
                               </NavLink>
@@ -201,18 +201,16 @@ export function SiteHeader() {
               href={company.quoteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="eyebrow inline-flex h-11 items-center gap-2 text-stone-300 transition-colors hover:text-gold-bright"
+              className="tech inline-flex h-11 items-center gap-2 text-stone-300 transition-colors hover:text-gold-bright"
             >
-              <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
-                <span className="absolute inset-0 rounded-full bg-gold-bright" />
-              </span>
+              <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-gold-bright" />
               {company.ticker}
             </a>
             <a
               href={company.presentation.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-gold-bright/50 px-5 text-sm font-semibold text-gold-bright transition-colors hover:bg-gold-bright hover:text-ink-950"
+              className="tech inline-flex h-11 items-center gap-2 border border-gold-bright/50 px-5 text-gold-bright transition-colors hover:bg-gold-bright hover:text-ink-950"
             >
               Corporate Presentation
               <ArrowUpRight size={15} />
@@ -222,7 +220,7 @@ export function SiteHeader() {
           <button
             ref={toggleRef}
             type="button"
-            className="relative z-[60] -mr-2 inline-flex h-11 items-center gap-3 rounded-full px-3 text-sm font-semibold text-ivory lg:hidden"
+            className="tech relative z-[60] -mr-2 inline-flex h-11 items-center gap-3 px-3 text-ivory lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen(true)}
@@ -252,14 +250,14 @@ export function SiteHeader() {
             ref={closeRef}
             type="button"
             onClick={closeMenu}
-            className="-mr-2 inline-flex h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-ivory"
+            className="tech -mr-2 inline-flex h-11 items-center gap-2 px-3 text-ivory"
           >
             Close
             <CloseIcon size={20} />
           </button>
         </div>
         <nav aria-label="Mobile" className="shell flex-1 pb-8 pt-4">
-          <ul className="divide-y divide-white/10 border-y border-white/10">
+          <ul className="divide-y divide-hair-dark border-y border-hair-dark">
             {navigation.map((item, i) => (
               <li
                 key={item.label}
@@ -267,11 +265,11 @@ export function SiteHeader() {
                 style={{ transitionDelay: menuOpen ? `${120 + i * 60}ms` : "0ms" }}
               >
                 <div className="flex items-baseline gap-4">
-                  <span className="eyebrow w-6 text-gold-bright tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="numeral w-7 text-base text-gold-bright">{String(i + 1).padStart(2, "0")}</span>
                   <NavLink
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className={`display-sm inline-flex min-h-11 items-center ${isActive(pathname, item) ? "text-gold-bright" : "text-ivory"}`}
+                    className={`display-md inline-flex min-h-11 items-center ${isActive(pathname, item) ? "text-gold-bright" : "text-ivory"}`}
                   >
                     {item.label}
                   </NavLink>
@@ -294,14 +292,14 @@ export function SiteHeader() {
               </li>
             ))}
           </ul>
-          <div className="mt-8 grid gap-1 text-sm text-stone-300">
+          <div className="mt-s4 grid gap-1 text-sm text-stone-300">
             <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={`mailto:${company.email}`}>
               {company.email}
             </a>
             <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={company.phoneHref}>
               {company.phoneDisplay}
             </a>
-            <a className="eyebrow inline-flex min-h-11 items-center text-gold-bright" href={company.quoteUrl} target="_blank" rel="noopener noreferrer">
+            <a className="tech inline-flex min-h-11 items-center text-gold-bright" href={company.quoteUrl} target="_blank" rel="noopener noreferrer">
               {company.ticker}
             </a>
           </div>
@@ -309,7 +307,7 @@ export function SiteHeader() {
             href={company.presentation.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gold-bright px-6 text-[0.9375rem] font-semibold text-ink-950"
+            className="tech mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-gold-bright px-6 text-ink-950"
           >
             Corporate Presentation
             <ArrowUpRight size={16} />

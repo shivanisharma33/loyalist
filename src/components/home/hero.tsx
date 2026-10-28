@@ -1,52 +1,56 @@
 import Image from "next/image";
-import { Contours } from "@/components/ui/contours";
-import { ButtonLink } from "@/components/ui/primitives";
+import { ArrowLink, ButtonLink } from "@/components/ui/primitives";
 import { heroCopy } from "@/content/company";
 import { company } from "@/content/site";
 
-const meta = [
-  { k: "Timmins Mining Camp", v: "70M+ oz gold produced" },
-  { k: "Tully Gold Project", v: "2026 MRE · effective June 15, 2026" },
-  { k: "Portfolio", v: "4 projects · ~8,300 ha" },
-];
-
+/**
+ * Editorial hero: one photograph, one headline, one statement, one action.
+ * The portfolio figures live in the fact band below so this composition stays clear.
+ *
+ * The source photograph is a 2.29:1 panorama. Covering a phone screen with it would crop
+ * away three quarters of the frame and upscale what is left, so below `md` the image keeps
+ * a near-landscape block at the top and the type sits on solid ink beneath it — a separate
+ * composition rather than the desktop one squeezed.
+ */
 export function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="grain relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink-950 text-ivory">
-      <div className="absolute inset-0 -z-10">
+    <section
+      aria-labelledby="hero-title"
+      className="grain relative isolate flex flex-col overflow-hidden bg-ink-950 text-ivory md:min-h-[100svh]"
+    >
+      <div className="relative h-[38svh] w-full shrink-0 md:absolute md:inset-0 md:-z-10 md:h-auto">
         <Image
-          src="/hero.webp"
+          src="/hero.png"
           alt=""
           fill
           preload
           fetchPriority="high"
-          sizes="100vw"
-          quality={75}
-          className="hero-media object-cover object-[32%_58%] md:object-center"
+          sizes="(max-width: 767px) 170vw, 100vw"
+          quality={80}
+          className="hero-media graded object-cover object-[52%_58%] md:object-[center_56%]"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,16,15,0.7)_0%,rgba(16,16,15,0.15)_35%,rgba(16,16,15,0.55)_62%,rgba(16,16,15,0.97)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,16,15,0.75)_0%,rgba(16,16,15,0)_60%)]" />
-        <Contours className="absolute inset-0 h-full w-full opacity-70 mix-blend-screen" lines={16} seed={4} draw drift strokeClassName="stroke-gold-bright/20" />
+        {/* Two deliberate layers: a bottom anchor for the type, and a vignette that keeps
+            the highlights out of the upper-right corner. */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(16,16,15,1)_0%,rgba(16,16,15,0.55)_22%,rgba(16,16,15,0.08)_62%,rgba(16,16,15,0.55)_100%)] md:bg-[linear-gradient(to_top,rgba(16,16,15,0.95)_0%,rgba(16,16,15,0.6)_26%,rgba(16,16,15,0.08)_58%,rgba(16,16,15,0.5)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(125%_95%_at_82%_18%,transparent_30%,rgba(16,16,15,0.55)_100%)]" />
       </div>
 
-      {/* Vertical technical annotation */}
+      {/* Survey annotation on the right edge — instrumentation, not decoration. */}
       <p
         aria-hidden="true"
-        className="eyebrow hero-enter absolute right-[var(--gutter)] top-1/2 hidden -translate-y-1/2 text-stone-300 [writing-mode:vertical-rl] xl:block"
+        className="tech hero-enter absolute right-[var(--gutter)] top-1/2 hidden -translate-y-1/2 text-stone-300 [writing-mode:vertical-rl] xl:block"
         style={{ ["--d" as string]: 900 }}
       >
         48.48° N · 81.33° W — Timmins, Ontario
       </p>
 
-      <div className="shell relative z-[2] flex flex-1 flex-col justify-end pb-10 pt-[calc(var(--header-h)+4rem)] sm:pb-14">
-        <p className="eyebrow hero-enter mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-gold-bright" style={{ ["--d" as string]: 100 }}>
-          <span aria-hidden="true" className="h-px w-8 bg-gold-bright/70" />
-          {heroCopy.eyebrow}
-          <span aria-hidden="true" className="text-stone">/</span>
-          <span className="text-stone-300">The next chapter of Timmins</span>
+      <div className="shell relative z-[2] flex flex-1 flex-col justify-end pb-s4 pt-s4 md:pb-s6 md:pt-[calc(var(--header-h)+4rem)]">
+        <p className="tech hero-enter flex flex-wrap items-center gap-x-3 gap-y-1" style={{ ["--d" as string]: 80 }}>
+          <span aria-hidden="true" className="hero-rule h-px w-10 bg-gold" style={{ ["--d" as string]: 80 }} />
+          <span className="text-gold-bright">{heroCopy.eyebrow}</span>
         </p>
 
-        <h1 id="hero-title" className="display-xl max-w-[14ch]">
+        <h1 id="hero-title" className="display-2xl mt-s3 max-w-[15ch]">
           <span className="hero-line">
             <span style={{ ["--line" as string]: 0 }}>“Buy Timmins,</span>
           </span>
@@ -57,31 +61,25 @@ export function Hero() {
           </span>
         </h1>
 
-        <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-12 lg:items-end">
-          <p className="hero-enter max-w-2xl text-[1.0625rem] leading-relaxed text-stone-300 sm:text-lg lg:col-span-7" style={{ ["--d" as string]: 450 }}>
-            {heroCopy.body}
+        <div className="mt-s4 grid gap-s4 border-t border-hair-dark pt-s4 sm:mt-s5 lg:grid-cols-12 lg:items-start lg:gap-s2">
+          <p className="hero-enter measure text-[1.0625rem] leading-relaxed text-stone-300 lg:col-span-6" style={{ ["--d" as string]: 420 }}>
+            {heroCopy.lead}
           </p>
-          <div className="hero-enter flex flex-col gap-3 xs:flex-row lg:col-span-5 lg:justify-end" style={{ ["--d" as string]: 600 }}>
-            <ButtonLink href="/projects">Explore Our Projects</ButtonLink>
-            <ButtonLink href={company.presentation.href} variant="ghostDark">
-              View Corporate Presentation
-            </ButtonLink>
+          <div
+            className="hero-enter flex flex-wrap items-center gap-x-s5 gap-y-s3 lg:col-span-5 lg:col-start-8 lg:justify-end"
+            style={{ ["--d" as string]: 560 }}
+          >
+            <ButtonLink href="/projects">Explore Projects</ButtonLink>
+            <ArrowLink href={company.presentation.href} tone="dark">
+              Corporate presentation
+            </ArrowLink>
           </div>
         </div>
-
-        <dl className="hero-enter mt-12 grid grid-cols-1 border-t border-white/12 sm:grid-cols-3" style={{ ["--d" as string]: 760 }}>
-          {meta.map((m, i) => (
-            <div key={m.k} className={`py-4 sm:py-5 ${i > 0 ? "border-t border-white/12 sm:border-l sm:border-t-0 sm:pl-6" : ""}`}>
-              <dt className="eyebrow text-gold-bright">{m.k}</dt>
-              <dd className="mt-1.5 text-sm text-ivory">{m.v}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
 
       <a
         href="#about"
-        className="absolute bottom-6 right-[var(--gutter)] z-[3] hidden items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-300 hover:text-gold-bright md:flex"
+        className="tech absolute bottom-5 right-[var(--gutter)] z-[3] hidden items-center gap-3 text-stone-300 transition-colors hover:text-gold-bright md:flex"
       >
         Scroll
         <span aria-hidden="true" className="scroll-cue relative block h-10 w-px overflow-hidden bg-white/20" />

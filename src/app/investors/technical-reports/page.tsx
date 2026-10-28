@@ -25,10 +25,10 @@ export default async function TechnicalReportsPage() {
         ]}
       />
       <InvestorNav current="/investors/technical-reports" />
-      <section aria-label="Technical reports" className="on-light bg-paper py-16 sm:py-20">
+      <section aria-label="Technical reports" className="on-light section-tight bg-paper">
         <div className="shell max-w-5xl">
           {reports.length ? (
-            <ul className="divide-y divide-ink-900/10 border-y border-ink-900/10">
+            <ul className="divide-y divide-hair border-y border-hair">
               {reports.map((r) => (
                 <li key={r.id}>
                   <DocumentRow href={r.href} type="NI 43-101" title={r.title} date={r.date} action="View report" />
@@ -36,7 +36,7 @@ export default async function TechnicalReportsPage() {
               ))}
             </ul>
           ) : (
-            <p className="rounded-2xl border border-dashed border-ink-900/15 p-8 text-ink-800">No technical reports are currently published.</p>
+            <p className="border border-dashed border-hair-strong p-8 text-ink-800">No technical reports are currently published.</p>
           )}
         </div>
       </section>

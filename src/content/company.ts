@@ -3,6 +3,8 @@
 export const heroCopy = {
   eyebrow: "CSE: PNGC · Timmins, Ontario",
   title: "“Buy Timmins, Mine Timmins”",
+  /** Trimmed hero statement. The full paragraph is carried by the About section below. */
+  lead: "A mineral development and exploration company acquiring and advancing to production high-potential gold and strategic metals projects in the prolific Timmins Mining Camp.",
   body: "Loyalist (CSE: PNGC) is a mineral development and exploration company focused on a “Buy Timmins, Mine Timmins” strategy — acquiring and advancing to production high-potential gold and strategic metals projects in the prolific Timmins Mining Camp, a district that has produced over 70 million ounces of gold and hosts the Kidd Creek Mine, one of the world's largest volcanogenic massive sulfide deposits.",
 };
 

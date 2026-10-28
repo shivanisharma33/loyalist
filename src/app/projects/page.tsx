@@ -24,40 +24,40 @@ export default function ProjectsPage() {
         image="/projects/tully.png"
         crumbs={[{ name: "Projects", path: "/projects" }]}
       >
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-x-s4 gap-y-s3 md:grid-cols-4">
           {portfolioStats.map((s) => (
-            <div key={s.label} className="bg-ink-950/80 p-5 backdrop-blur">
+            <div key={s.label} className="border-t border-hair-dark pt-3">
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <span className="numeral block text-3xl text-gold-bright sm:text-4xl">{s.count !== undefined ? <CountUp value={s.count} suffix={s.suffix} /> : s.value}</span>
-                <span className="mt-2 block text-xs text-stone-300">{s.label}</span>
+                <span className="figure-lg block text-gold-bright">{s.count !== undefined ? <CountUp value={s.count} suffix={s.suffix} /> : s.value}</span>
+                <span className="tech mt-2 block text-stone-300">{s.label}</span>
               </dd>
             </div>
           ))}
         </dl>
       </PageHero>
 
-      <section aria-labelledby="glance-title" className="on-light bg-paper py-24 sm:py-28">
+      <section aria-labelledby="glance-title" className="on-light section bg-paper">
         <div className="shell">
           <SectionIndex index="01" label="Asset Portfolio" />
-          <SplitHeading id="glance-title" className="display-md mt-6 text-ink-900" lines={["Portfolio at a Glance"]} />
+          <SplitHeading id="glance-title" className="display-lg mt-s4 text-ink-900" lines={["Portfolio at a Glance"]} />
 
           {/* Desktop/tablet table */}
-          <div className="mt-12 hidden overflow-hidden rounded-[1.5rem] border border-ink-900/10 md:block" data-reveal="">
+          <div className="mt-s5 hidden border-t border-hair-strong md:block" data-reveal="">
             <table className="w-full text-left text-sm">
               <caption className="sr-only">Loyalist Exploration project portfolio</caption>
-              <thead className="bg-ivory text-xs uppercase tracking-[0.14em] text-stone-600">
+              <thead className="text-stone-600">
                 <tr>
                   {["Project", "Location", "Area", "Commodities", "Ownership", "Stage"].map((h) => (
-                    <th key={h} scope="col" className="px-5 py-4 font-semibold">
+                    <th key={h} scope="col" className="tech border-b border-hair px-5 py-3 text-left">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-ink-900/10 bg-paper">
+              <tbody className="divide-y divide-hair">
                 {projects.map((p) => (
-                  <tr key={p.slug} className="transition-colors hover:bg-ivory/60">
+                  <tr key={p.slug} className="transition-colors hover:bg-ivory">
                     <th scope="row" className="px-5 py-5">
                       <Link href={`/projects/${p.slug}`} className="font-display text-base font-semibold text-ink-900 underline-offset-4 hover:text-gold-ink hover:underline">
                         {p.name}
@@ -77,10 +77,10 @@ export default function ProjectsPage() {
           </div>
 
           {/* Mobile cards */}
-          <ul className="mt-10 grid gap-4 md:hidden">
+          <ul className="mt-s4 border-t border-hair md:hidden">
             {projects.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/projects/${p.slug}`} className="block rounded-[1.25rem] border border-ink-900/10 bg-paper p-5">
+              <li key={p.slug} className="border-b border-hair">
+                <Link href={`/projects/${p.slug}`} className="block py-s3">
                   <span className="flex items-start justify-between gap-3">
                     <span className="font-display text-lg font-semibold text-ink-900">{p.name}</span>
                     <ArrowRight size={18} className="mt-1 shrink-0 text-gold-ink" />
@@ -94,7 +94,7 @@ export default function ProjectsPage() {
                       ["Stage", p.stage],
                     ].map(([k, v]) => (
                       <div key={k}>
-                        <dt className="text-xs text-stone-600">{k}</dt>
+                        <dt className="tech text-stone-600">{k}</dt>
                         <dd className="mt-0.5 font-medium text-ink-900">{v}</dd>
                       </div>
                     ))}
@@ -112,40 +112,40 @@ export default function ProjectsPage() {
           <section
             key={p.slug}
             aria-labelledby={`${p.slug}-title`}
-            className={dark ? "grain relative isolate bg-ink-950 py-24 text-ivory sm:py-28" : "on-light bg-ivory py-24 sm:py-28"}
+            className={dark ? "grain relative isolate bg-ink-950 section text-ivory" : "on-light section bg-ivory"}
           >
-            <div className={`shell relative z-[2] grid items-center gap-12 lg:grid-cols-12 ${i % 2 ? "" : ""}`}>
-              <div className={`relative aspect-[4/3] overflow-hidden rounded-[1.75rem] lg:col-span-6 ${i % 2 ? "lg:order-2 lg:col-start-7" : ""}`} data-reveal="curtain">
-                <Image src={p.image} alt="" fill sizes="(min-width: 1024px) 45vw, 92vw" quality={75} className="object-cover" />
+            <div className="shell relative z-[2] grid items-center gap-s5 lg:grid-cols-12">
+              <div className={`relative aspect-[3/2] overflow-hidden lg:col-span-6 ${i % 2 ? "lg:order-2 lg:col-start-7" : ""}`} data-reveal="curtain">
+                <Image src={p.image} alt="" fill sizes="(min-width: 1024px) 45vw, 92vw" quality={75} className="graded object-cover" />
                 <div className="absolute left-5 top-5 flex flex-wrap gap-2">
                   <Pill>{p.ownership}</Pill>
                   <Pill>{p.stage}</Pill>
                 </div>
               </div>
               <div className={`lg:col-span-5 ${i % 2 ? "lg:order-1" : "lg:col-start-8"}`}>
-                <p className={`eyebrow ${dark ? "text-gold-bright" : "text-gold-ink"}`} data-reveal="fade">
+                <p className={`tech ${dark ? "text-gold-bright" : "text-gold-ink"}`} data-reveal="fade">
                   {String(i + 1).padStart(2, "0")} — {p.locationLine.split(" — ")[0]}
                 </p>
-                <h2 id={`${p.slug}-title`} className="display-md mt-4" data-reveal="">
+                <h2 id={`${p.slug}-title`} className="display-lg mt-s3" data-reveal="">
                   {p.name}
                 </h2>
                 <p className={`mt-2 text-sm ${dark ? "text-stone-300" : "text-stone-600"}`}>{p.locationLine.split(" — ")[1]} · {p.commodities}</p>
                 <p className={`mt-6 text-[1.0625rem] leading-relaxed ${dark ? "text-stone-300" : "text-ink-800"}`} data-reveal="">
                   {p.summary}
                 </p>
-                <dl className={`mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border ${dark ? "border-white/10 bg-white/10" : "border-ink-900/10 bg-ink-900/10"}`} data-reveal="">
+                <dl className="mt-s4 grid grid-cols-2 gap-x-s4 gap-y-s3" data-reveal="">
                   {p.stats.map((s) => (
-                    <div key={s.label} className={`p-4 ${dark ? "bg-ink-950" : "bg-ivory"}`}>
+                    <div key={s.label} className={`border-t pt-3 ${dark ? "border-hair-dark" : "border-hair"}`}>
                       <dt className="sr-only">{s.label}</dt>
                       <dd>
                         <span className={`numeral block text-2xl ${dark ? "text-gold-bright" : "text-ink-900"}`}>{s.value}</span>
-                        <span className={`mt-1 block text-xs ${dark ? "text-stone-300" : "text-stone-600"}`}>{s.label}</span>
+                        <span className={`tech mt-2 block ${dark ? "text-stone-300" : "text-stone-600"}`}>{s.label}</span>
                       </dd>
                     </div>
                   ))}
                 </dl>
-                <div className="mt-8" data-reveal="">
-                  <h3 className={`eyebrow ${dark ? "text-gold-bright" : "text-gold-ink"}`}>Current Activities</h3>
+                <div className="mt-s4" data-reveal="">
+                  <h3 className={`tech ${dark ? "text-gold-bright" : "text-gold-ink"}`}>Current activities</h3>
                   <ul className="mt-4 grid gap-3">
                     {p.activities.map((a) => (
                       <li key={a} className={`flex gap-3 text-[0.9375rem] leading-relaxed ${dark ? "text-ivory" : "text-ink-800"}`}>
@@ -155,7 +155,7 @@ export default function ProjectsPage() {
                     ))}
                   </ul>
                 </div>
-                <div className="mt-8">
+                <div className="mt-s4">
                   <ButtonLink href={`/projects/${p.slug}`} variant={dark ? "primary" : "dark"} aria-label={`View full project: ${p.name}`}>
                     View full project
                   </ButtonLink>
@@ -166,8 +166,8 @@ export default function ProjectsPage() {
         );
       })}
 
-      <section className="on-light bg-paper py-20 sm:py-24">
-        <div className="shell flex flex-col gap-8 rounded-[1.75rem] bg-ivory p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+      <section className="on-light section-tight bg-paper">
+        <div className="shell flex flex-col gap-s4 border-t border-hair-strong pt-s5 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="display-md text-ink-900">Questions about the exploration pipeline?</h2>
             <p className="mt-3 max-w-xl text-ink-800">Our exploration and investor relations teams are available for technical inquiries.</p>

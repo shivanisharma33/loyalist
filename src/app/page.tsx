@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
+import { FactBand } from "@/components/home/fact-band";
+import { Interlude } from "@/components/home/interlude";
 import { Introduction } from "@/components/home/introduction";
 import { ResourceIntelligence } from "@/components/home/resource-intelligence";
 import { Strategy } from "@/components/home/strategy";
@@ -32,7 +34,14 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <FactBand />
       <Introduction />
+      <Interlude
+        plate="Plate 01"
+        annotation="Quartz-carbonate vein material — the style of mineralisation hosted at Tully"
+        caption="Gold in a quartz-carbonate vein. Illustrative photography; not a Loyalist sample."
+        objectPosition="50% 46%"
+      />
       <ResourceIntelligence />
       <Strategy />
       <Portfolio />

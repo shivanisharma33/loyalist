@@ -54,24 +54,24 @@ export function TeamDirectory({ groups, people }: { groups: { id: string; title:
 
   return (
     <>
-      <div className="grid gap-20 sm:gap-24">
+      <div className="grid gap-s7">
         {groups.map((group, gi) => (
           <section key={group.id} aria-labelledby={`group-${group.id}`}>
-            <div className="mb-10 flex items-end justify-between gap-6 border-b border-ink-900/10 pb-6">
-              <h2 id={`group-${group.id}`} className="display-md text-ink-900" data-reveal="">
+            <div className="mb-s5 flex items-end justify-between gap-6 border-b border-hair pb-s3">
+              <h2 id={`group-${group.id}`} className="display-lg text-ink-900" data-reveal="">
                 {group.title}
               </h2>
               <span className="numeral hidden text-5xl text-ink-900/10 sm:block">{String(gi + 1).padStart(2, "0")}</span>
             </div>
-            <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid gap-x-s4 gap-y-s5 sm:grid-cols-2 lg:grid-cols-4">
               {group.members.map((m, i) => {
                 const person = people[m.personId];
                 return (
                   <li key={m.personId} data-reveal="" style={{ ["--reveal-delay" as string]: i * 90 }}>
                     <article className="group flex h-full flex-col">
-                      <Portrait person={person} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw" className="aspect-[4/5] rounded-[1.25rem]" />
+                      <Portrait person={person} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw" className="aspect-[4/5]" />
                       <h3 className="mt-5 font-display text-lg font-semibold leading-snug text-ink-900">{person.name}</h3>
-                      <p className="eyebrow mt-1.5 text-gold-ink">{m.role}</p>
+                      <p className="tech mt-1.5 text-gold-ink">{m.role}</p>
                       <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-stone-600">{m.summary}</p>
                       {/* Full biography stays in the HTML (crawlable, find-in-page) and opens in the dialog. */}
                       {gi === groups.findIndex((g) => g.members.some((x) => x.personId === m.personId)) && (
@@ -104,7 +104,7 @@ export function TeamDirectory({ groups, people }: { groups: { id: string; title:
         aria-labelledby="bio-title"
         onClose={() => openerRef.current?.focus()}
         onClick={(e) => e.target === dialogRef.current && close()}
-        className="m-auto max-h-[min(90dvh,48rem)] w-[min(100vw-2rem,52rem)] overflow-hidden rounded-[1.5rem] bg-paper p-0 text-ink-900 shadow-2xl backdrop:bg-ink-950/75 backdrop:backdrop-blur-sm"
+        className="m-auto max-h-[min(90dvh,48rem)] w-[min(100vw-2rem,52rem)] overflow-hidden border border-hair bg-paper p-0 text-ink-900 shadow-2xl backdrop:bg-ink-950/80 backdrop:backdrop-blur-sm"
       >
         {selected && (
           <div className="grid max-h-[min(90dvh,48rem)] overflow-y-auto md:grid-cols-[16rem_1fr]">
@@ -113,13 +113,13 @@ export function TeamDirectory({ groups, people }: { groups: { id: string; title:
               <button
                 type="button"
                 onClick={close}
-                className="absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-ink-900/5"
+                className="absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center text-ink-900 hover:bg-ink-900/5"
                 aria-label="Close biography"
                 autoFocus
               >
                 <CloseIcon size={20} />
               </button>
-              <p className="eyebrow pr-12 text-gold-ink">{selected.role}</p>
+              <p className="tech pr-12 text-gold-ink">{selected.role}</p>
               <h2 id="bio-title" className="display-sm mt-2 pr-12">
                 {selected.person.name}
               </h2>

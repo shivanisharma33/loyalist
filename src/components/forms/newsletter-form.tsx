@@ -14,7 +14,7 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
   if (state.status === "success") {
     return (
-      <p role="status" className={`rounded-2xl border px-5 py-4 text-[0.9375rem] ${dark ? "border-gold-bright/40 text-ivory" : "border-gold-ink/30 text-ink-900"}`}>
+      <p role="status" className={`border-l-2 px-5 py-4 text-[0.9375rem] ${dark ? "border-gold-bright text-ivory" : "border-gold-ink text-ink-900"}`}>
         {state.message}
       </p>
     );
@@ -22,7 +22,7 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
   return (
     <form action={action} noValidate className="w-full">
-      <label htmlFor={`${id}-email`} className={`mb-2 block text-sm font-medium ${dark ? "text-stone-300" : "text-stone-600"}`}>
+      <label htmlFor={`${id}-email`} className={`tech mb-2 block ${dark ? "text-stone-300" : "text-stone-600"}`}>
         Email address
       </label>
       <div className="flex flex-col gap-3 sm:flex-row">
@@ -37,10 +37,10 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
           placeholder="you@example.com"
           aria-invalid={error ? true : undefined}
           aria-describedby={`${id}-msg`}
-          className={`h-12 min-w-0 flex-1 rounded-full border px-5 text-base outline-none transition-colors ${
+          className={`h-12 min-w-0 flex-1 border px-5 text-base outline-none transition-colors ${
             dark
-              ? "border-white/20 bg-white/[0.04] text-ivory placeholder:text-stone focus:border-gold-bright"
-              : "border-ink-900/20 bg-white text-ink-900 placeholder:text-stone focus:border-gold-ink"
+              ? "border-hair-dark-strong bg-white/[0.04] text-ivory placeholder:text-stone focus:border-gold-bright"
+              : "border-hair-strong bg-white text-ink-900 placeholder:text-stone focus:border-gold-ink"
           } aria-[invalid=true]:border-[#e0806a]`}
         />
         {/* Honeypot: hidden from people, filled by bots. */}
@@ -48,10 +48,10 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-gold-bright px-6 text-[0.9375rem] font-semibold text-ink-950 transition-colors hover:bg-gold-mineral disabled:opacity-60"
+          className="group inline-flex h-12 items-center justify-center gap-3 border border-gold-bright bg-gold-bright px-7 text-[0.8125rem] font-semibold uppercase tracking-[0.11em] text-ink-950 transition-colors hover:bg-transparent hover:text-gold-bright disabled:opacity-60"
         >
           {pending ? "Subscribing…" : "Subscribe"}
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </button>
       </div>
       <p id={`${id}-msg`} role={state.status === "error" ? "alert" : undefined} className={`mt-3 min-h-5 text-sm ${dark ? "text-[#f0a493]" : "text-[#a13a22]"}`}>
