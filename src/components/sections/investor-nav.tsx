@@ -13,7 +13,7 @@ export function InvestorNav({ current }: { current: string }) {
           <Link
             href="/investors"
             aria-current={current === "/investors" ? "page" : undefined}
-            className={`tech inline-flex h-11 items-center border-b-2 px-4 transition-colors ${
+            className={`btn-label inline-flex h-11 items-center border-b-2 px-4 transition-colors ${
               current === "/investors" ? "border-gold text-ink-900" : "border-transparent text-stone-600 hover:text-ink-900"
             }`}
           >
@@ -23,7 +23,7 @@ export function InvestorNav({ current }: { current: string }) {
         {items.map((item) => {
           const active = item.href === current;
           const external = item.href.endsWith(".pdf");
-          const cls = `tech inline-flex h-11 items-center gap-1.5 whitespace-nowrap border-b-2 px-4 transition-colors ${
+          const cls = `btn-label inline-flex h-11 items-center gap-1.5 whitespace-nowrap border-b-2 px-4 transition-colors ${
             active ? "border-gold text-ink-900" : "border-transparent text-stone-600 hover:text-ink-900"
           }`;
           return (

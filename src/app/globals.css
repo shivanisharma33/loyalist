@@ -1,41 +1,57 @@
 @import "tailwindcss";
 
-/* ───────────────────────── Design tokens ─────────────────────────
-   Quiet-luxury system: a narrow tonal palette, one accent used sparingly, a
-   fixed spacing scale and an explicitly flat geometry (no decorative radii).
-   Depth comes from tone, rule weight and image grading — never from shadows. */
+/* ───────────────────────── Design tokens — "Geological Frontier" ─────────────────────────
+   Two grounds alternate down the page: warm limestone (paper, ivory, sand) and dark iron-oxide
+   umber (ink-*). The historic token names are kept so every interior page inherits the new
+   palette; `limestone-*` and `forest-*` aliases are used by the new homepage.
+   One accent: oxidised ochre-gold, spent on data and the primary action only. */
 @theme {
-  --color-ink-950: #10100f;
-  --color-ink-900: #171714;
-  --color-ink-850: #1c1b18;
-  --color-ink-800: #23221e;
-  --color-ink-700: #33312b;
-  --color-ink-600: #4a4840;
+  /* Iron-oxide umber — the dark ground (the forest and ink token names are kept for compatibility). */
+  --color-ink-950: #17110d;
+  --color-ink-900: #1c1510;
+  --color-ink-850: #211813;
+  --color-ink-800: #2d211a;
+  --color-ink-700: #3d2d23;
+  --color-ink-600: #54402f;
+  --color-forest-950: #17110d;
+  --color-forest-900: #1c1510;
+  --color-forest-800: #2d211a;
+  --color-forest-700: #3d2d23;
+  --color-moss: #8a6a4f; /* weathered rust-tan */
+  --color-lichen: #c4ad8f; /* pale ochre */
 
-  --color-paper: #fbfaf7;
-  --color-ivory: #f4f1e9;
-  --color-sand: #e9e4d7;
-  --color-rule: #dcd6c8;
-  --color-stone: #89877f;
-  --color-stone-600: #5f5c54;
-  --color-stone-300: #b9b6ac;
+  /* Limestone — the light ground. */
+  --color-paper: #efe9de;
+  --color-ivory: #f6f2ea;
+  --color-sand: #e4dccc;
+  --color-rule: #d2c8b4;
+  --color-limestone: #efe9de;
+  --color-limestone-200: #e4dccc;
+  --color-limestone-300: #d2c8b4;
+  --color-stone: #8b8a7c;
+  --color-stone-600: #57594f;
+  --color-stone-300: #b8bbae;
 
-  /* Brand gold (#bf9e2e) and the logo gold (#d4b248) come from the existing site. */
-  --color-gold: #bf9e2e;
-  --color-gold-bright: #d4b248;
-  --color-gold-mineral: #d0b16d;
-  --color-gold-antique: #b69552;
-  --color-gold-ink: #6f5810;
+  /* Ochre-gold. `gold-ink` is the accessible text tone on limestone (≥ 5:1). */
+  --color-gold: #b48a3c;
+  --color-gold-bright: #d4ab55;
+  --color-gold-mineral: #d8b778;
+  --color-gold-antique: #a8813f;
+  --color-gold-ink: #6e4f17;
+  /* Iron-oxide — used only to encode "Inferred" and historical data. */
+  --color-oxide: #b5643a;
+  --color-oxide-ink: #8a4321;
 
   /* Hairlines. One weight per surface, so every rule on the site matches. */
-  --color-hair: rgb(16 16 15 / 0.11);
-  --color-hair-strong: rgb(16 16 15 / 0.22);
-  --color-hair-dark: rgb(255 255 255 / 0.12);
-  --color-hair-dark-strong: rgb(255 255 255 / 0.24);
+  --color-hair: rgb(23 17 13 / 0.13);
+  --color-hair-strong: rgb(23 17 13 / 0.26);
+  --color-hair-dark: rgb(239 233 222 / 0.13);
+  --color-hair-dark-strong: rgb(239 233 222 / 0.26);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-dm-serif), Georgia, serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Iowan Old Style", Georgia, serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
@@ -135,68 +151,132 @@ body.menu-open {
 }
 
 /* ───────────────────────── Type scale ─────────────────────────
-   Large sizes are set lighter than small ones: at display size, weight reads as
-   shouting, so the hierarchy is carried by size and measure instead. */
+   Display sizes are set in Cormorant Garamond, whose fine hairlines carry the editorial
+   voice; the sans is reserved for reading and interface, and
+   the mono for instrumentation (coordinates, assays, document metadata). */
+@utility display-3xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.25rem, 0.9rem + 10.4vw, 12.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+}
+
 @utility display-2xl {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(2.75rem, 1.1rem + 7.1vw, 8rem);
-  line-height: 0.93;
-  letter-spacing: -0.045em;
+  font-weight: 400;
+  font-size: clamp(2.875rem, 1.1rem + 7.1vw, 8.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
 }
 
 @utility display-xl {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(2.5rem, 1.4rem + 5.2vw, 6.25rem);
   line-height: 0.96;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.018em;
 }
 
 @utility display-lg {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2rem, 1.35rem + 2.9vw, 4.25rem);
+  font-size: clamp(2.125rem, 1.35rem + 2.9vw, 4.5rem);
   line-height: 1.02;
-  letter-spacing: -0.033em;
+  letter-spacing: -0.014em;
 }
 
 @utility display-md {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(1.625rem, 1.2rem + 1.7vw, 2.75rem);
-  line-height: 1.1;
-  letter-spacing: -0.026em;
+  line-height: 1.08;
+  letter-spacing: -0.008em;
 }
 
 @utility display-sm {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.1875rem, 1.03rem + 0.7vw, 1.625rem);
-  line-height: 1.22;
-  letter-spacing: -0.016em;
+  font-size: clamp(1.25rem, 1.05rem + 0.75vw, 1.75rem);
+  line-height: 1.18;
+  letter-spacing: -0.004em;
 }
 
-/* Section eyebrow: wide, quiet, display face. */
+/* Section eyebrow: wide, quiet sans caps. */
 @utility eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   line-height: 1.4;
 }
 
 /* Technical annotation — coordinates, figure numbers, map labels, data keys.
-   Deliberately the text face, not the display face, so it reads as instrumentation. */
+   Set in the mono so it reads as instrumentation rather than prose. */
 @utility tech {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-weight: 450;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.5;
   font-variant-numeric: tabular-nums;
+}
+
+/* ───────────────────────── Instrument kit ─────────────────────────
+   A restrained, precise visual language: corner brackets frame data panels like an
+   instrument display, a dot matrix gives dark surfaces depth, and gold markers glow softly. */
+
+/* Corner brackets on a panel (no extra markup). Colour follows --hud (defaults to gold). */
+@utility hud {
+  position: relative;
+  --hud-c: var(--hud, var(--color-gold-bright));
+  background-image:
+    linear-gradient(var(--hud-c), var(--hud-c)), linear-gradient(var(--hud-c), var(--hud-c)),
+    linear-gradient(var(--hud-c), var(--hud-c)), linear-gradient(var(--hud-c), var(--hud-c)),
+    linear-gradient(var(--hud-c), var(--hud-c)), linear-gradient(var(--hud-c), var(--hud-c)),
+    linear-gradient(var(--hud-c), var(--hud-c)), linear-gradient(var(--hud-c), var(--hud-c));
+  background-repeat: no-repeat;
+  background-size: 14px 1px, 1px 14px, 14px 1px, 1px 14px, 14px 1px, 1px 14px, 14px 1px, 1px 14px;
+  background-position: left top, left top, right top, right top, left bottom, left bottom, right bottom, right bottom;
+}
+
+/* Fine dot matrix for dark technical surfaces. */
+@utility dot-grid {
+  background-image: radial-gradient(rgb(239 233 222 / 0.09) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+@utility dot-grid-light {
+  background-image: radial-gradient(rgb(23 17 13 / 0.1) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Gauge arcs fade in (motion-safe only; static otherwise). */
+@media (prefers-reduced-motion: no-preference) {
+  .gauge-arc {
+    animation: gauge-in 1.8s cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+  }
+}
+@keyframes gauge-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Soft gold glow for live markers and key figures. */
+@utility glow {
+  box-shadow: 0 0 0 1px rgb(212 171 85 / 0.5), 0 0 18px 2px rgb(212 171 85 / 0.35);
+}
+
+/* Button and call-to-action text: the reading sans, semibold, in normal case. */
+@utility btn-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-transform: none;
 }
 
 @utility caption {
@@ -209,27 +289,37 @@ body.menu-open {
   font-family: var(--font-display);
   font-weight: 500;
   font-variant-numeric: tabular-nums lining-nums;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.01em;
   line-height: 0.95;
 }
 
 /* Annual-report figure: the big typeset number in a data block. */
 @utility figure-xl {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
   font-size: clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem);
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   line-height: 0.9;
 }
 
 @utility figure-lg {
   font-family: var(--font-display);
   font-weight: 500;
-  font-variant-numeric: tabular-nums lining-nums;
+  font-variant-numeric: lining-nums;
   font-size: clamp(1.875rem, 1.4rem + 1.6vw, 2.75rem);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   line-height: 0.95;
+}
+
+/* The oversized resource numeral — the single largest piece of type on the site. */
+@utility figure-mega {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  font-size: clamp(4.5rem, 0.6rem + 17vw, 17rem);
+  letter-spacing: -0.035em;
+  line-height: 0.8;
 }
 
 @utility lede {
@@ -256,11 +346,50 @@ body.menu-open {
   max-width: 44em;
 }
 
+/* Accent word inside a display line. Upright — the accent is carried by colour alone. */
 @utility serif-accent {
   font-family: var(--font-serif);
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: -0.015em;
+  font-weight: inherit;
+  font-style: normal;
+  letter-spacing: inherit;
+}
+
+/* Limestone ground with a faint fossiliferous grain, so light sections read as stone, not paper. */
+@utility limestone {
+  background-color: var(--color-limestone);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Visually-hidden range thumb styling for the cut-off grade instrument. */
+.grade-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  height: 2.75rem;
+  cursor: pointer;
+}
+.grade-range:focus-visible { outline: 2px solid var(--color-gold-bright); outline-offset: 4px; }
+.grade-range::-webkit-slider-runnable-track { height: 1px; background: var(--color-hair-dark-strong); }
+.grade-range::-moz-range-track { height: 1px; background: var(--color-hair-dark-strong); }
+.grade-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  background: var(--color-gold-bright);
+  border: 5px solid var(--color-ink-950);
+  outline: 1px solid var(--color-gold-bright);
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+.grade-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--color-gold-bright);
+  border: 4px solid var(--color-ink-950);
+  outline: 1px solid var(--color-gold-bright);
+  border-radius: 0;
+  transform: rotate(45deg);
 }
 
 /* ───────────────────────── Geological language ───────────────────────── */

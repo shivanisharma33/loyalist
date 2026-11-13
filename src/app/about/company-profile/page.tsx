@@ -30,7 +30,7 @@ export default function CompanyProfilePage() {
             ["Leadership", "/about/our-team"],
             ["Contact", "/contact"],
           ].map(([label, href]) => (
-            <Link key={href} href={href} className="tech inline-flex min-h-11 items-center gap-2 text-ivory hover:text-gold-bright">
+            <Link key={href} href={href} className="btn-label inline-flex min-h-11 items-center gap-2 text-ivory hover:text-gold-bright">
               {label}
               <ArrowRight size={14} className="text-gold-bright" />
             </Link>

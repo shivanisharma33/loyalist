@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Contours } from "@/components/ui/contours";
 import { JsonLd } from "@/components/ui/json-ld";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
@@ -17,12 +16,11 @@ type Props = {
   imagePosition?: string;
   crumbs: Crumb[];
   children?: ReactNode;
-  seed?: number;
   size?: "lg" | "md";
 };
 
 /** Dark cinematic page header shared by every internal page. */
-export function PageHero({ title, titleText, eyebrow, lede, image = "/page-header.png", imagePosition = "center", crumbs, children, seed = 11, size = "lg" }: Props) {
+export function PageHero({ title, titleText, eyebrow, lede, image = "/page-header.png", imagePosition = "center", crumbs, children, size = "lg" }: Props) {
   return (
     <header className="grain relative isolate overflow-hidden bg-ink-950 text-ivory">
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
@@ -39,7 +37,6 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,16,15,0.82)_0%,rgba(16,16,15,0.55)_45%,rgba(16,16,15,0.96)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_12%_100%,rgba(212,178,72,0.09),transparent_72%)]" />
-        <Contours className="absolute inset-0 h-full w-full opacity-60" lines={12} seed={seed} draw />
       </div>
 
       <div className="shell relative z-[2] pb-s6 pt-[calc(var(--header-h)+3.5rem)] sm:pt-[calc(var(--header-h)+5.5rem)] lg:pb-s7">

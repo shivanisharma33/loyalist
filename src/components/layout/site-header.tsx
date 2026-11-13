@@ -4,75 +4,266 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { company, navigation, type NavItem } from "@/content/site";
-import { ArrowUpRight, ChevronDown, CloseIcon } from "@/components/ui/icons";
+import { company, navigation, socials, type NavItem } from "@/content/site";
+import { ArrowRight, ArrowUpRight, ChevronDown, CloseIcon } from "@/components/ui/icons";
 
 const sectionOf = (href: string) => "/" + (href.split("/")[1] ?? "");
+const isFile = (href: string) => href.endsWith(".pdf") || href.startsWith("http");
 
 function isActive(pathname: string, item: NavItem) {
-  if (item.href.endsWith(".pdf")) return false;
+  if (isFile(item.href)) return false;
   return pathname === item.href || pathname.startsWith(sectionOf(item.href) + "/") || pathname === sectionOf(item.href);
 }
 
-function NavLink({ href, className, children, onClick }: { href: string; className?: string; children: React.ReactNode; onClick?: () => void }) {
-  if (href.endsWith(".pdf") || href.startsWith("http")) {
+function NavLink({ href, className, children, onClick, ...rest }: { href: string; className?: string; children: React.ReactNode; onClick?: () => void } & Omit<React.ComponentProps<"a">, "href">) {
+  if (isFile(href)) {
     return (
-      <a href={href} className={className} target="_blank" rel="noopener noreferrer" onClick={onClick}>
+      <a href={href} className={className} target="_blank" rel="noopener noreferrer" onClick={onClick} {...rest}>
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className={className} onClick={onClick}>
+    <Link href={href} className={className} onClick={onClick} {...rest}>
       {children}
     </Link>
   );
 }
 
+/** One line of context per section, used in the dropdown panels and the menu overlay. */
+const sectionNotes: Record<string, string> = {
+  About: "A Timmins-focused developer advancing toward production — strategy, mission and the people behind it.",
+  Projects: "Four properties in the Timmins–Porcupine gold camp, led by the Tully Gold Project.",
+  Investors: "Capital structure, financial statements, NI 43-101 technical reports and meeting materials.",
+  "Press Releases": "Every Company news release, newest first.",
+  Contact: "Toronto head office · info@loyalistexploration.com",
+};
+
+const projectImages: Record<string, string> = {
+  "/projects/tully": "/projects/tully.png",
+  "/projects/loveland": "/projects/loveland.png",
+  "/projects/gold-rush": "/projects/gold-rush.png",
+  "/projects/desantis": "/projects/desantis.png",
+};
+
+/* ───────────────────────── Dropdown panels ───────────────────────── */
+
+function PanelLink({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
+  const file = isFile(item.href);
+  return (
+    <NavLink href={item.href} onClick={onNavigate} className="group flex items-start justify-between gap-6 border-b border-hair-dark py-4">
+      <span>
+        <span className="block font-display text-[1.1875rem] leading-snug text-ivory transition-colors group-hover:text-gold-bright">{item.label}</span>
+        {item.description && <span className="mt-1 block text-[0.8125rem] text-ivory/55">{item.description}</span>}
+      </span>
+      {file ? (
+        <ArrowUpRight size={15} className="mt-1.5 shrink-0 text-gold-bright" />
+      ) : (
+        <ArrowRight size={15} className="mt-1.5 shrink-0 text-ivory/40 transition-[transform,color] group-hover:translate-x-1 group-hover:text-gold-bright" />
+      )}
+    </NavLink>
+  );
+}
+
+function Panel({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
+  const children = item.children ?? [];
+  const intro = (
+    <div className="lg:col-span-3">
+      <p className="tech text-gold-bright">{item.label}</p>
+      <p className="mt-4 max-w-[22em] text-[0.9375rem] leading-relaxed text-ivory/65">{sectionNotes[item.label]}</p>
+      <NavLink href={item.href} onClick={onNavigate} className="btn-label group mt-6 inline-flex min-h-11 items-center gap-2 text-ivory hover:text-gold-bright">
+        {item.label === "Projects" ? "All projects" : `${item.label} overview`}
+        <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+      </NavLink>
+    </div>
+  );
+
+  if (item.label === "Projects") {
+    return (
+      <div className="grid gap-8 lg:grid-cols-12">
+        {intro}
+        <ul className="grid grid-cols-4 gap-5 lg:col-span-9">
+          {children.map((c) => (
+            <li key={c.href}>
+              <NavLink href={c.href} onClick={onNavigate} className="group block">
+                <span className="relative block aspect-[4/3] overflow-hidden bg-ink-850">
+                  <Image
+                    src={projectImages[c.href] ?? "/hero.webp"}
+                    alt=""
+                    fill
+                    sizes="18vw"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                  />
+                </span>
+                <span className="display-sm mt-3 block text-ivory transition-colors group-hover:text-gold-bright">{c.label.replace(" Project", "").replace(" Mine Property", "")}</span>
+                <span className="mt-1 block text-[0.8125rem] text-ivory/55">{c.description}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  if (item.label === "Investors") {
+    const deck = children.find((c) => isFile(c.href));
+    const pages = children.filter((c) => !isFile(c.href));
+    return (
+      <div className="grid gap-8 lg:grid-cols-12">
+        {intro}
+        <ul className="grid grid-cols-2 gap-x-8 border-t border-hair-dark lg:col-span-6">
+          {pages.map((c) => (
+            <li key={c.href}>
+              <PanelLink item={c} onNavigate={onNavigate} />
+            </li>
+          ))}
+        </ul>
+        {deck && (
+          <a
+            href={deck.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onNavigate}
+            className="group flex flex-col justify-between border border-gold-bright/40 p-6 transition-colors hover:border-gold-bright lg:col-span-3"
+          >
+            <span>
+              <span className="tech text-gold-bright">PDF · Updated {company.presentation.updated}</span>
+              <span className="display-sm mt-3 block text-ivory">Corporate presentation</span>
+            </span>
+            <span className="btn-label mt-6 inline-flex items-center gap-2 text-ivory group-hover:text-gold-bright">
+              Download
+              <ArrowUpRight size={13} />
+            </span>
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  // About
+  return (
+    <div className="grid gap-8 lg:grid-cols-12">
+      {intro}
+      <ul className="border-t border-hair-dark lg:col-span-5">
+        {children.map((c) => (
+          <li key={c.href}>
+            <PanelLink item={c} onNavigate={onNavigate} />
+          </li>
+        ))}
+      </ul>
+      <figure className="border-l border-hair-dark pl-8 lg:col-span-4">
+        <blockquote className="display-sm text-ivory/85">“We intend to be future miners.”</blockquote>
+        <figcaption className="tech mt-4 text-ivory/50">Errol Farr · President &amp; CEO</figcaption>
+      </figure>
+    </div>
+  );
+}
+
+/* ───────────────────────── Header ───────────────────────── */
+
+/**
+ * Editorial navigation. Logo left, section links centred, actions right. About, Projects and
+ * Investors open full-width panels on hover or keyboard focus. The bar compacts once scrolled,
+ * draws a reading-progress hairline, hides while reading downward and returns on scroll up.
+ * "Menu" opens a full-screen contents page at every width.
+ */
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hidden, setHidden] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [menu, setMenu] = useState<string | null>(null);
+  const [focusGroup, setFocusGroup] = useState(navigation[1].label);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Set while Escape returns focus to a trigger, so that focus does not reopen its panel.
+  const suppressFocusOpen = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let last = window.scrollY;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        setScrolled(y > 24);
+        setProgress(max > 0 ? Math.min(1, y / max) : 0);
+        if (Math.abs(y - last) > 6) {
+          setHidden(y > last && y > window.innerHeight * 0.6);
+          last = y;
+        }
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
-  // Close menus whenever the route changes (state adjustment during render, not in an effect).
+  // Close everything whenever the route changes (state adjustment during render).
   const [lastPath, setLastPath] = useState(pathname);
   if (lastPath !== pathname) {
     setLastPath(pathname);
-    setMenuOpen(false);
-    setOpenDropdown(null);
+    setOpen(false);
+    setMenu(null);
   }
 
-  const closeMenu = useCallback(() => {
-    setMenuOpen(false);
+  const close = useCallback(() => {
+    setOpen(false);
     toggleRef.current?.focus();
   }, []);
 
-  // Mobile menu: scroll lock, initial focus, focus trap and Escape-to-close.
+  const openPanel = (label: string | null) => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setMenu(label);
+  };
+  const scheduleClose = () => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    leaveTimer.current = setTimeout(() => setMenu(null), 140);
+  };
+
+  // Panels close on Escape (returning focus to their link) and on outside clicks.
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menu) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const trigger = document.querySelector<HTMLElement>(`[data-menu-trigger="${menu}"]`);
+      setMenu(null);
+      suppressFocusOpen.current = true;
+      trigger?.focus();
+      suppressFocusOpen.current = false;
+    };
+    const onDown = (e: PointerEvent) => !(e.target as Element).closest("header") && setMenu(null);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [menu]);
+
+  // Menu overlay: scroll lock, initial focus, focus trap, Escape.
+  useEffect(() => {
+    if (!open) return;
     document.body.classList.add("menu-open");
-    closeRef.current?.focus();
+    const raf = requestAnimationFrame(() => closeRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        closeMenu();
+        close();
         return;
       }
-      if (e.key !== "Tab" || !menuRef.current) return;
-      const focusables = menuRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const f = [...dialogRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")].filter((el) => el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -82,111 +273,94 @@ export function SiteHeader() {
       }
     };
     document.addEventListener("keydown", onKey);
-    const mq = window.matchMedia("(min-width: 64rem)");
-    const onMq = () => mq.matches && setMenuOpen(false);
-    mq.addEventListener("change", onMq);
     return () => {
+      cancelAnimationFrame(raf);
       document.body.classList.remove("menu-open");
       document.removeEventListener("keydown", onKey);
-      mq.removeEventListener("change", onMq);
     };
-  }, [menuOpen, closeMenu]);
+  }, [open, close]);
 
-  // Desktop dropdowns close on Escape or outside click.
-  useEffect(() => {
-    if (!openDropdown) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenDropdown(null);
-    const onClick = (e: MouseEvent) => !(e.target as Element).closest("[data-dropdown]") && setOpenDropdown(null);
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("click", onClick);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("click", onClick);
-    };
-  }, [openDropdown]);
-
-  const solid = scrolled || menuOpen;
+  const solid = scrolled || open || menu !== null;
+  const group = navigation.find((n) => n.label === focusGroup) ?? navigation[0];
 
   return (
     <>
       <a
         href="#main"
-        className="fixed left-4 top-3 z-[70] -translate-y-24 bg-gold-bright px-4 py-2 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
+        className="fixed left-4 top-3 z-[80] -translate-y-24 bg-gold-bright px-4 py-2 text-sm font-semibold text-ink-950 transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
-      <header className="fixed inset-x-0 top-3 sm:top-5 z-50 px-3 sm:px-6 pointer-events-none">
+
+      <header
+        onPointerLeave={scheduleClose}
+        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          hidden && !open && !menu ? "-translate-y-full" : "translate-y-0"
+        } ${solid ? "border-b border-hair-dark bg-ink-950/92 backdrop-blur-xl" : "border-b border-transparent bg-gradient-to-b from-ink-950/60 to-transparent"}`}
+      >
         <div
-          className={`mx-auto max-w-7xl rounded-2xl border transition-[background-color,border-color,backdrop-filter,box-shadow] duration-500 pointer-events-auto flex items-center justify-between gap-4 px-4 sm:px-6 py-2.5 ${
-            solid
-              ? "border-white/20 bg-ink-950/92 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.7)]"
-              : "border-white/15 bg-ink-950/75 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+          className={`mx-auto grid max-w-[110rem] grid-cols-[1fr_auto] items-center gap-6 px-[var(--gutter)] text-ivory transition-[height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] xl:grid-cols-[1fr_auto_1fr] ${
+            scrolled ? "h-16" : "h-[var(--header-h)]"
           }`}
         >
-          <div className="flex items-center">
-            <Link href="/" className="relative z-[60] -m-1 shrink-0 p-1" aria-label="Loyalist Exploration — home">
-              <Image src="/logo-light-trim.webp" alt="Loyalist Exploration" width={2329} height={446} priority className="h-7 sm:h-8 w-auto" sizes="170px" />
-            </Link>
-            <span className="hidden md:block h-5 w-px bg-white/20 ml-4 mr-1" />
-          </div>
+          <Link href="/" className="-m-1 justify-self-start p-1" aria-label="Loyalist Exploration — home">
+            <Image
+              src="/logo-light-trim.webp"
+              alt="Loyalist Exploration"
+              width={2329}
+              height={446}
+              preload
+              className={`w-auto transition-[height] duration-500 ${scrolled ? "h-7" : "h-7 sm:h-8"}`}
+              sizes="190px"
+            />
+          </Link>
 
-          <nav aria-label="Main" className="hidden lg:block">
-            <ul className="flex items-center gap-1 xl:gap-2">
+          <nav
+            aria-label="Main"
+            className="hidden xl:block"
+            onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setMenu(null)}
+          >
+            <ul className="flex items-center gap-1">
               {navigation.map((item) => {
                 const active = isActive(pathname, item);
-                const open = openDropdown === item.label;
+                const expanded = menu === item.label;
+                const hasPanel = !!item.children;
                 return (
-                  <li key={item.label} className="group relative" data-dropdown>
-                    <div className="flex items-center">
-                      <NavLink
-                        href={item.href}
-                        className={`relative inline-flex h-9 items-center px-3 text-[0.875rem] font-medium tracking-normal transition-colors ${
-                          active ? "text-white" : "text-stone-300 hover:text-white"
+                  <li
+                    key={item.label}
+                    onPointerEnter={() => openPanel(hasPanel ? item.label : null)}
+                    onFocus={() => !suppressFocusOpen.current && openPanel(hasPanel ? item.label : null)}
+                  >
+                    <NavLink
+                      href={item.href}
+                      data-menu-trigger={item.label}
+                      aria-current={active ? "page" : undefined}
+                      aria-expanded={hasPanel ? expanded : undefined}
+                      aria-controls={hasPanel ? `panel-${item.label}` : undefined}
+                      className={`group relative inline-flex h-11 items-center gap-1.5 px-4 text-[0.875rem] font-medium tracking-[0.02em] transition-colors ${
+                        active || expanded ? "text-ivory" : "text-ivory/70 hover:text-ivory"
+                      }`}
+                    >
+                      {item.label}
+                      {hasPanel && <ChevronDown size={12} className={`opacity-60 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`} />}
+                      <span
+                        aria-hidden="true"
+                        className={`absolute inset-x-4 bottom-1 h-px origin-center bg-gold-bright transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                          active || expanded ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                         }`}
-                      >
-                        {item.label}
-                      </NavLink>
-                      {item.children && (
-                        <button
-                          type="button"
-                          className="-ml-1 inline-flex h-9 w-6 items-center justify-center text-stone-400 hover:text-gold-bright transition-colors"
-                          aria-expanded={open}
-                          aria-controls={`menu-${item.label}`}
-                          aria-label={`${item.label} submenu`}
-                          onClick={() => setOpenDropdown(open ? null : item.label)}
-                        >
-                          <ChevronDown size={13} className={`transition-transform duration-300 ${open ? "rotate-180 text-gold-bright" : ""}`} />
-                        </button>
-                      )}
-                    </div>
-                    {item.children && (
+                      />
+                    </NavLink>
+
+                    {hasPanel && (
                       <div
-                        id={`menu-${item.label}`}
-                        className={`absolute left-0 top-full w-80 pt-2 transition-[opacity,transform,visibility] duration-300 ease-out ${
-                          open
-                            ? "visible translate-y-0 opacity-100"
-                            : "invisible -translate-y-1 opacity-0 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+                        id={`panel-${item.label}`}
+                        className={`absolute inset-x-0 top-full border-b border-hair-dark bg-ink-950 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.6)] transition-[opacity,transform,visibility] duration-300 ease-out ${
+                          expanded ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
                         }`}
                       >
-                        <ul className="overflow-hidden rounded-xl border border-white/15 bg-ink-950/95 backdrop-blur-xl shadow-2xl">
-                          {item.children.map((child) => (
-                            <li key={child.href}>
-                              <NavLink
-                                href={child.href}
-                                onClick={() => setOpenDropdown(null)}
-                                className="group/item flex items-start justify-between gap-4 border-b border-white/10 px-5 py-3 transition-colors last:border-b-0 hover:bg-white/[0.06] focus-visible:bg-white/[0.06]"
-                              >
-                                <span>
-                                  <span className={`block text-sm font-semibold ${pathname === child.href ? "text-gold-bright" : "text-ivory"}`}>
-                                    {child.label}
-                                  </span>
-                                  {child.description && <span className="caption mt-0.5 block text-xs text-stone-300">{child.description}</span>}
-                                </span>
-                                <ArrowUpRight size={14} className="mt-0.5 shrink-0 text-stone transition-colors group-hover/item:text-gold-bright" />
-                              </NavLink>
-                            </li>
-                          ))}
-                        </ul>
+                        <div className="mx-auto max-w-[110rem] px-[var(--gutter)] py-10">
+                          <Panel item={item} onNavigate={() => setMenu(null)} />
+                        </div>
                       </div>
                     )}
                   </li>
@@ -195,126 +369,186 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="flex items-center justify-self-end gap-3">
             <a
               href={company.quoteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="tech inline-flex h-9 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 text-xs font-mono font-medium text-stone-200 transition-colors hover:border-gold-bright/50 hover:text-gold-bright"
+              className="tech hidden h-10 items-center gap-2 text-ivory/65 transition-colors hover:text-gold-bright 2xl:inline-flex"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-bright opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-bright" />
-              </span>
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold-bright" />
               {company.ticker}
+              <span className="sr-only">(share quote, opens in a new tab)</span>
             </a>
             <a
               href={company.presentation.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex h-9 items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#e8be56] via-[#dfad43] to-[#d69f3d] px-4 text-xs font-bold uppercase tracking-wider text-ink-950 shadow-[0_2px_14px_rgba(223,173,67,0.35)] transition-all hover:shadow-[0_4px_22px_rgba(223,173,67,0.55)] hover:brightness-105 active:scale-[0.98]"
+              className="group hidden h-10 items-center gap-2 bg-gold-bright px-5 text-[0.8125rem] font-semibold tracking-[0.02em] text-ink-950 transition-colors hover:bg-ivory lg:inline-flex"
             >
-              <span>Corporate Presentation</span>
-              <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              Investor Presentation
+              <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <span className="sr-only">(PDF, opens in a new tab)</span>
             </a>
+            <button
+              ref={toggleRef}
+              type="button"
+              aria-expanded={open}
+              aria-controls="site-index"
+              onClick={() => {
+                setMenu(null);
+                setOpen(true);
+              }}
+              className="group inline-flex h-10 items-center gap-3 border border-hair-dark-strong pl-4 pr-3.5 text-[0.8125rem] font-medium tracking-[0.02em] text-ivory transition-colors hover:border-ivory/70"
+            >
+              Menu
+              <span aria-hidden="true" className="flex w-[18px] flex-col items-end gap-[5px]">
+                <span className="h-px w-[18px] bg-current" />
+                <span className="h-px w-3 bg-gold-bright transition-[width] duration-300 group-hover:w-[18px]" />
+              </span>
+            </button>
           </div>
-
-          <button
-            ref={toggleRef}
-            type="button"
-            className="tech relative z-[60] inline-flex h-9 items-center gap-2.5 rounded-lg border border-white/15 bg-white/5 px-3 text-xs text-ivory lg:hidden hover:border-gold-bright/40"
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen(true)}
-          >
-            Menu
-            <span aria-hidden="true" className="flex w-5 flex-col gap-1">
-              <span className="h-px w-5 bg-current" />
-              <span className="h-px w-3.5 self-end bg-gold-bright" />
-            </span>
-          </button>
         </div>
+
+        {/* Reading progress */}
+        <span
+          aria-hidden="true"
+          className={`absolute inset-x-0 bottom-[-1px] h-px origin-left bg-gold-bright transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`}
+          style={{ transform: `scaleX(${progress})` }}
+        />
       </header>
 
+      {/* ───────── Menu overlay ───────── */}
       <div
-        id="mobile-menu"
-        ref={menuRef}
+        id="site-index"
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
-        className={`fixed inset-0 z-[65] flex flex-col overflow-y-auto bg-ink-950 text-ivory transition-[opacity,visibility,clip-path] duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] lg:hidden ${
-          menuOpen ? "visible opacity-100 [clip-path:inset(0_0_0_0)]" : "invisible opacity-0 [clip-path:inset(0_0_100%_0)]"
+        className={`fixed inset-0 z-[70] overflow-y-auto bg-ink-950 text-ivory ${
+          open ? "visible [clip-path:inset(0_0_0_0)]" : "invisible [clip-path:inset(0_0_100%_0)]"
         }`}
+        // Visible immediately on open (so focus can land), hidden only after the wipe on close.
+        style={{ transition: `clip-path 700ms cubic-bezier(0.76,0,0.24,1), visibility 0s linear ${open ? "0s" : "700ms"}` }}
       >
-        <div className="shell flex h-[var(--header-h)] shrink-0 items-center justify-between">
-          <Image src="/logo-light-trim.webp" alt="" width={2329} height={446} className="h-8 w-auto" sizes="170px" />
-          <button
-            ref={closeRef}
-            type="button"
-            onClick={closeMenu}
-            className="tech -mr-2 inline-flex h-11 items-center gap-2 px-3 text-ivory"
-          >
-            Close
-            <CloseIcon size={20} />
-          </button>
-        </div>
-        <nav aria-label="Mobile" className="shell flex-1 pb-8 pt-4">
-          <ul className="divide-y divide-hair-dark border-y border-hair-dark">
-            {navigation.map((item, i) => (
-              <li
-                key={item.label}
-                className={`py-4 transition-[opacity,transform] duration-700 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-                style={{ transitionDelay: menuOpen ? `${120 + i * 60}ms` : "0ms" }}
-              >
-                <div className="flex items-baseline gap-4">
-                  <span className="numeral w-7 text-base text-gold-bright">{String(i + 1).padStart(2, "0")}</span>
-                  <NavLink
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`display-md inline-flex min-h-11 items-center ${isActive(pathname, item) ? "text-gold-bright" : "text-ivory"}`}
-                  >
-                    {item.label}
-                  </NavLink>
-                </div>
-                {item.children && (
-                  <ul className="mt-1 grid gap-0.5 pl-10">
-                    {item.children.map((child) => (
-                      <li key={child.href}>
-                        <NavLink
-                          href={child.href}
-                          onClick={() => setMenuOpen(false)}
-                          className={`inline-flex min-h-11 items-center text-[0.9375rem] ${pathname === child.href ? "text-gold-bright" : "text-stone-300"}`}
-                        >
-                          {child.label}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-s4 grid gap-1 text-sm text-stone-300">
-            <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={`mailto:${company.email}`}>
-              {company.email}
-            </a>
-            <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={company.phoneHref}>
-              {company.phoneDisplay}
-            </a>
-            <a className="tech inline-flex min-h-11 items-center text-gold-bright" href={company.quoteUrl} target="_blank" rel="noopener noreferrer">
-              {company.ticker}
-            </a>
+        <div className="mx-auto flex min-h-full max-w-[110rem] flex-col px-[var(--gutter)]">
+          <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-hair-dark">
+            <Image src="/logo-light-trim.webp" alt="" width={2329} height={446} className="h-7 w-auto sm:h-8" sizes="190px" />
+            <p className="tech hidden text-ivory/50 md:block">Timmins, Ontario · {company.ticker}</p>
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={close}
+              className="-mr-1 inline-flex h-10 items-center gap-2 border border-hair-dark-strong px-4 text-[0.8125rem] font-medium text-ivory transition-colors hover:border-ivory/70"
+            >
+              Close
+              <CloseIcon size={16} />
+            </button>
           </div>
-          <a
-            href={company.presentation.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="tech mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-gold-bright px-6 text-ink-950"
-          >
-            Corporate Presentation
-            <ArrowUpRight size={16} />
-          </a>
-        </nav>
+
+          <div className="grid flex-1 gap-10 py-10 lg:grid-cols-12 lg:gap-8 lg:py-16">
+            <nav aria-label="Site menu" className="lg:col-span-6">
+              <ul>
+                {navigation.map((item, i) => {
+                  const active = isActive(pathname, item);
+                  const focused = focusGroup === item.label;
+                  return (
+                    <li
+                      key={item.label}
+                      className={`border-t border-hair-dark transition-[opacity,transform] duration-700 last:border-b ${open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+                      style={{ transitionDelay: open ? `${180 + i * 70}ms` : "0ms" }}
+                    >
+                      <NavLink
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        onMouseEnter={() => setFocusGroup(item.label)}
+                        onFocus={() => setFocusGroup(item.label)}
+                        aria-current={active ? "page" : undefined}
+                        className="group flex items-center justify-between gap-6 py-3 sm:py-4"
+                      >
+                        <span className={`display-xl transition-[color,transform] duration-500 group-hover:translate-x-2 ${active || focused ? "text-ivory" : "text-ivory/40"}`}>
+                          {item.label}
+                        </span>
+                        <ArrowRight
+                          size={22}
+                          className={`shrink-0 transition-[opacity,transform] duration-500 ${active || focused ? "translate-x-0 text-gold-bright opacity-100" : "-translate-x-3 opacity-0"}`}
+                        />
+                      </NavLink>
+                      {item.children && (
+                        <ul className="-mt-1 flex flex-wrap gap-x-5 pb-4 lg:hidden">
+                          {item.children.map((c) => (
+                            <li key={c.href}>
+                              <NavLink href={c.href} onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center text-[0.9375rem] text-ivory/60 hover:text-gold-bright">
+                                {c.label}
+                              </NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            {/* Desktop: the focused section's contents. */}
+            <div className="hidden lg:col-span-3 lg:block" aria-live="polite">
+              <p className="tech text-gold-bright">{group.label}</p>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-ivory/60">{sectionNotes[group.label]}</p>
+              {group.children ? (
+                <ul className="mt-8 border-t border-hair-dark">
+                  {group.children.map((c) => (
+                    <li key={c.href}>
+                      <PanelLink item={c} onNavigate={() => setOpen(false)} />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <NavLink href={group.href} onClick={() => setOpen(false)} className="btn-label mt-8 inline-flex min-h-11 items-center gap-2 text-ivory hover:text-gold-bright">
+                  Open {group.label}
+                  <ArrowRight size={14} />
+                </NavLink>
+              )}
+            </div>
+
+            <aside className="grid content-start gap-8 border-t border-hair-dark pt-8 lg:col-span-3 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+              <div>
+                <p className="tech text-ivory/50">Flagship · Tully Gold Project</p>
+                <p className="figure-lg mt-3 text-gold-bright">164,000 oz</p>
+                <p className="mt-1 text-sm text-ivory/60">Indicated at 3.16 g/t Au · plus 62,000 oz Inferred at 2.03 g/t Au</p>
+                <p className="mt-2 text-xs leading-relaxed text-ivory/40">2026 MRE, effective June 15, 2026. Mineral Resources are not Mineral Reserves.</p>
+              </div>
+              <div className="grid gap-1 text-[0.9375rem]">
+                <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={`mailto:${company.email}`}>
+                  {company.email}
+                </a>
+                <a className="inline-flex min-h-11 items-center hover:text-gold-bright" href={company.phoneHref}>
+                  {company.phoneDisplay}
+                </a>
+              </div>
+              <a
+                href={company.presentation.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-between gap-2 bg-gold-bright px-5 text-[0.8125rem] font-semibold text-ink-950 hover:bg-ivory"
+              >
+                Investor Presentation
+                <ArrowUpRight size={15} />
+              </a>
+              <ul className="flex flex-wrap gap-x-4 gap-y-1">
+                {socials.map((s) => (
+                  <li key={s.href}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="btn-label inline-flex min-h-11 items-center text-ivory/55 hover:text-gold-bright">
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </div>
+
+          <p className="display-sm border-t border-hair-dark py-6 text-ivory/50">Buy Timmins, Mine Timmins.</p>
+        </div>
       </div>
     </>
   );

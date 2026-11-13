@@ -8,7 +8,7 @@ type Tone = "dark" | "light";
 /* Buttons are square-edged and set in wide caps: the geometry does the signalling, so
    the accent colour can stay reserved for one action per view. */
 const buttonBase =
-  "group/btn relative inline-flex min-h-12 items-center justify-center gap-3 border px-6 text-[0.8125rem] font-semibold uppercase tracking-[0.11em] transition-[background-color,color,border-color] duration-400 ease-out sm:px-7";
+  "group/btn relative inline-flex min-h-12 items-center justify-center gap-3 border px-6 btn-label transition-[background-color,color,border-color] duration-400 ease-out sm:px-7";
 
 const variants = {
   primary: "border-gold-bright bg-gold-bright text-ink-950 hover:bg-transparent hover:text-gold-bright",

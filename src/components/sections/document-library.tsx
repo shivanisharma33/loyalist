@@ -22,7 +22,7 @@ export function DocumentLibrary({ docs }: { docs: FinancialDoc[] }) {
             type="button"
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
-            className={`tech inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
+            className={`btn-label inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
               filter === f ? "border-ink-900 bg-ink-900 text-ivory" : "border-hair text-ink-800 hover:border-hair-strong"
             }`}
           >

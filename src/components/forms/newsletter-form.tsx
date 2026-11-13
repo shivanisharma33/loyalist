@@ -48,7 +48,7 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex h-12 items-center justify-center gap-3 border border-gold-bright bg-gold-bright px-7 text-[0.8125rem] font-semibold uppercase tracking-[0.11em] text-ink-950 transition-colors hover:bg-transparent hover:text-gold-bright disabled:opacity-60"
+          className="group inline-flex h-12 items-center justify-center gap-3 border border-gold-bright bg-gold-bright px-7 btn-label text-ink-950 transition-colors hover:bg-transparent hover:text-gold-bright disabled:opacity-60"
         >
           {pending ? "Subscribing…" : "Subscribe"}
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

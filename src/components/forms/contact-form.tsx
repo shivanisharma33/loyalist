@@ -70,7 +70,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex h-12 shrink-0 items-center justify-center gap-3 border border-ink-900 bg-ink-900 px-7 text-[0.8125rem] font-semibold uppercase tracking-[0.11em] text-ivory transition-colors hover:bg-transparent hover:text-ink-900 disabled:opacity-60"
+          className="group inline-flex h-12 shrink-0 items-center justify-center gap-3 border border-ink-900 bg-ink-900 px-7 btn-label text-ivory transition-colors hover:bg-transparent hover:text-ink-900 disabled:opacity-60"
         >
           {pending ? "Sending…" : "Send Message"}
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

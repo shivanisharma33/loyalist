@@ -119,7 +119,7 @@ export const projects: Project[] = [
     location: "Byers, Loveland, Thorburn & Moberly Twps, ON",
     area: "6,244 HA",
     commodities: "Gold, Nickel, Copper",
-    ownership: "Option / Joint Venture",
+    ownership: "100% Owned (2% NSR)",
     stage: "Technical Report",
     summary:
       "High grade gold, copper and nickel exploration across 292 contiguous claims totalling 6,244 hectares in the Porcupine Mining Division. Gold-bearing arsenopyrite and pyrite in silicified granodiorite, plus the historical Hollinger and Cominco nickel-copper zones, open along strike and at depth over a 10 km corridor.",
@@ -202,7 +202,7 @@ export const projects: Project[] = [
     location: "30km West of Timmins, ON",
     area: "820 HA",
     commodities: "Gold, Silver",
-    ownership: "Option to 100%",
+    ownership: "Option Exercised (100%)",
     stage: "Target Generation",
     summary:
       "Potential extension of a known gold trend, approximately 30 km west of Timmins across 41 claims totalling 820 hectares. Historical work identified the North Shaft Zone, North Vein Area and Mid-Point Area, with surface grab samples returning up to 27.3 g/t Au.",
@@ -211,14 +211,14 @@ export const projects: Project[] = [
       { value: "820 HA", label: "Total Hectares", count: 820, suffix: " HA" },
       { value: "41", label: "Claims", count: 41 },
       { value: "30 KM W", label: "of Timmins" },
-      { value: "Option to 100%", label: "Ownership Status" },
+      { value: "100%", label: "Option Exercised · June 2026" },
     ],
     blocks: [
       {
         kind: "text",
         heading: "Overview",
         paragraphs: [
-          "The Gold Rush Property is located approximately 30 kilometres west of Timmins and consists of 41 claims totaling 820 hectares. Historical work has identified multiple target areas, including the North Shaft Zone, North Vein Area, and Mid-Point Area. Loyalist Exploration has an option to acquire a 100% interest in the Gold Rush property.",
+          "The Gold Rush Property is located approximately 30 kilometres west of Timmins and consists of 41 claims totaling 820 hectares. Historical work has identified multiple target areas, including the North Shaft Zone, North Vein Area, and Mid-Point Area. On June 8, 2026 Loyalist announced that it had exercised its option to acquire a 100% interest in the Gold Rush property; completion of the exercise is subject to the receipt of all necessary regulatory approvals, including that of the Canadian Securities Exchange.",
         ],
       },
       {
@@ -251,7 +251,7 @@ export const projects: Project[] = [
       "15 drill holes completed; best reported intercept of 2.08 g/t gold and 11.5 g/t silver over 1 metre.",
       "Surface grab samples up to 27.3 g/t gold from the North Shaft Zone.",
       "11.2 g/t gold from the North Vein Area, where seven samples exceeded 1 g/t gold.",
-      "Loyalist Exploration has an option to acquire a 100% interest in the property.",
+      "Option to acquire a 100% interest exercised (announced June 8, 2026), subject to regulatory approval.",
     ],
     figures: [{ src: "/projects/gold-rush/target-areas.jpeg", alt: "Target Areas", width: 454, height: 443 }],
     map: { x: 11.8, y: 84.6, distance: "~30 km W of Timmins" },

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { DM_Serif_Display, Inter, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { RevealObserver } from "@/components/motion/reveal-observer";
@@ -9,9 +9,18 @@ import { SITE_URL, company } from "@/content/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const dmSerif = DM_Serif_Display({ subsets: ["latin"], weight: "400", style: ["italic"], variable: "--font-dm-serif", display: "swap" });
+// A refined high-contrast Garamond for the editorial voice, a contemporary grotesque for
+// reading, and a mono for technical instrumentation.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: "normal",
+  variable: "--font-cormorant",
+  display: "swap",
+});
+const instrument = Instrument_Sans({ subsets: ["latin"], weight: "variable", variable: "--font-instrument", display: "swap" });
+// Mono labels sit in the header and hero; "optional" avoids a late swap reflowing them.
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "optional" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -28,13 +37,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#10100f",
+  themeColor: "#17110d",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-CA" className={`${manrope.variable} ${inter.variable} ${dmSerif.variable}`} suppressHydrationWarning>
+    <html lang="en-CA" className={`${cormorant.variable} ${instrument.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body>
         {/* Marks JS as available so reveal styles apply; without it all content stays visible. */}
         <Script

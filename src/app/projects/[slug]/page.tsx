@@ -145,7 +145,6 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           { name: "Projects", path: "/projects" },
           { name: project.name, path: `/projects/${project.slug}` },
         ]}
-        seed={13 + index}
       >
         <StatBand project={project} />
       </PageHero>

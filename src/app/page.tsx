@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/home/hero";
-import { FactBand } from "@/components/home/fact-band";
-import { Interlude } from "@/components/home/interlude";
-import { Introduction } from "@/components/home/introduction";
-import { ResourceIntelligence } from "@/components/home/resource-intelligence";
-import { Strategy } from "@/components/home/strategy";
-import { Portfolio } from "@/components/home/portfolio";
-import { District } from "@/components/home/district";
-import { Leadership } from "@/components/home/leadership";
-import { InvestorsSection } from "@/components/home/investors";
-import { NewsSection } from "@/components/home/news";
-import { ContactSection, NewsletterBand } from "@/components/home/newsletter-contact";
+import { Hero } from "@/components/frontier/hero";
+import { Prologue } from "@/components/frontier/prologue";
+import { TullyResource } from "@/components/frontier/tully-resource";
+import { StrategyStory } from "@/components/frontier/strategy-story";
+import { District } from "@/components/frontier/district";
+import { Leadership } from "@/components/frontier/leadership";
+import { Investors } from "@/components/frontier/investors";
+import { Newsroom } from "@/components/frontier/newsroom";
+import { Contact } from "@/components/frontier/contact";
+import { DepthRail } from "@/components/frontier/depth-rail";
 import { company } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -34,23 +32,15 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <FactBand />
-      <Introduction />
-      <Interlude
-        plate="Plate 01"
-        annotation="Quartz-carbonate vein material — the style of mineralisation hosted at Tully"
-        caption="Gold in a quartz-carbonate vein. Illustrative photography; not a Loyalist sample."
-        objectPosition="50% 46%"
-      />
-      <ResourceIntelligence />
-      <Strategy />
-      <Portfolio />
+      <Prologue />
+      <TullyResource />
+      <StrategyStory />
       <District />
       <Leadership />
-      <InvestorsSection />
-      <NewsSection />
-      <NewsletterBand />
-      <ContactSection />
+      <Investors />
+      <Newsroom />
+      <Contact />
+      <DepthRail />
     </>
   );
 }

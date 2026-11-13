@@ -50,7 +50,7 @@ export function PressRoom({ releases }: { releases: PressRelease[] }) {
                 type="button"
                 onClick={() => setFilter(f.id)}
                 aria-pressed={filter === f.id}
-                className={`tech inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
+                className={`btn-label inline-flex h-11 shrink-0 items-center gap-2 border px-4 transition-colors ${
                   filter === f.id ? "border-ink-900 bg-ink-900 text-ivory" : "border-hair text-ink-800 hover:border-hair-strong"
                 }`}
               >
