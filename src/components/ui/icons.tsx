@@ -85,3 +85,55 @@ export const CalendarIcon = ({ size, ...p }: IconProps) => (
     <path d="M3 10h18M8 3v4M16 3v4" />
   </svg>
 );
+
+export const PickaxeIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <path d="m14 10 7-7m-4.5 1L21 8.5M10 14 3 21m4.5-1L3 15.5" />
+    <path d="M14.5 4.5c1.8-1.8 4.2-2.3 5.5-1 1.3 1.3.8 3.7-1 5.5l-4-4z" />
+    <path d="M9.5 19.5c-1.8 1.8-4.2 2.3-5.5 1-1.3-1.3-.8-3.7 1-5.5l4 4z" />
+    <path d="m8 8 8 8" />
+  </svg>
+);
+
+export const LayersIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
+);
+
+export const MountainPeakIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+    <path d="m4.14 15 .86-2 3.5 2L12 11l3 4.5" />
+  </svg>
+);
+
+export const TrendingBarsIcon = ({ size = 24, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <line x1="18" y1="20" x2="18" y2="10" />
+    <line x1="12" y1="20" x2="12" y2="4" />
+    <line x1="6" y1="20" x2="6" y2="14" />
+    <line x1="2" y1="20" x2="22" y2="20" />
+  </svg>
+);
+
+export const CompassTargetIcon = ({ size = 16, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <circle cx="12" cy="12" r="10" />
+    <line x1="22" y1="12" x2="18" y2="12" />
+    <line x1="6" y1="12" x2="2" y2="12" />
+    <line x1="12" y1="6" x2="12" y2="2" />
+    <line x1="12" y1="22" x2="12" y2="18" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+export const DownloadIcon = ({ size = 16, ...p }: IconProps) => (
+  <svg {...base(size)} {...p}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);

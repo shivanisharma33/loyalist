@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { DM_Serif_Display, Inter, Manrope } from "next/font/google";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -34,11 +35,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-CA" className={`${manrope.variable} ${inter.variable} ${dmSerif.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Marks JS as available so reveal styles apply; without it all content stays visible. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
       <body>
+        {/* Marks JS as available so reveal styles apply; without it all content stays visible. */}
+        <Script
+          id="reveal-js"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
         <JsonLd data={[organizationJsonLd, websiteJsonLd]} />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="outline-none">

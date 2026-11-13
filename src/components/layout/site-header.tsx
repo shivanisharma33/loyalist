@@ -115,18 +115,23 @@ export function SiteHeader() {
       >
         Skip to content
       </a>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
-          solid ? "border-b border-hair-dark bg-ink-950/90 backdrop-blur-xl" : "border-b border-transparent bg-transparent"
-        }`}
-      >
-        <div className="shell flex h-[var(--header-h)] items-center justify-between gap-6">
-          <Link href="/" className="relative z-[60] -m-2 shrink-0 p-2" aria-label="Loyalist Exploration — home">
-            <Image src="/logo-light-trim.webp" alt="Loyalist Exploration" width={2329} height={446} preload className="h-8 w-auto sm:h-9" sizes="190px" />
-          </Link>
+      <header className="fixed inset-x-0 top-3 sm:top-5 z-50 px-3 sm:px-6 pointer-events-none">
+        <div
+          className={`mx-auto max-w-7xl rounded-2xl border transition-[background-color,border-color,backdrop-filter,box-shadow] duration-500 pointer-events-auto flex items-center justify-between gap-4 px-4 sm:px-6 py-2.5 ${
+            solid
+              ? "border-white/20 bg-ink-950/92 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.7)]"
+              : "border-white/15 bg-ink-950/75 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+          }`}
+        >
+          <div className="flex items-center">
+            <Link href="/" className="relative z-[60] -m-1 shrink-0 p-1" aria-label="Loyalist Exploration — home">
+              <Image src="/logo-light-trim.webp" alt="Loyalist Exploration" width={2329} height={446} priority className="h-7 sm:h-8 w-auto" sizes="170px" />
+            </Link>
+            <span className="hidden md:block h-5 w-px bg-white/20 ml-4 mr-1" />
+          </div>
 
           <nav aria-label="Main" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-1 xl:gap-2">
               {navigation.map((item) => {
                 const active = isActive(pathname, item);
                 const open = openDropdown === item.label;
@@ -135,28 +140,22 @@ export function SiteHeader() {
                     <div className="flex items-center">
                       <NavLink
                         href={item.href}
-                        className={`relative inline-flex h-11 items-center px-3 text-[0.875rem] font-medium tracking-[-0.005em] transition-colors ${
-                          active ? "text-ivory" : "text-stone-300 hover:text-ivory"
+                        className={`relative inline-flex h-9 items-center px-3 text-[0.875rem] font-medium tracking-normal transition-colors ${
+                          active ? "text-white" : "text-stone-300 hover:text-white"
                         }`}
                       >
                         {item.label}
-                        <span
-                          aria-hidden="true"
-                          className={`absolute inset-x-3 bottom-1.5 h-px origin-left bg-gold-bright transition-transform duration-500 ease-out ${
-                            active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                          }`}
-                        />
                       </NavLink>
                       {item.children && (
                         <button
                           type="button"
-                          className="-ml-2 inline-flex h-11 w-8 items-center justify-center text-stone-300 hover:text-gold-bright"
+                          className="-ml-1 inline-flex h-9 w-6 items-center justify-center text-stone-400 hover:text-gold-bright transition-colors"
                           aria-expanded={open}
                           aria-controls={`menu-${item.label}`}
                           aria-label={`${item.label} submenu`}
                           onClick={() => setOpenDropdown(open ? null : item.label)}
                         >
-                          <ChevronDown size={14} className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+                          <ChevronDown size={13} className={`transition-transform duration-300 ${open ? "rotate-180 text-gold-bright" : ""}`} />
                         </button>
                       )}
                     </div>
@@ -169,21 +168,21 @@ export function SiteHeader() {
                             : "invisible -translate-y-1 opacity-0 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
                         }`}
                       >
-                        <ul className="overflow-hidden border border-hair-dark bg-ink-900/97 backdrop-blur-xl">
+                        <ul className="overflow-hidden rounded-xl border border-white/15 bg-ink-950/95 backdrop-blur-xl shadow-2xl">
                           {item.children.map((child) => (
                             <li key={child.href}>
                               <NavLink
                                 href={child.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="group/item flex items-start justify-between gap-4 border-b border-hair-dark px-5 py-3.5 transition-colors last:border-b-0 hover:bg-white/[0.04] focus-visible:bg-white/[0.04]"
+                                className="group/item flex items-start justify-between gap-4 border-b border-white/10 px-5 py-3 transition-colors last:border-b-0 hover:bg-white/[0.06] focus-visible:bg-white/[0.06]"
                               >
                                 <span>
                                   <span className={`block text-sm font-semibold ${pathname === child.href ? "text-gold-bright" : "text-ivory"}`}>
                                     {child.label}
                                   </span>
-                                  {child.description && <span className="caption mt-0.5 block text-stone-300">{child.description}</span>}
+                                  {child.description && <span className="caption mt-0.5 block text-xs text-stone-300">{child.description}</span>}
                                 </span>
-                                <ArrowUpRight size={15} className="mt-0.5 shrink-0 text-stone transition-colors group-hover/item:text-gold-bright" />
+                                <ArrowUpRight size={14} className="mt-0.5 shrink-0 text-stone transition-colors group-hover/item:text-gold-bright" />
                               </NavLink>
                             </li>
                           ))}
@@ -196,39 +195,42 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-4 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <a
               href={company.quoteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="tech inline-flex h-11 items-center gap-2 text-stone-300 transition-colors hover:text-gold-bright"
+              className="tech inline-flex h-9 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 text-xs font-mono font-medium text-stone-200 transition-colors hover:border-gold-bright/50 hover:text-gold-bright"
             >
-              <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-gold-bright" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-bright opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-bright" />
+              </span>
               {company.ticker}
             </a>
             <a
               href={company.presentation.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="tech inline-flex h-11 items-center gap-2 border border-gold-bright/50 px-5 text-gold-bright transition-colors hover:bg-gold-bright hover:text-ink-950"
+              className="group inline-flex h-9 items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#e8be56] via-[#dfad43] to-[#d69f3d] px-4 text-xs font-bold uppercase tracking-wider text-ink-950 shadow-[0_2px_14px_rgba(223,173,67,0.35)] transition-all hover:shadow-[0_4px_22px_rgba(223,173,67,0.55)] hover:brightness-105 active:scale-[0.98]"
             >
-              Corporate Presentation
-              <ArrowUpRight size={15} />
+              <span>Corporate Presentation</span>
+              <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </div>
 
           <button
             ref={toggleRef}
             type="button"
-            className="tech relative z-[60] -mr-2 inline-flex h-11 items-center gap-3 px-3 text-ivory lg:hidden"
+            className="tech relative z-[60] inline-flex h-9 items-center gap-2.5 rounded-lg border border-white/15 bg-white/5 px-3 text-xs text-ivory lg:hidden hover:border-gold-bright/40"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen(true)}
           >
             Menu
-            <span aria-hidden="true" className="flex w-6 flex-col gap-1.5">
-              <span className="h-px w-6 bg-current" />
-              <span className="h-px w-4 self-end bg-gold-bright" />
+            <span aria-hidden="true" className="flex w-5 flex-col gap-1">
+              <span className="h-px w-5 bg-current" />
+              <span className="h-px w-3.5 self-end bg-gold-bright" />
             </span>
           </button>
         </div>

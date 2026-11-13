@@ -15,7 +15,16 @@ import snapshotEvents from "@/content/snapshot/events.json";
 type RawPdf = { _id: string; title: string; date: string };
 type RawNews = { id: string; title: string; content: string; imageUrl?: string; date: string };
 type RawFinancial = { _id: string; title: string; description?: string; date: string; category: string; fileUrl: string };
-type RawTechnical = { _id: string; title: string; url: string; isActive?: boolean; uploadedAt: string };
+type RawTechnical = {
+  _id: string;
+  title: string;
+  url?: string;
+  fileUrl?: string;
+  isActive?: boolean;
+  uploadedAt?: string;
+  date?: string;
+  createdAt?: string;
+};
 type RawMeeting = {
   _id: string;
   title: string;
@@ -141,7 +150,12 @@ export async function getTechnicalReports(): Promise<TechnicalReport[]> {
   const rows = await getJson<RawTechnical[]>("/api/technical-reports", snapshotTechnical as RawTechnical[]);
   return rows
     .filter((r) => r.isActive !== false)
-    .map((r) => ({ id: r._id, title: r.title.trim(), date: r.uploadedAt.slice(0, 10), href: absolute(r.url) }))
+    .map((r) => ({
+      id: r._id,
+      title: r.title.trim(),
+      date: (r.uploadedAt ?? r.date ?? r.createdAt ?? "").slice(0, 10),
+      href: absolute(r.url ?? r.fileUrl ?? ""),
+    }))
     .sort(byDateDesc);
 }
 
