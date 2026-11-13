@@ -15,7 +15,7 @@ export type LibraryDoc = {
 };
 
 const CATEGORIES = ["All", "Presentation", "Financial Statements", "MD&A", "Technical Reports", "Meeting Materials"] as const;
-const PAGE = 8;
+const PAGE = 5;
 
 /**
  * Filterable investor document library. Every row links to the document as hosted by the

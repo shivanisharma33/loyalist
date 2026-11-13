@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
+import { ArrowUpRight } from "@/components/ui/icons";
 import { capitalStructure, shareOwnership } from "@/content/company";
-import { agmNotice, capitalCaveat } from "@/content/frontier";
-import { company, navigation } from "@/content/site";
+import { company } from "@/content/site";
 import { getFinancials, getMeetingDocuments, getTechnicalReports } from "@/lib/api";
-import { formatDate } from "@/lib/format";
 import { SectionHeader } from "./chapter";
 import { DocumentLibrary, type LibraryDoc } from "./document-library";
 
@@ -40,11 +38,9 @@ export async function Investors() {
     ...meeting.map((m) => ({ id: m.id, title: m.title, category: "Meeting Materials" as const, date: String(m.year), year: String(m.year), href: m.href })),
   ];
 
-  const investorLinks = navigation.find((n) => n.label === "Investors")?.children ?? [];
-
   return (
     <section id="investors" aria-labelledby="investors-title" className="grain relative isolate bg-ink-850 text-ivory">
-      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] pb-32 pt-28 sm:pt-36">
+      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] pb-20 pt-20 sm:pt-28">
         <SectionHeader
           id="investors-title"
           tone="dark"
@@ -54,98 +50,72 @@ export async function Investors() {
               The <span className="serif-accent text-gold-bright">record</span>, in full.
             </>
           }
-          lede="Financial statements, MD&A, NI 43-101 technical reports and meeting materials, linked directly to the documents the Company files."
+          lede="Financial statements, MD&A, NI 43-101 technical reports and meeting materials."
         />
 
-        {/* Notice */}
-        <aside aria-labelledby="agm-title" className="mt-14 grid gap-4 border-y border-gold-bright/50 py-6 sm:grid-cols-[12rem_1fr]" data-reveal="">
-          <p className="tech text-gold-bright">
-            Notice
-            <br />
-            <time dateTime={agmNotice.date} className="text-ivory/60">
-              {formatDate(agmNotice.date, "short")}
-            </time>
-          </p>
-          <div>
-            <h3 id="agm-title" className="display-sm">
-              {agmNotice.title}
-            </h3>
-            <p className="mt-2 max-w-[52em] text-[0.9375rem] leading-relaxed text-ivory/75">{agmNotice.body}</p>
-            <p className="tech mt-2 text-ivory/45">{agmNotice.source}</p>
-          </div>
-        </aside>
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-x-10">
+          {/* Capital structure & ownership summary */}
+          <div className="flex flex-col gap-8 lg:col-span-4" data-reveal="">
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 backdrop-blur-md">
+              <h3 className="tech border-b border-hair-dark-strong pb-3 text-ivory/60">Capital Structure</h3>
+              <dl className="divide-y divide-hair-dark">
+                {capitalStructure.map((c) => (
+                  <div key={c.label} className="flex items-baseline justify-between gap-4 py-3">
+                    <dt className="text-sm text-ivory/70">{c.label}</dt>
+                    <dd className="font-display text-base sm:text-lg font-semibold text-ivory">{c.value}</dd>
+                  </div>
+                ))}
+              </dl>
 
-        <div className="mt-16 grid gap-16 lg:grid-cols-12 lg:gap-x-8">
-          {/* Capital register */}
-          <div className="lg:col-span-4" data-reveal="">
-            <h3 className="tech border-b border-hair-dark-strong pb-3 text-ivory/60">Capital structure</h3>
-            <dl>
-              {capitalStructure.map((c) => (
-                <div key={c.label} className="flex items-baseline justify-between gap-4 border-b border-hair-dark py-5">
-                  <dt className="text-[0.9375rem] text-ivory/70">{c.label}</dt>
-                  <dd className="figure-lg text-ivory">{c.value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <h3 className="tech mt-12 border-b border-hair-dark-strong pb-3 text-ivory/60">Share ownership</h3>
-            <div className="mt-5 flex h-2 w-full gap-1" role="img" aria-label={shareOwnership.map((s) => `${s.label} ${s.percent}%`).join(", ")}>
-              {shareOwnership.map((s, i) => (
-                <span key={s.label} className={`h-full ${ownershipTone[i]}`} style={{ width: `${s.percent}%` }} />
-              ))}
-            </div>
-            <ul className="mt-5 grid gap-2">
-              {shareOwnership.map((s, i) => (
-                <li key={s.label} className="flex items-center justify-between gap-4 text-[0.875rem]">
-                  <span className="flex items-center gap-3 text-ivory/75">
-                    <span aria-hidden="true" className={`h-2.5 w-2.5 ${ownershipTone[i]}`} />
-                    {s.label}
-                  </span>
-                  <span className="font-mono tabular-nums text-ivory">{s.percent.toFixed(2)}%</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-xs leading-relaxed text-ivory/55">{capitalCaveat}</p>
-
-            <nav aria-label="Investor pages" className="mt-10">
-              <ul className="border-t border-hair-dark-strong">
-                {investorLinks.map((l) => {
-                  const external = l.href.endsWith(".pdf");
-                  const cls = "group flex min-h-12 items-center justify-between gap-4 border-b border-hair-dark py-2 text-[0.9375rem] text-ivory hover:text-gold-bright";
-                  const Icon = external ? ArrowUpRight : ArrowRight;
-                  return (
-                    <li key={l.href}>
-                      {external ? (
-                        <a href={l.href} target="_blank" rel="noopener noreferrer" className={cls}>
-                          {l.label}
-                          <Icon size={14} className="text-gold-bright" />
-                        </a>
-                      ) : (
-                        <Link href={l.href} className={cls}>
-                          {l.label}
-                          <Icon size={14} className="text-gold-bright transition-transform group-hover:translate-x-1" />
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-                <li>
-                  <a href={company.quoteUrl} target="_blank" rel="noopener noreferrer" className="group flex min-h-12 items-center justify-between gap-4 border-b border-hair-dark py-2 text-[0.9375rem] text-ivory hover:text-gold-bright">
-                    {company.ticker} share quote
-                    <ArrowUpRight size={14} className="text-gold-bright" />
-                  </a>
-                </li>
+              <h3 className="tech mt-7 border-b border-hair-dark-strong pb-3 text-ivory/60">Share Ownership</h3>
+              <div className="mt-3.5 flex h-2 w-full gap-1 overflow-hidden rounded-full" role="img" aria-label={shareOwnership.map((s) => `${s.label} ${s.percent}%`).join(", ")}>
+                {shareOwnership.map((s, i) => (
+                  <span key={s.label} className={`h-full ${ownershipTone[i]}`} style={{ width: `${s.percent}%` }} />
+                ))}
+              </div>
+              <ul className="mt-3.5 grid gap-1.5">
+                {shareOwnership.map((s, i) => (
+                  <li key={s.label} className="flex items-center justify-between gap-3 text-xs">
+                    <span className="flex items-center gap-2 text-ivory/75">
+                      <span aria-hidden="true" className={`h-2 w-2 rounded-sm ${ownershipTone[i]}`} />
+                      {s.label}
+                    </span>
+                    <span className="font-mono tabular-nums text-ivory">{s.percent.toFixed(2)}%</span>
+                  </li>
+                ))}
               </ul>
-            </nav>
+
+              <div className="mt-6 pt-4 border-t border-hair-dark flex items-center justify-between">
+                <a
+                  href={company.quoteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tech inline-flex items-center gap-1.5 text-gold-bright hover:underline text-xs"
+                >
+                  {company.ticker} Share Quote
+                  <ArrowUpRight size={13} />
+                </a>
+                <Link
+                  href="/investors/corporate-structure"
+                  className="tech text-xs text-stone-400 hover:text-ivory"
+                >
+                  Structure Details →
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Library */}
           <div className="lg:col-span-8" data-reveal="">
-            <h3 className="display-md mb-6">Document library</h3>
+            <div className="flex items-baseline justify-between mb-4">
+              <h3 className="display-sm">Document Library</h3>
+              <Link href="/investors/financial-statements" className="tech text-xs text-stone-400 hover:text-gold-bright">
+                All Filings →
+              </Link>
+            </div>
             <DocumentLibrary docs={docs} />
-            <p className="mt-8 text-xs leading-relaxed text-ivory/55">
-              Documents open from the Company&apos;s document service in a new tab. The Company&apos;s complete continuous-disclosure record is
-              available on SEDAR+.
+            <p className="mt-6 text-xs text-ivory/50">
+              Documents open directly from SEDAR+ continuous disclosure service in a new tab.
             </p>
           </div>
         </div>

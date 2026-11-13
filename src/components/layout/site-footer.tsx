@@ -45,27 +45,6 @@ export function SiteFooter() {
   return (
     <footer className="grain relative isolate overflow-hidden bg-ink-950 text-ivory">
       <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)]">
-        {/* Closing line */}
-        <div className="flex flex-col gap-8 border-b border-hair-dark py-16 lg:flex-row lg:items-end lg:justify-between lg:py-24">
-          <p className="display-2xl max-w-[12ch]">
-            Buy Timmins, <span className="serif-accent text-gold-bright">Mine Timmins.</span>
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={company.presentation.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-label inline-flex min-h-12 items-center gap-3 bg-gold-bright px-6 text-ink-950 hover:bg-ivory"
-            >
-              Corporate presentation
-              <ArrowUpRight size={14} />
-            </a>
-            <a href="#main" className="btn-label inline-flex min-h-12 items-center gap-3 border border-hair-dark-strong px-6 text-ivory hover:border-ivory">
-              Return to surface ↑
-            </a>
-          </div>
-        </div>
-
         <div className="grid gap-12 border-b border-hair-dark py-14 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
             <Image src="/logo-light-trim.webp" alt="Loyalist Exploration" width={2329} height={446} className="h-10 w-auto" sizes="210px" />
