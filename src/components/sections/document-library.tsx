@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type { FinancialDoc } from "@/lib/api";
 import { DocumentRow } from "./document-row";
 
-const FILTERS = ["All Documents", "Financial Statements", "MD&A", "Annual Statements"] as const;
+const FILTERS = ["All Documents", "Financial Statements", "MD&A", "Annual Statements", "Corporate Filings"] as const;
 type Filter = (typeof FILTERS)[number];
 
 /** Financial statements & MD&A with type filters. All rows are server-rendered. */

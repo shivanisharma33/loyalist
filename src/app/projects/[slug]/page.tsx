@@ -9,6 +9,8 @@ import { ButtonLink, Pill } from "@/components/ui/primitives";
 import { projectBySlug, projects, type Block, type Project } from "@/content/projects";
 import { pageMetadata } from "@/lib/seo";
 
+export const instant = false;
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
@@ -27,8 +29,8 @@ function BlockView({ block }: { block: Block }) {
         <div data-reveal="">
           {block.heading && <h2 className="display-sm text-ink-900">{block.heading}</h2>}
           <div className="mt-5 grid gap-5 text-[1.0625rem] leading-[1.75] text-ink-800">
-            {block.paragraphs.map((p) => (
-              <p key={p.slice(0, 30)}>{p}</p>
+            {block.paragraphs.map((p, i) => (
+              <p key={`${i}-${p.slice(0, 30)}`}>{p}</p>
             ))}
           </div>
         </div>
@@ -41,16 +43,16 @@ function BlockView({ block }: { block: Block }) {
             <table className="w-full min-w-[34rem] text-left text-sm">
               <thead className="bg-ink-900 text-ivory">
                 <tr>
-                  {block.columns.map((c) => (
-                    <th key={c} scope="col" className="tech px-4 py-3.5 text-left">
+                  {block.columns.map((c, i) => (
+                    <th key={`${c}-${i}`} scope="col" className="tech px-4 py-3.5 text-left">
                       {c}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-hair">
-                {block.rows.map((row) => (
-                  <tr key={row[0]}>
+                {block.rows.map((row, rowIndex) => (
+                  <tr key={`${block.id ?? "table"}-${rowIndex}-${row[0]}`}>
                     {row.map((cell, i) =>
                       i === 0 ? (
                         <th key={i} scope="row" className="px-4 py-4 font-display font-semibold text-ink-900">
@@ -67,8 +69,8 @@ function BlockView({ block }: { block: Block }) {
               </tbody>
             </table>
           </div>
-          {block.footnotes?.map((f) => (
-            <p key={f.slice(0, 30)} className="caption mt-s3 border-l-2 border-gold/50 bg-ivory p-4 leading-relaxed text-ink-800">
+          {block.footnotes?.map((f, i) => (
+            <p key={`${i}-${f.slice(0, 30)}`} className="caption mt-s3 border-l-2 border-gold/50 bg-ivory p-4 leading-relaxed text-ink-800">
               {f}
             </p>
           ))}
@@ -164,8 +166,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                   Current Activities
                 </h2>
                 <ul className="mt-5 grid gap-4">
-                  {project.activities.map((a) => (
-                    <li key={a} className="flex gap-3 text-[0.9375rem] leading-relaxed">
+                  {project.activities.map((a, i) => (
+                    <li key={`${i}-${a.slice(0, 24)}`} className="flex gap-3 text-[0.9375rem] leading-relaxed">
                       <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-bright" />
                       {a}
                     </li>
@@ -179,8 +181,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                     {project.sidebarTable.heading}
                   </h2>
                   <dl className="mt-s2 divide-y divide-hair">
-                    {project.sidebarTable.rows.map((r) => (
-                      <div key={r.name} className="py-4">
+                    {project.sidebarTable.rows.map((r, i) => (
+                      <div key={`${r.name}-${i}`} className="py-4">
                         <dt className="font-display font-semibold text-ink-900">{r.name}</dt>
                         <dd className="mt-1 text-sm text-ink-800">
                           <span className="font-semibold tabular-nums">{r.value}</span> {r.detail}

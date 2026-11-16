@@ -12,7 +12,7 @@ import snapshotEvents from "@/content/snapshot/events.json";
 // reader is cached for an hour and falls back to the snapshot captured during the
 // 2026-10-28 audit, so a CMS outage never blanks the investor pages.
 
-type RawPdf = { _id: string; title: string; date: string };
+type RawPdf = { _id: string; title: string; date: string; url?: string };
 type RawNews = { id: string; title: string; content: string; imageUrl?: string; date: string };
 type RawFinancial = { _id: string; title: string; description?: string; date: string; category: string; fileUrl: string };
 type RawTechnical = {
@@ -30,6 +30,8 @@ type RawMeeting = {
   title: string;
   description?: string;
   year: number;
+  fileName?: string;
+  fileUrl?: string;
   displayOrder?: number;
   isActive?: boolean;
 };
@@ -49,7 +51,7 @@ export type FinancialDoc = {
   title: string;
   description: string;
   date: string;
-  type: "Financial Statements" | "MD&A" | "Annual Statements";
+  type: "Financial Statements" | "MD&A" | "Annual Statements" | "Corporate Filings";
   href: string;
 };
 
@@ -74,7 +76,12 @@ async function getJson<T>(path: string, fallback: T): Promise<T> {
   }
 }
 
-const absolute = (path: string) => (/^https?:\/\//.test(path) ? path : `${API_ORIGIN}${encodeURI(path)}`);
+const absolute = (path: string) => {
+  if (!path) return "";
+  if (/^https?:\/\//.test(path)) return path;
+  if (path.startsWith("/documents/") || path.startsWith("/image/")) return path;
+  return `${API_ORIGIN}${encodeURI(path)}`;
+};
 const byDateDesc = <T extends { date?: string }>(a: T, b: T) => (b.date ?? "").localeCompare(a.date ?? "");
 
 export async function getPressReleases(): Promise<PressRelease[]> {
@@ -90,7 +97,7 @@ export async function getPressReleases(): Promise<PressRelease[]> {
       id: p._id,
       title: p.title.trim(),
       date: p.date.slice(0, 10),
-      href: `${API_ORIGIN}/api/pdf/view/${p._id}`,
+      href: p.url ?? `${API_ORIGIN}/api/pdf/view/${p._id}`,
       external: true,
       kind: "News Release" as const,
     })),
@@ -125,7 +132,13 @@ export async function getNewsIds(): Promise<string[]> {
 }
 
 const financialType = (category: string): FinancialDoc["type"] =>
-  category === "mda" ? "MD&A" : category === "annual" ? "Annual Statements" : "Financial Statements";
+  category === "mda"
+    ? "MD&A"
+    : category === "annual"
+    ? "Annual Statements"
+    : category === "estma" || category === "filing"
+    ? "Corporate Filings"
+    : "Financial Statements";
 
 export async function getFinancials(): Promise<FinancialDoc[]> {
   "use cache";
@@ -172,7 +185,7 @@ export async function getMeetingDocuments(): Promise<MeetingDoc[]> {
       title: r.title.trim(),
       description: (r.description ?? "").trim(),
       year: r.year,
-      href: `${API_ORIGIN}/api/annual-meeting-documents/download/${r._id}`,
+      href: r.fileUrl ? absolute(r.fileUrl) : `${API_ORIGIN}/api/annual-meeting-documents/download/${r._id}`,
     }));
 }
 

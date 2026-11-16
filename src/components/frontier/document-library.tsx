@@ -7,14 +7,14 @@ import { formatDate } from "@/lib/format";
 export type LibraryDoc = {
   id: string;
   title: string;
-  category: "Presentation" | "Financial Statements" | "MD&A" | "Technical Reports" | "Meeting Materials";
+  category: "Presentation" | "Financial Statements" | "MD&A" | "Technical Reports" | "Meeting Materials" | "Corporate Filings";
   /** ISO date, or a bare year for meeting materials. */
   date: string;
   year: string;
   href: string;
 };
 
-const CATEGORIES = ["All", "Presentation", "Financial Statements", "MD&A", "Technical Reports", "Meeting Materials"] as const;
+const CATEGORIES = ["All", "Presentation", "Financial Statements", "MD&A", "Technical Reports", "Meeting Materials", "Corporate Filings"] as const;
 const PAGE = 5;
 
 /**

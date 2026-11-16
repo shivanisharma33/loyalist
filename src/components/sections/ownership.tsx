@@ -10,7 +10,7 @@ export function CapitalStructure({ tone = "light" }: { tone?: "light" | "dark" }
         <div key={s.label} className={`border-t pt-4 ${dark ? "border-hair-dark" : "border-hair"}`} data-reveal="" style={{ ["--reveal-delay" as string]: i * 100 }}>
           <dt className={`tech ${dark ? "text-stone-300" : "text-stone-600"}`}>{s.label}</dt>
           <dd className={`figure-xl mt-s3 ${dark ? "text-gold-bright" : "text-ink-900"}`}>
-            <CountUp value={s.count} suffix={s.suffix} />
+            <CountUp value={s.count} suffix={s.suffix} decimals={"decimals" in s ? s.decimals : 0} />
           </dd>
         </div>
       ))}

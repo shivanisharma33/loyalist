@@ -38,7 +38,7 @@ export default async function InvestorsPage() {
           <dl className="grid grid-cols-2 gap-x-s4 gap-y-s3 md:grid-cols-4">
             {[
               { v: <>PNGC</>, l: "CSE Symbol" },
-              { v: <CountUp value={421} suffix="M" />, l: "Common Shares Outstanding" },
+              { v: <CountUp value={448} suffix="M" />, l: "Common Shares Outstanding" },
               { v: <CountUp value={176} suffix="M" />, l: "Warrants Outstanding" },
               { v: <CountUp value={19.42} decimals={2} suffix="%" />, l: "Public Float" },
             ].map((s) => (

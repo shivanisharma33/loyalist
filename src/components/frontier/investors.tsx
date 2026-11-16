@@ -30,7 +30,12 @@ export async function Investors() {
     ...financials.map((f) => ({
       id: f.id,
       title: f.title,
-      category: f.type === "MD&A" ? ("MD&A" as const) : ("Financial Statements" as const),
+      category:
+        f.type === "MD&A"
+          ? ("MD&A" as const)
+          : f.type === "Corporate Filings"
+          ? ("Corporate Filings" as const)
+          : ("Financial Statements" as const),
       date: f.date,
       year: f.date.slice(0, 4),
       href: f.href,

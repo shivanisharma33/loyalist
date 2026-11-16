@@ -80,7 +80,7 @@ export const profile = {
   ],
   community:
     "As the Company moves from acquisition to execution, management remains focused on disciplined capital allocation, technical excellence and meaningful engagement with local stakeholders. Loyalist believes that value creation is built on strong community relationships, transparent communication and responsible stewardship.",
-  communityQuote: "Loyalist is committed to responsible exploration practices and building strong, lasting relationships with local communities.",
+  communityQuote: "Loyalist is committed to responsible exploration practices and building strong relationships with local communities.",
 };
 
 export const portfolioStats = [
@@ -91,9 +91,9 @@ export const portfolioStats = [
 ];
 
 export const capitalStructure = [
-  { value: "421M", label: "Common Shares Outstanding", count: 421, suffix: "M" },
-  { value: "35M", label: "LTIP Grants", count: 35, suffix: "M" },
-  { value: "176M", label: "Warrants", count: 176, suffix: "M" },
+  { value: "448M", label: "Common Shares Outstanding", count: 448, suffix: "M", decimals: 0 },
+  { value: "38.25M", label: "LTIP Grants", count: 38.25, suffix: "M", decimals: 2 },
+  { value: "176M", label: "Warrants", count: 176, suffix: "M", decimals: 0 },
 ];
 
 export const shareOwnership = [

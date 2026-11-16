@@ -43,7 +43,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-CA" className={`${cormorant.variable} ${instrument.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html
+      lang="en-CA"
+      data-scroll-behavior="smooth"
+      className={`${cormorant.variable} ${instrument.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         {/* Marks JS as available so reveal styles apply; without it all content stays visible. */}
         <Script

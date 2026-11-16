@@ -9,6 +9,8 @@ import { getNewsArticle, getNewsIds } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { newsArticleJsonLd, pageMetadata } from "@/lib/seo";
 
+export const instant = false;
+
 export async function generateStaticParams() {
   return (await getNewsIds()).map((id) => ({ id }));
 }
