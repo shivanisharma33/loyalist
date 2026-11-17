@@ -58,23 +58,62 @@ export default function CompanyProfilePage() {
         <div className="shell">
           <SectionIndex index="02" label="The Portfolio" />
           <SplitHeading id="portfolio-title" className="display-lg mt-s4 text-ink-900" lines={["Four Timmins properties"]} />
-          <ul className="mt-s6 grid gap-s5 md:grid-cols-2 md:gap-s4">
+          <ul className="mt-10 grid gap-8 sm:mt-12 md:grid-cols-2 lg:gap-10">
             {projects.map((p, i) => (
               <li key={p.slug} data-reveal="" style={{ ["--reveal-delay" as string]: (i % 2) * 120 }}>
-                <Link href={`/projects/${p.slug}`} className="group grid h-full border-t border-hair-strong pt-s3 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-s3">
-                  <div className="relative aspect-[3/2] overflow-hidden sm:aspect-auto sm:min-h-44">
-                    <Image src={p.image} alt="" fill sizes="(min-width: 768px) 20vw, 100vw" quality={70} className="graded object-cover transition-transform duration-[1400ms] group-hover:scale-105" />
+                <Link
+                  href={`/projects/${p.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-xs border border-ink-900/15 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-gold-ink/50 hover:shadow-md hover:-translate-y-0.5"
+                >
+                  {/* High-Resolution Project Landscape Image Frame */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink-950/10">
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      fill
+                      sizes="(min-width: 1280px) 45vw, (min-width: 768px) 50vw, 100vw"
+                      quality={85}
+                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+                      <Pill tone="light" className="bg-white/95 backdrop-blur-sm shadow-xs font-semibold">
+                        {p.ownership}
+                      </Pill>
+                      <Pill tone="light" className="bg-white/95 backdrop-blur-sm shadow-xs">
+                        {p.stage}
+                      </Pill>
+                    </div>
                   </div>
-                  <div className="flex flex-col pt-s3 sm:pt-0">
-                    <Pill tone="light" className="self-start">
-                      {p.ownership}
-                    </Pill>
-                    <h3 className="display-sm mt-s2 text-ink-900">{p.name}</h3>
-                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-stone-600">{p.summary}</p>
-                    <span className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ink-900 group-hover:text-gold-ink">
-                      View project
-                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                    </span>
+
+                  {/* Card Content & Metadata */}
+                  <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
+                    <div>
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="tech text-xs font-semibold tracking-wider text-gold-ink uppercase">
+                          {p.location}
+                        </span>
+                        <span className="tech text-xs text-stone-600">
+                          {p.commodities}
+                        </span>
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold leading-snug text-ink-900 transition-colors group-hover:text-gold-ink mt-3">
+                        {p.name}
+                      </h3>
+                      <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-800/80 line-clamp-3">
+                        {p.summary}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-between border-t border-hair pt-4">
+                      <span className="tech text-xs text-stone-600 font-medium">
+                        Area: <strong className="font-semibold text-ink-900">{p.area}</strong>
+                      </span>
+                      <span className="tech inline-flex items-center gap-1.5 text-xs font-semibold text-ink-900 transition-colors group-hover:text-gold-ink">
+                        <span>View project</span>
+                        <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </div>
                   </div>
                 </Link>
               </li>

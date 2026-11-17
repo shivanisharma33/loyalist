@@ -45,7 +45,7 @@ export async function Investors() {
 
   return (
     <section id="investors" aria-labelledby="investors-title" className="grain relative isolate bg-ink-850 text-ivory">
-      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] pb-20 pt-20 sm:pt-28">
+      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] py-24 sm:py-32">
         <SectionHeader
           id="investors-title"
           tone="dark"
@@ -58,11 +58,11 @@ export async function Investors() {
           lede="Financial statements, MD&A, NI 43-101 technical reports and meeting materials."
         />
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-x-10">
+        <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-x-12">
           {/* Capital structure & ownership summary */}
           <div className="flex flex-col gap-8 lg:col-span-4" data-reveal="">
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 backdrop-blur-md">
-              <h3 className="tech border-b border-hair-dark-strong pb-3 text-ivory/60">Capital Structure</h3>
+            <div className="border border-hair-dark bg-ink-950/65 p-6 sm:p-7 backdrop-blur-md shadow-lg">
+              <h3 className="tech text-xs uppercase tracking-wider border-b border-hair-dark-strong pb-3 text-ivory/60">Capital Structure</h3>
               <dl className="divide-y divide-hair-dark">
                 {capitalStructure.map((c) => (
                   <div key={c.label} className="flex items-baseline justify-between gap-4 py-3">
@@ -72,20 +72,20 @@ export async function Investors() {
                 ))}
               </dl>
 
-              <h3 className="tech mt-7 border-b border-hair-dark-strong pb-3 text-ivory/60">Share Ownership</h3>
-              <div className="mt-3.5 flex h-2 w-full gap-1 overflow-hidden rounded-full" role="img" aria-label={shareOwnership.map((s) => `${s.label} ${s.percent}%`).join(", ")}>
+              <h3 className="tech text-xs uppercase tracking-wider mt-7 border-b border-hair-dark-strong pb-3 text-ivory/60">Share Ownership</h3>
+              <div className="mt-3.5 flex h-2 w-full gap-1 overflow-hidden rounded-full bg-ink-900" role="img" aria-label={shareOwnership.map((s) => `${s.label} ${s.percent}%`).join(", ")}>
                 {shareOwnership.map((s, i) => (
                   <span key={s.label} className={`h-full ${ownershipTone[i]}`} style={{ width: `${s.percent}%` }} />
                 ))}
               </div>
-              <ul className="mt-3.5 grid gap-1.5">
+              <ul className="mt-3.5 grid gap-2">
                 {shareOwnership.map((s, i) => (
                   <li key={s.label} className="flex items-center justify-between gap-3 text-xs">
                     <span className="flex items-center gap-2 text-ivory/75">
                       <span aria-hidden="true" className={`h-2 w-2 rounded-sm ${ownershipTone[i]}`} />
-                      {s.label}
+                      <span>{s.label}</span>
                     </span>
-                    <span className="font-mono tabular-nums text-ivory">{s.percent.toFixed(2)}%</span>
+                    <span className="font-mono tabular-nums text-ivory font-medium">{s.percent.toFixed(2)}%</span>
                   </li>
                 ))}
               </ul>
@@ -102,7 +102,7 @@ export async function Investors() {
                 </a>
                 <Link
                   href="/investors/corporate-structure"
-                  className="tech text-xs text-stone-400 hover:text-ivory"
+                  className="tech text-xs text-stone-400 hover:text-ivory transition-colors"
                 >
                   Structure Details →
                 </Link>
@@ -112,9 +112,9 @@ export async function Investors() {
 
           {/* Library */}
           <div className="lg:col-span-8" data-reveal="">
-            <div className="flex items-baseline justify-between mb-4">
+            <div className="flex items-baseline justify-between mb-4 border-b border-hair-dark pb-3">
               <h3 className="display-sm">Document Library</h3>
-              <Link href="/investors/financial-statements" className="tech text-xs text-stone-400 hover:text-gold-bright">
+              <Link href="/investors/financial-statements" className="tech text-xs text-stone-400 hover:text-gold-bright transition-colors">
                 All Filings →
               </Link>
             </div>

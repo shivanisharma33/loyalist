@@ -188,6 +188,7 @@ export function DistrictExplorer({ projects }: { projects: DistrictProject[] }) 
                 aria-hidden={p.slug !== current.slug}
                 fill
                 sizes="(min-width: 1024px) 40vw, 100vw"
+                quality={85}
                 className={`object-cover transition-opacity duration-700 ${p.slug === current.slug ? "opacity-100" : "opacity-0"}`}
               />
             ))}
@@ -257,6 +258,7 @@ export function DistrictExplorer({ projects }: { projects: DistrictProject[] }) 
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 22vw, 50vw"
+                    quality={85}
                     className={`object-cover transition-[transform,filter] duration-700 group-hover:scale-[1.03] ${on ? "" : "brightness-75 saturate-50"}`}
                   />
                 </span>

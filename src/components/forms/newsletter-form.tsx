@@ -20,6 +20,11 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
     );
   }
 
+
+
+
+
+  
   return (
     <form action={action} noValidate className="w-full">
       <label htmlFor={`${id}-email`} className={`tech mb-2 block ${dark ? "text-stone-300" : "text-stone-600"}`}>

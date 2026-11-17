@@ -1,54 +1,74 @@
 import Image from "next/image";
-import { ArrowDown, ArrowRight, ArrowUpRight } from "@/components/ui/icons";
+import { ArrowDown, ArrowRight, DownloadIcon } from "@/components/ui/icons";
 import { company } from "@/content/site";
 import { photos } from "@/content/imagery";
-import { getPressReleases } from "@/lib/api";
-import { formatDate } from "@/lib/format";
-
-const readout = [
-  { k: "Tully · Indicated", v: "164,000 oz", d: "1.62 Mt @ 3.16 g/t Au", tone: "text-gold-bright" },
-  { k: "Tully · Inferred", v: "62,000 oz", d: "0.95 Mt @ 2.03 g/t Au", tone: "text-oxide" },
-  { k: "Land position", v: "8,300+ ha", d: "Four properties, one camp", tone: "text-ivory" },
-];
 
 /**
- * Cinematic hero. The photograph sits under a forest-green grade with contour linework
- * drawing over it; the headline is pinned low-left and the instrument column high-right,
- * so the composition is deliberately unbalanced and reads as a title plate, not a banner.
+ * Clean, cinematic hero section with balanced composition,
+ * atmospheric depth, refined typography, and clear visual hierarchy.
  */
 export async function Hero() {
-  const releases = await getPressReleases();
-  const latest = releases[0];
   const photo = photos.boreal;
 
   return (
-    <section id="surface" aria-labelledby="hero-title" className="grain relative isolate flex flex-col overflow-hidden bg-ink-950 text-ivory">
-      {/* Photograph + grade */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
+    <section
+      id="surface"
+      aria-labelledby="hero-title"
+      className="grain relative isolate flex min-h-[calc(100vh-var(--header-h))] flex-col justify-center overflow-hidden bg-ink-950 text-ivory"
+    >
+      {/* ─── Background photography & ambient lighting (clean, no background lines) ─── */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden select-none pointer-events-none">
         <Image
           src={photo.src}
           alt=""
           fill
-          preload
+          priority
           sizes="100vw"
-          quality={75}
-          className="hero-media object-cover object-[50%_40%] [filter:saturate(0.55)_contrast(1.15)_brightness(0.7)]"
+          quality={85}
+          className="hero-media object-cover object-[50%_35%] opacity-45 [filter:saturate(0.75)_contrast(1.12)_brightness(0.78)]"
         />
-        <div className="absolute inset-0 bg-[#17110d] mix-blend-multiply opacity-60" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,17,13,0.55)_0%,rgba(23,17,13,0)_28%,rgba(23,17,13,0.1)_55%,rgba(23,17,13,0.92)_100%)]" />
-        <div className="absolute inset-y-0 left-0 w-[70%] bg-[linear-gradient(90deg,rgba(23,17,13,0.7),rgba(23,17,13,0))]" />
+
+        {/* Ambient warm radial lighting behind content */}
+        <div className="absolute -left-[5%] top-1/4 h-[750px] w-[750px] rounded-full bg-gold-bright/[0.06] blur-[150px]" />
+        <div className="absolute right-[10%] top-1/3 h-[600px] w-[600px] rounded-full bg-gold-bright/[0.03] blur-[140px]" />
+
+        {/* Deep smooth vignettes ensuring optimal contrast & text readability */}
+        <div className="absolute inset-0 bg-ink-950/60 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/35 to-ink-950/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_45%,transparent_25%,rgba(23,17,13,0.88)_100%)]" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-[110rem] flex-1 items-end gap-x-8 gap-y-12 px-[var(--gutter)] pb-14 pt-[calc(var(--header-h)+4rem)] lg:grid-cols-12 lg:pt-[calc(var(--header-h)+5rem)]">
-        {/* Statement */}
-        <div className="lg:col-span-8">
-          <p className="hero-enter tech flex flex-wrap items-center gap-x-3 gap-y-1 text-ivory/70" style={{ ["--d" as string]: 150 }}>
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-gold-bright glow" />
-            <span className="text-gold-bright">{company.ticker}</span>
-            <span aria-hidden="true" className="text-ivory/30">/</span>
-            Mineral development &amp; exploration · Timmins, Ontario
-          </p>
-          <h1 id="hero-title" className="display-2xl mt-8 lg:whitespace-nowrap">
+      {/* ─── Main Hero Content ─── */}
+      <div className="relative mx-auto flex w-full max-w-[110rem] flex-1 items-center px-[var(--gutter)] py-24 lg:py-32">
+        <div className="max-w-4xl">
+          {/* Institutional market pill */}
+          <div
+            className="hero-enter inline-flex flex-wrap items-center gap-3 rounded-full border border-gold-bright/25 bg-ink-950/80 px-4 py-2 shadow-lg backdrop-blur-md"
+            style={{ ["--d" as string]: 120 }}
+          >
+            <a
+              href={company.quoteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2.5 transition-colors"
+              title="View share quote on TradingView"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-bright opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(212,171,85,0.8)]" />
+              </span>
+              <span className="tech text-xs font-semibold tracking-wide text-gold-bright group-hover:text-ivory">
+                {company.ticker}
+              </span>
+            </a>
+            <span aria-hidden="true" className="h-3.5 w-px bg-hair-dark" />
+            <span className="tech text-xs tracking-wider text-stone-300 font-medium">
+              Timmins Gold Camp · Ontario, Canada
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 id="hero-title" className="display-2xl mt-8 tracking-tight text-ivory drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
             <span className="hero-line">
               <span style={{ ["--line" as string]: 0 }}>Buy Timmins,</span>
             </span>
@@ -58,75 +78,64 @@ export async function Hero() {
               </span>
             </span>
           </h1>
-          <p className="hero-enter lede mt-8 max-w-[36em] text-ivory/80" style={{ ["--d" as string]: 500 }}>
-            Loyalist acquires and advances high-potential gold and strategic-metals projects in the Timmins Mining Camp — a district that has
-            produced more than 70 million ounces of gold.
+
+          {/* Subheading / Lede */}
+          <p
+            className="hero-enter lede mt-8 max-w-2xl text-lg sm:text-xl font-normal leading-relaxed text-stone-200/90 drop-shadow-sm"
+            style={{ ["--d" as string]: 350 }}
+          >
+            Loyalist acquires and advances high-potential gold and critical metals projects in the world-renowned Timmins Mining Camp — a tier-one Canadian jurisdiction with more than 70 million ounces of historic gold production.
           </p>
-          <div className="hero-enter mt-10 flex flex-wrap gap-3" style={{ ["--d" as string]: 700 }}>
-            <a href="#tully" className="btn-label group inline-flex min-h-12 items-center gap-3 bg-gold-bright px-6 text-ink-950 transition-colors hover:bg-ivory">
-              The Tully resource
-              <ArrowDown size={15} className="transition-transform group-hover:translate-y-0.5" />
+
+          {/* CTAs */}
+          <div
+            className="hero-enter mt-10 flex flex-wrap items-center gap-4 sm:gap-5"
+            style={{ ["--d" as string]: 550 }}
+          >
+            <a
+              href="#tully"
+              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs bg-gold-bright px-7 text-ink-950 font-semibold tracking-wide shadow-[0_4px_28px_rgba(212,171,85,0.3)] transition-all duration-300 hover:bg-ivory hover:shadow-[0_6px_36px_rgba(212,171,85,0.45)] hover:-translate-y-0.5"
+            >
+              <span>The Tully Resource</span>
+              <ArrowDown size={15} className="transition-transform duration-300 group-hover:translate-y-0.5" />
             </a>
             <a
               href="#district"
-              className="btn-label group inline-flex min-h-12 items-center gap-3 border border-ivory/40 px-6 text-ivory transition-colors hover:border-ivory hover:bg-ivory hover:text-ink-950"
+              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs border border-ivory/30 bg-ink-950/60 px-7 text-ivory backdrop-blur-md transition-all duration-300 hover:border-gold-bright hover:bg-gold-bright/10 hover:text-white hover:-translate-y-0.5"
             >
-              Explore the projects
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+              <span>Explore District</span>
+              <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+            <a
+              href={company.presentation.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex h-13 items-center gap-2.5 px-3 text-xs font-semibold text-stone-300 hover:text-gold-bright transition-colors"
+              title="Download Corporate Presentation (PDF)"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-xs border border-hair-dark bg-ink-950/40 transition-colors group-hover:border-gold-bright group-hover:bg-gold-bright group-hover:text-ink-950">
+                <DownloadIcon size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+              </span>
+              <span className="tech uppercase tracking-wider text-[0.6875rem]">Investor Deck</span>
+              <span className="sr-only">(PDF, opens in a new tab)</span>
             </a>
           </div>
         </div>
-
-        {/* Instrument panel */}
-        <aside
-          aria-label="Key figures"
-          className="hero-enter hud border border-hair-dark bg-ink-950/55 p-6 backdrop-blur-md sm:max-w-md lg:col-span-4 lg:max-w-none xl:p-7"
-          style={{ ["--d" as string]: 650 }}
-        >
-          <p className="tech flex items-center justify-between text-ivory/60">
-            <span className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold-bright motion-safe:animate-pulse" />
-              Field readout
-            </span>
-            <span>2026 MRE</span>
-          </p>
-          <dl className="mt-4">
-            {readout.map((r) => (
-              <div key={r.k} className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 border-t border-hair-dark py-4">
-                <dt className="text-[0.875rem] text-ivory/75">{r.k}</dt>
-                <dd className={`numeral text-right text-[1.75rem] ${r.tone}`}>{r.v}</dd>
-                <dd className="tech col-span-2 mt-1 text-ivory/45">{r.d}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="border-t border-hair-dark pt-4 text-[0.6875rem] leading-relaxed text-ivory/50">
-            Effective June 15, 2026. Mineral Resources that are not Mineral Reserves do not have demonstrated economic viability.
-          </p>
-        </aside>
       </div>
 
-      {/* Latest release strip */}
-      <div className="relative border-t border-hair-dark bg-ink-950/70 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[110rem] flex-col gap-2 px-[var(--gutter)] py-4 sm:flex-row sm:items-center sm:gap-6">
-          {latest && (
-            <a
-              href={latest.href}
-              {...(latest.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group flex min-h-11 min-w-0 flex-1 items-center gap-4"
-            >
-              <span className="tech shrink-0 text-gold-bright">Latest</span>
-              <time dateTime={latest.date} className="tech hidden shrink-0 text-ivory/60 sm:inline">
-                {formatDate(latest.date, "short")}
-              </time>
-              <span className="truncate text-[0.9375rem] text-ivory/90 group-hover:text-gold-bright">{latest.title}</span>
-              <ArrowUpRight size={14} className="shrink-0 text-ivory/60 group-hover:text-gold-bright" />
-              {latest.external && <span className="sr-only">(PDF, opens in a new tab)</span>}
-            </a>
-          )}
-          <p className="tech shrink-0 text-ivory/45">
-            Plate I · Boreal cover, Canadian Shield — illustrative · {photo.credit.author}, {photo.credit.license}
-          </p>
-        </div>
+      {/* ─── Subtle Scroll to Explore Indicator ─── */}
+      <div
+        className="hero-enter absolute bottom-8 left-[var(--gutter)] flex items-center gap-3 text-stone-400"
+        style={{ ["--d" as string]: 750 }}
+      >
+        <span className="h-px w-8 bg-stone-500/40" />
+        <a
+          href="#prologue"
+          className="group flex items-center gap-2 tech text-[0.6875rem] font-medium tracking-widest text-stone-300/80 uppercase transition-colors hover:text-gold-bright"
+        >
+          <span>Scroll to Explore</span>
+          <ArrowDown size={12} className="transition-transform duration-300 group-hover:translate-y-1" />
+        </a>
       </div>
     </section>
   );

@@ -123,7 +123,7 @@ export function StrategyStory() {
 
   return (
     <section id="strategy" aria-labelledby="strategy-title" className="on-light limestone relative text-ink-900">
-      <div className="mx-auto max-w-[110rem] px-[var(--gutter)] pb-32 pt-28 sm:pt-36">
+      <div className="mx-auto max-w-[110rem] px-[var(--gutter)] py-24 sm:py-32">
         <SectionHeader
           id="strategy-title"
           label="Strategy · From acquisition to advancement"
@@ -135,11 +135,11 @@ export function StrategyStory() {
           lede="Since launching “Buy Timmins”, Loyalist has assembled a focused land package in the Timmins gold camp. “Mine Timmins” signals the intention to advance that portfolio along the value chain."
         />
 
-        <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-x-8">
+        <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-x-12 sm:mt-20">
           {/* Sticky instrument panel */}
           <div className="hidden lg:col-span-5 lg:block">
-            <div className="sticky top-[calc(var(--header-h)+1.5rem)]">
-              <nav className="flex border border-ink-900" aria-label="Strategy chapters">
+            <div className="sticky top-[calc(var(--header-h)+2rem)]">
+              <nav className="flex border border-ink-900 overflow-hidden rounded-xs" aria-label="Strategy chapters">
                 {chapters.map((c) => (
                   <a
                     key={c.id}
@@ -153,7 +153,7 @@ export function StrategyStory() {
                   </a>
                 ))}
               </nav>
-              <div className="relative mt-4 aspect-[4/4.4] overflow-hidden border border-ink-900">
+              <div className="relative mt-4 aspect-[4/4.2] overflow-hidden border border-ink-900 shadow-md">
                 {chapters.map((c) => (
                   <div
                     key={c.id}
@@ -174,7 +174,7 @@ export function StrategyStory() {
           </div>
 
           {/* Chapters */}
-          <div className="lg:col-span-6 lg:col-start-7">
+          <div className="lg:col-span-7">
             {chapters.map((c) => (
               <article
                 key={c.id}
@@ -183,42 +183,44 @@ export function StrategyStory() {
                   refs.current[c.id] = el;
                 }}
                 aria-labelledby={`chapter-${c.id}-title`}
-                className="scroll-mt-28 border-t border-ink-900 pb-24 pt-8 last:pb-0 lg:min-h-[85vh]"
+                className="scroll-mt-32 border-t border-ink-900 pb-20 pt-10 last:pb-0 lg:min-h-[65vh]"
               >
                 <p className="flex items-baseline justify-between">
-                  <span className="serif-accent text-6xl text-gold-ink sm:text-7xl">{c.n}</span>
-                  <span className="tech text-stone-600">{c.verb}</span>
+                  <span className="serif-accent text-5xl text-gold-ink sm:text-6xl">{c.n}</span>
+                  <span className="tech text-xs tracking-wider uppercase text-stone-600">{c.verb}</span>
                 </p>
-                <h3 id={`chapter-${c.id}-title`} className="display-xl mt-4">
+                <h3 id={`chapter-${c.id}-title`} className="display-xl mt-3">
                   {c.title}
                 </h3>
-                <p className="mt-6 text-xl leading-snug text-ink-900">{c.lead}</p>
-                <p className="body-text mt-5 text-ink-800">{c.body}</p>
+                <p className="mt-5 text-xl leading-relaxed text-ink-900">{c.lead}</p>
+                <p className="body-text mt-4 text-ink-800 leading-relaxed">{c.body}</p>
                 <p className="mt-6 flex items-baseline gap-4 border-y border-hair py-4 lg:hidden">
                   <span className="numeral text-3xl">{c.metric.value}</span>
                   <span className="text-[0.875rem] text-stone-600">{c.metric.label}</span>
                 </p>
 
-                <ol className="mt-8 border-l border-gold-ink/40 pl-6" aria-label={`${c.title} milestones`}>
+                <ol className="mt-8 border-l border-gold-ink/40 pl-6 space-y-6" aria-label={`${c.title} milestones`}>
                   {c.milestones.map((m) => (
-                    <li key={m.date + m.label} className="relative pb-6 last:pb-0">
-                      <span aria-hidden="true" className="absolute -left-[30px] top-1 h-[11px] w-[11px] rounded-full border-2 border-gold-ink bg-limestone" />
-                      <p className="tech flex flex-wrap gap-x-3 text-stone-600">
+                    <li key={m.date + m.label} className="relative">
+                      <span aria-hidden="true" className="absolute -left-[30px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-gold-ink bg-limestone" />
+                      <p className="tech flex flex-wrap gap-x-3 text-xs text-stone-600">
                         <time dateTime={m.date}>{formatDate(m.date, "short")}</time>
-                        {m.project && <span className="text-gold-ink">{m.project}</span>}
+                        {m.project && <span className="text-gold-ink font-medium">{m.project}</span>}
                       </p>
                       <p className="mt-1 font-medium text-ink-900">{m.label}</p>
-                      <p className="mt-0.5 text-[0.9375rem] text-stone-600">{m.detail}</p>
+                      <p className="mt-0.5 text-[0.9375rem] text-stone-600 leading-normal">{m.detail}</p>
                     </li>
                   ))}
                 </ol>
-                <Link href={c.href} className="btn-label group mt-8 inline-flex min-h-11 items-center gap-2 text-ink-900 hover:text-gold-ink">
-                  {c.cta}
-                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="mt-8">
+                  <Link href={c.href} className="btn-label group inline-flex min-h-11 items-center gap-2 text-ink-900 hover:text-gold-ink transition-colors">
+                    <span>{c.cta}</span>
+                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
               </article>
             ))}
-            <p className="mt-10 text-xs leading-relaxed text-stone-600">
+            <p className="mt-10 text-xs leading-relaxed text-stone-600 border-t border-hair-strong pt-6">
               Dates are those of the Company news releases that disclosed each milestone. Grab samples are selective by nature and are not necessarily
               representative of mineralisation on a property.
             </p>

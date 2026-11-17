@@ -31,7 +31,7 @@ export function District() {
 
   return (
     <section id="district" aria-labelledby="district-title" className="grain relative isolate overflow-hidden bg-ink-950 text-ivory">
-      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] pb-32 pt-28 sm:pt-36">
+      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] py-24 sm:py-32">
         <SectionHeader
           id="district-title"
           tone="dark"

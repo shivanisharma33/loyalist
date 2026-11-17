@@ -31,7 +31,7 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
           fill
           preload
           sizes="100vw"
-          quality={70}
+          quality={85}
           className="hero-media graded object-cover opacity-55"
           style={{ objectPosition: imagePosition }}
         />

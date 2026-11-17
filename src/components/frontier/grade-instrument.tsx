@@ -22,19 +22,19 @@ export function GradeInstrument() {
   ];
 
   return (
-    <div className="hud border border-hair-dark bg-ink-950/40 p-6 sm:p-8">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h3 className="tech text-stone-300" id={`${id}-t`}>
-          Grade–tonnage sensitivity
+    <div className="border border-hair-dark bg-ink-950/60 p-6 sm:p-7 backdrop-blur-md">
+      <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-hair-dark pb-3.5">
+        <h3 className="tech text-xs uppercase tracking-wider text-stone-300" id={`${id}-t`}>
+          Grade–Tonnage Sensitivity
         </h3>
-        <p className="tech text-stone">Oct 19, 2026 release · Table 1</p>
+        <p className="tech text-xs text-stone">Oct 19, 2026 release · Table 1</p>
       </div>
 
       <div className="mt-6">
         <label htmlFor={`${id}-r`} className="flex items-baseline justify-between gap-4">
-          <span className="text-sm text-stone-300">Reporting cut-off</span>
-          <output htmlFor={`${id}-r`} className="figure-lg text-ivory" aria-live="polite">
-            {fmt(row.cutoff, 1)} <span className="text-base text-stone-300">g/t Au</span>
+          <span className="text-xs uppercase tracking-wider tech text-stone-300">Reporting cut-off</span>
+          <output htmlFor={`${id}-r`} className="figure-lg text-ivory font-display" aria-live="polite">
+            {fmt(row.cutoff, 1)} <span className="text-sm font-sans text-stone-300">g/t Au</span>
           </output>
         </label>
         <input
@@ -49,21 +49,32 @@ export function GradeInstrument() {
           aria-describedby={`${id}-t`}
           className="grade-range mt-2 w-full"
         />
-        <div className="tech mt-1 flex justify-between text-stone" aria-hidden="true">
+        <div className="tech mt-1 flex justify-between text-xs text-stone" aria-hidden="true">
           {gradeTonnage.map((g, k) => (
-            <button key={g.cutoff} type="button" tabIndex={-1} onClick={() => setI(k)} className={`px-1 ${k === i ? "text-gold-bright" : "hover:text-ivory"}`}>
+            <button
+              key={g.cutoff}
+              type="button"
+              tabIndex={-1}
+              onClick={() => setI(k)}
+              className={`px-1.5 py-0.5 rounded transition-colors ${
+                k === i ? "text-gold-bright font-bold bg-gold-bright/10" : "hover:text-ivory"
+              }`}
+            >
               {fmt(g.cutoff, 1)}
             </button>
           ))}
         </div>
       </div>
 
-      <dl className="mt-7 grid gap-6">
+      <dl className="mt-6 grid gap-5 divide-y divide-hair-dark pt-2">
         {series.map((s) => {
           const v = row[s.key];
           return (
-            <div key={s.key}>
-              <dt className={`tech ${s.text}`}>{s.label}</dt>
+            <div key={s.key} className="pt-4 first:pt-0">
+              <div className="flex items-center justify-between">
+                <dt className={`tech text-xs uppercase tracking-wider font-semibold ${s.text}`}>{s.label}</dt>
+                <span className="tech text-xs text-ivory/40">{s.label === "Indicated" ? "Higher Confidence" : "Exploration Upside"}</span>
+              </div>
               <dd className="mt-3 grid grid-cols-3 gap-4">
                 {(
                   [
@@ -72,10 +83,10 @@ export function GradeInstrument() {
                     ["Gold", `${fmt(v.koz)} koz`, v.koz / max.koz],
                   ] as const
                 ).map(([label, value, ratio]) => (
-                  <div key={label}>
-                    <p className="text-[0.75rem] text-stone-300">{label}</p>
-                    <p className="numeral mt-1 text-[1.375rem] text-ivory sm:text-[1.625rem]">{value}</p>
-                    <div className="mt-2 h-1 bg-white/[0.07]" aria-hidden="true">
+                  <div key={label} className="bg-ink-900/60 p-2.5 border border-hair-dark/40">
+                    <p className="tech text-[0.6875rem] text-stone-300 uppercase">{label}</p>
+                    <p className="numeral mt-1 text-lg sm:text-xl text-ivory">{value}</p>
+                    <div className="mt-2 h-1 bg-white/[0.07] overflow-hidden" aria-hidden="true">
                       <div className={`h-full ${s.tone} transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]`} style={{ width: `${Math.max(4, ratio * 100)}%` }} />
                     </div>
                   </div>
@@ -86,7 +97,7 @@ export function GradeInstrument() {
         })}
       </dl>
 
-      <p className="mt-7 border-t border-hair-dark pt-4 text-xs leading-relaxed text-stone-300">
+      <p className="mt-6 border-t border-hair-dark pt-3.5 text-[0.6875rem] leading-relaxed text-stone-300">
         Within stope shapes generated at the 1.1 g/t Au base case and a 1.25 m minimum mining width. Illustrative only — not a new or updated Mineral
         Resource Estimate. Bars are scaled to the 1.1 g/t row (grade to the 3.0 g/t row).
       </p>

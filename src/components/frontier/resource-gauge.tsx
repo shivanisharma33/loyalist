@@ -88,17 +88,17 @@ export function ResourceGauge({ className = "" }: { className?: string }) {
         </text>
       </svg>
 
-      <figcaption className="mt-6 grid grid-cols-2 gap-4">
-        <p className="border-t-2 border-gold-bright pt-3">
-          <span className="tech block text-gold-bright">Indicated</span>
-          <span className="numeral mt-1 block text-2xl text-ivory">164,000 oz</span>
-          <span className="text-[0.8125rem] text-ivory/60">1.62 Mt @ 3.16 g/t Au</span>
-        </p>
-        <p className="border-t-2 border-oxide pt-3">
-          <span className="tech block text-oxide">Inferred</span>
-          <span className="numeral mt-1 block text-2xl text-ivory">62,000 oz</span>
-          <span className="text-[0.8125rem] text-ivory/60">0.95 Mt @ 2.03 g/t Au</span>
-        </p>
+      <figcaption className="mt-6 grid grid-cols-2 gap-4 pt-2">
+        <div className="border-t-2 border-gold-bright pt-3">
+          <span className="tech block text-xs font-semibold text-gold-bright">Indicated</span>
+          <span className="numeral mt-1 block text-xl sm:text-2xl text-ivory">164,000 oz</span>
+          <span className="tech mt-0.5 block text-xs text-ivory/60">1.62 Mt @ 3.16 g/t</span>
+        </div>
+        <div className="border-t-2 border-oxide pt-3">
+          <span className="tech block text-xs font-semibold text-oxide">Inferred</span>
+          <span className="numeral mt-1 block text-xl sm:text-2xl text-ivory">62,000 oz</span>
+          <span className="tech mt-0.5 block text-xs text-ivory/60">0.95 Mt @ 2.03 g/t</span>
+        </div>
       </figcaption>
     </figure>
   );

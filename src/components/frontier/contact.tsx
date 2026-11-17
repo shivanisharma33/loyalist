@@ -15,36 +15,36 @@ export function Contact() {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,17,13,1)_0%,rgba(23,17,13,0.35)_30%,rgba(23,17,13,0.55)_70%,rgba(23,17,13,1)_100%)]" />
       </div>
 
-      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] pb-24 pt-28 sm:pt-36">
+      <div className="relative z-[2] mx-auto max-w-[110rem] px-[var(--gutter)] py-24 sm:py-32">
         <Chapter n="08" label="Contact · Toronto head office" tone="dark" />
 
-        <div className="mt-12 grid gap-16 lg:grid-cols-12 lg:gap-x-8">
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-x-12 sm:mt-16">
           <div className="lg:col-span-6">
-            <h2 id="contact-title" className="display-3xl" data-reveal="">
+            <h2 id="contact-title" className="display-lg text-balance" data-reveal="">
               Talk <span className="serif-accent text-gold-bright">Timmins</span> with us.
             </h2>
 
-            <dl className="mt-14 grid gap-8" data-reveal="">
+            <dl className="mt-12 grid gap-8" data-reveal="">
               <div>
-                <dt className="tech text-ivory/55">Email</dt>
-                <dd>
-                  <a href={`mailto:${company.email}`} className="display-md inline-block break-all text-ivory underline decoration-gold-bright/60 decoration-1 underline-offset-[0.2em] hover:text-gold-bright sm:break-normal">
+                <dt className="tech text-xs uppercase tracking-wider text-ivory/55">Email</dt>
+                <dd className="mt-1">
+                  <a href={`mailto:${company.email}`} className="display-md inline-block break-all text-ivory underline decoration-gold-bright/60 decoration-1 underline-offset-[0.2em] hover:text-gold-bright transition-colors sm:break-normal">
                     {company.email}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="tech text-ivory/55">Telephone</dt>
-                <dd>
-                  <a href={company.phoneHref} className="display-md inline-block text-ivory hover:text-gold-bright">
+                <dt className="tech text-xs uppercase tracking-wider text-ivory/55">Telephone</dt>
+                <dd className="mt-1">
+                  <a href={company.phoneHref} className="display-md inline-block text-ivory hover:text-gold-bright transition-colors">
                     {company.phoneDisplay}
                   </a>
                 </dd>
               </div>
-              <div className="grid gap-8 sm:grid-cols-2">
+              <div className="grid gap-8 sm:grid-cols-2 pt-2 border-t border-hair-dark">
                 <div>
-                  <dt className="tech text-ivory/55">Head office</dt>
-                  <dd className="mt-2 not-italic leading-relaxed text-ivory/85">
+                  <dt className="tech text-xs uppercase tracking-wider text-ivory/55">Head office</dt>
+                  <dd className="mt-2 not-italic leading-relaxed text-ivory/85 text-[0.9375rem]">
                     <address className="not-italic">
                       {company.address.street}
                       <br />
@@ -55,13 +55,13 @@ export function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="tech text-ivory/55">Follow</dt>
-                  <dd className="mt-1">
-                    <ul className="flex flex-wrap gap-x-4">
+                  <dt className="tech text-xs uppercase tracking-wider text-ivory/55">Follow</dt>
+                  <dd className="mt-2">
+                    <ul className="flex flex-wrap gap-x-4 gap-y-1">
                       {socials.map((s) => (
                         <li key={s.href}>
-                          <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-ivory/85 hover:text-gold-bright">
-                            {s.label}
+                          <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-1 text-[0.9375rem] text-ivory/85 hover:text-gold-bright transition-colors">
+                            <span>{s.label}</span>
                             <ArrowUpRight size={12} />
                           </a>
                         </li>
@@ -74,18 +74,14 @@ export function Contact() {
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7 xl:col-span-5 xl:col-start-8" data-reveal="">
-            <div className="limestone border-t-2 border-gold-bright p-6 text-ink-900 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] sm:p-10">
-              <p className="tech text-gold-ink">Correspondence</p>
+            <div className="limestone border-t-2 border-gold-bright p-6 text-ink-900 shadow-2xl sm:p-10">
+              <p className="tech text-xs uppercase tracking-wider text-gold-ink">Correspondence</p>
               <h3 className="display-md mt-2">Send a message</h3>
-              <p className="mb-8 mt-2 text-[0.9375rem] text-stone-600">Investor, media and general enquiries. Our team will respond as soon as possible.</p>
+              <p className="mb-6 mt-2 text-[0.9375rem] leading-relaxed text-stone-600">Investor, media and general enquiries. Our team will respond as soon as possible.</p>
               <ContactForm />
             </div>
           </div>
         </div>
-
-        <p className="tech mt-20 text-ivory/40">
-          Plate III · {photo.caption.split(".")[0]} — illustrative · {photo.credit.author}, {photo.credit.license}
-        </p>
       </div>
     </section>
   );

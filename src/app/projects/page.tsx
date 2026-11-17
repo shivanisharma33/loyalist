@@ -116,7 +116,7 @@ export default function ProjectsPage() {
           >
             <div className="shell relative z-[2] grid items-center gap-s5 lg:grid-cols-12">
               <div className={`relative aspect-[3/2] overflow-hidden lg:col-span-6 ${i % 2 ? "lg:order-2 lg:col-start-7" : ""}`} data-reveal="curtain">
-                <Image src={p.image} alt="" fill sizes="(min-width: 1024px) 45vw, 92vw" quality={75} className="graded object-cover" />
+                <Image src={p.image} alt={p.name} fill sizes="(min-width: 1024px) 50vw, 100vw" quality={85} className="object-cover object-center" />
                 <div className="absolute left-5 top-5 flex flex-wrap gap-2">
                   <Pill>{p.ownership}</Pill>
                   <Pill>{p.stage}</Pill>

@@ -22,8 +22,10 @@ export function Chapter({ label, tone = "light", className = "" }: { n?: string;
 }
 
 /**
- * The one header layout every homepage section uses: eyebrow across the full grid, headline on
- * the left seven columns, lede on the right four, both sharing a baseline.
+ * The standard header layout for homepage sections:
+ * - Eyebrow with status beacon and horizontal rule
+ * - Heading on the left, lede/action on the right
+ * - Clean top alignment and balanced column distribution
  */
 export function SectionHeader({
   label,
@@ -31,29 +33,35 @@ export function SectionHeader({
   lede,
   id,
   tone = "light",
-  size = "display-2xl",
+  size = "display-lg",
+  align = "start",
   aside,
+  className = "",
 }: {
   label: string;
   title: ReactNode;
   lede?: ReactNode;
   id: string;
   tone?: Tone;
-  size?: "display-2xl" | "display-xl";
+  size?: "display-2xl" | "display-xl" | "display-lg" | "display-md";
+  align?: "start" | "end" | "center";
   aside?: ReactNode;
+  className?: string;
 }) {
   const dark = tone === "dark";
+  const itemAlign = align === "center" ? "lg:items-center" : align === "end" ? "lg:items-end" : "lg:items-start";
+
   return (
-    <header>
+    <header className={className}>
       <Chapter label={label} tone={tone} />
-      <div className="mt-10 grid gap-y-6 lg:grid-cols-12 lg:items-end lg:gap-x-8">
+      <div className={`mt-8 grid gap-y-6 lg:grid-cols-12 lg:gap-x-12 ${itemAlign}`}>
         <h2 id={id} className={`${size} text-balance lg:col-span-7`} data-reveal="">
           {title}
         </h2>
         {(lede || aside) && (
-          <div className="lg:col-span-4 lg:col-start-9" data-reveal="">
+          <div className="lg:col-span-5" data-reveal="">
             {lede && <p className={`text-[1.0625rem] leading-relaxed ${dark ? "text-ivory/70" : "text-ink-800"}`}>{lede}</p>}
-            {aside && <div className={lede ? "mt-6" : ""}>{aside}</div>}
+            {aside && <div className={lede ? "mt-5" : ""}>{aside}</div>}
           </div>
         )}
       </div>
