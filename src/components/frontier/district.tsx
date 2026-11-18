@@ -41,7 +41,7 @@ export function District() {
               Four properties around <span className="serif-accent text-gold-bright">Timmins</span>
             </>
           }
-          lede="Select a project on the map or below to see its key figures, or overlay the Company's own regional map."
+          lede="Regional land package map. Explore Loyalist's four properties across the Abitibi Greenstone Belt, overlay regional geological fault corridors, and review distances from the Timmins mining hub."
         />
         <div className="mt-14">
           <DistrictExplorer projects={data} />

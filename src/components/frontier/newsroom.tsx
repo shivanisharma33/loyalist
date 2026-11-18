@@ -52,16 +52,13 @@ export async function Newsroom() {
 
                 {/* Card Meta Bar */}
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hair pb-4">
-                  <div className="flex items-center gap-2.5">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-ink opacity-75" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-ink" />
-                    </span>
-                    <span className="tech text-xs font-semibold tracking-wider text-gold-ink uppercase">
+                  <div className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold-ink" />
+                    <span className="text-xs font-bold tracking-wider text-gold-ink uppercase">
                       Latest Dispatch
                     </span>
                   </div>
-                  <time dateTime={lead.date} className="tech text-xs text-stone-600">
+                  <time dateTime={lead.date} className="text-xs font-medium text-stone-600">
                     {formatDate(lead.date)}
                   </time>
                 </div>
@@ -91,7 +88,7 @@ export async function Newsroom() {
                     </span>
                     {lead.external && <span className="sr-only">(PDF, opens in a new tab)</span>}
                   </a>
-                  <span className="tech text-xs text-stone-600">
+                  <span className="text-xs font-medium text-stone-600">
                     {lead.external ? "PDF · Document Filing" : "Official News Release"}
                   </span>
                 </div>
@@ -106,10 +103,10 @@ export async function Newsroom() {
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <time dateTime={r.date} className="tech text-xs text-gold-ink font-semibold">
+                        <time dateTime={r.date} className="text-xs text-gold-ink font-semibold">
                           {formatDate(r.date, "short")}
                         </time>
-                        <span className="tech text-[0.6875rem] text-stone-600 uppercase">
+                        <span className="text-[0.6875rem] font-bold text-stone-600 uppercase tracking-wider">
                           {r.kind}
                         </span>
                       </div>
@@ -123,7 +120,7 @@ export async function Newsroom() {
                       <a
                         href={r.href}
                         {...ext(r.external)}
-                        className="tech inline-flex items-center gap-1.5 text-xs font-semibold text-ink-900 group-hover:text-gold-ink transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-900 group-hover:text-gold-ink transition-colors"
                       >
                         <span>View release</span>
                         <ArrowUpRight size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -142,11 +139,11 @@ export async function Newsroom() {
                 <div className="flex items-center justify-between border-b border-hair pb-4">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-gold-ink" />
-                    <h3 className="tech text-xs font-semibold tracking-wider text-ink-900 uppercase">
+                    <h3 className="text-xs font-bold tracking-wider text-ink-900 uppercase">
                       The Wire
                     </h3>
                   </div>
-                  <span className="tech text-xs text-stone-600">Regulatory Feed</span>
+                  <span className="text-xs font-medium text-stone-600">Regulatory Feed</span>
                 </div>
 
                 {/* Wire Chronological Items */}
@@ -159,7 +156,7 @@ export async function Newsroom() {
                         className="group -mx-2.5 flex items-start justify-between gap-4 rounded-xs p-3 transition-colors hover:bg-sand/40"
                       >
                         <div className="min-w-0 flex-1">
-                          <time dateTime={r.date} className="tech block text-[0.6875rem] text-stone-600">
+                          <time dateTime={r.date} className="block text-[0.6875rem] font-medium text-stone-600">
                             {formatDate(r.date, "short")}
                           </time>
                           <span className="mt-1 block text-[0.875rem] font-medium leading-snug text-ink-900 transition-colors group-hover:text-gold-ink line-clamp-2">
@@ -180,7 +177,7 @@ export async function Newsroom() {
                 <div className="mt-5 border-t border-hair pt-4">
                   <Link
                     href="/press-release"
-                    className="tech group flex items-center justify-between text-xs font-semibold text-gold-ink hover:text-ink-900 transition-colors"
+                    className="group flex items-center justify-between text-xs font-semibold text-gold-ink hover:text-ink-900 transition-colors"
                   >
                     <span>Continuous Disclosures Archive</span>
                     <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />

@@ -11,10 +11,7 @@ export function Chapter({ label, tone = "light", className = "" }: { n?: string;
   const dark = tone === "dark";
   return (
     <p className={`flex items-center gap-3 ${className}`} data-reveal="fade">
-      <span aria-hidden="true" className="relative flex h-2 w-2 shrink-0">
-        <span className={`absolute inset-0 rounded-full ${dark ? "bg-gold-bright" : "bg-gold-ink"} motion-safe:animate-ping opacity-40`} />
-        <span className={`relative h-2 w-2 rounded-full ${dark ? "bg-gold-bright" : "bg-gold-ink"}`} />
-      </span>
+      <span aria-hidden="true" className={`h-1.5 w-1.5 shrink-0 rounded-full ${dark ? "bg-gold-bright" : "bg-gold-ink"}`} />
       <span className={`tech shrink-0 ${dark ? "text-ivory/70" : "text-stone-600"}`}>{label}</span>
       <span aria-hidden="true" className={`h-px flex-1 ${dark ? "bg-hair-dark" : "bg-hair"}`} />
     </p>

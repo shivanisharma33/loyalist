@@ -5,7 +5,7 @@ import { company, disclaimerText, mreDisclaimer, navigation, socials } from "@/c
 import { projects } from "@/content/projects";
 import { imageryNote } from "@/content/frontier";
 import { photoCredits } from "@/content/imagery";
-import { ArrowUpRight } from "@/components/ui/icons";
+import { ArrowUpRight, SocialIcon } from "@/components/ui/icons";
 
 async function CopyrightYear() {
   "use cache";
@@ -86,11 +86,21 @@ export function SiteFooter() {
               <li><FooterLink href={company.quoteUrl}>{company.ticker} quote</FooterLink></li>
             </Column>
             <Column title="Follow">
-              {socials.map((s) => (
-                <li key={s.href}>
-                  <FooterLink href={s.href}>{s.label}</FooterLink>
-                </li>
-              ))}
+              <div className="flex flex-wrap items-center gap-2 pt-1.5">
+                {socials.map((s) => (
+                  <a
+                    key={s.href}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    title={s.label}
+                    className="flex h-9 w-9 items-center justify-center rounded-xs border border-hair-dark bg-white/5 text-ivory/70 transition-all hover:border-gold-bright hover:bg-gold-bright/10 hover:text-gold-bright"
+                  >
+                    <SocialIcon name={s.label} size={16} />
+                  </a>
+                ))}
+              </div>
             </Column>
           </div>
         </div>

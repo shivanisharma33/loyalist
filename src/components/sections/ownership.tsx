@@ -5,11 +5,11 @@ import { capitalStructure, shareOwnership } from "@/content/company";
 export function CapitalStructure({ tone = "light" }: { tone?: "light" | "dark" }) {
   const dark = tone === "dark";
   return (
-    <dl className="grid gap-s4 sm:grid-cols-3">
-      {capitalStructure.map((s, i) => (
-        <div key={s.label} className={`border-t pt-4 ${dark ? "border-hair-dark" : "border-hair"}`} data-reveal="" style={{ ["--reveal-delay" as string]: i * 100 }}>
-          <dt className={`tech ${dark ? "text-stone-300" : "text-stone-600"}`}>{s.label}</dt>
-          <dd className={`figure-xl mt-s3 ${dark ? "text-gold-bright" : "text-ink-900"}`}>
+    <dl className="grid gap-6 sm:grid-cols-3">
+      {capitalStructure.map((s) => (
+        <div key={s.label} className={`border-t pt-4 ${dark ? "border-hair-dark" : "border-hair"} min-w-0`}>
+          <dt className={`text-xs font-semibold uppercase tracking-wider ${dark ? "text-stone-300" : "text-stone-600"}`}>{s.label}</dt>
+          <dd className={`figure-xl mt-3 truncate ${dark ? "text-gold-bright" : "text-ink-900"}`}>
             <CountUp value={s.count} suffix={s.suffix} decimals={"decimals" in s ? s.decimals : 0} />
           </dd>
         </div>

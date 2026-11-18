@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { company, navigation, socials, type NavItem } from "@/content/site";
-import { ArrowRight, ArrowUpRight, ChevronDown, CloseIcon } from "@/components/ui/icons";
+import { ArrowRight, ArrowUpRight, ChevronDown, CloseIcon, SocialIcon } from "@/components/ui/icons";
 
 const sectionOf = (href: string) => "/" + (href.split("/")[1] ?? "");
 const isFile = (href: string) => href.endsWith(".pdf") || href.startsWith("http");
@@ -434,7 +434,7 @@ export function SiteHeader() {
         <div className="mx-auto flex min-h-full max-w-[110rem] flex-col px-[var(--gutter)]">
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-hair-dark">
             <Image src="/logo-light-trim.webp" alt="" width={2329} height={446} className="h-7 w-auto sm:h-8" sizes="190px" />
-            <p className="tech hidden text-ivory/50 md:block">Timmins, Ontario · {company.ticker}</p>
+            <p className="text-xs text-ivory/60 hidden md:block">Timmins, Ontario · {company.ticker}</p>
             <button
               ref={closeRef}
               type="button"
@@ -535,15 +535,21 @@ export function SiteHeader() {
                 Investor Presentation
                 <ArrowUpRight size={15} />
               </a>
-              <ul className="flex flex-wrap gap-x-4 gap-y-1">
+              <div className="flex flex-wrap items-center gap-2 pt-1">
                 {socials.map((s) => (
-                  <li key={s.href}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="btn-label inline-flex min-h-11 items-center text-ivory/55 hover:text-gold-bright">
-                      {s.label}
-                    </a>
-                  </li>
+                  <a
+                    key={s.href}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    title={s.label}
+                    className="flex h-10 w-10 items-center justify-center rounded-xs border border-hair-dark bg-white/5 text-ivory/70 transition-all hover:border-gold-bright hover:bg-gold-bright/10 hover:text-gold-bright"
+                  >
+                    <SocialIcon name={s.label} size={18} />
+                  </a>
                 ))}
-              </ul>
+              </div>
             </aside>
           </div>
 

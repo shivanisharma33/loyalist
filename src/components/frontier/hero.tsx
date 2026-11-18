@@ -50,19 +50,14 @@ export async function Hero() {
               href={company.quoteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2.5 transition-colors"
+              className="group inline-flex items-center gap-2 text-xs font-semibold text-gold-bright transition-colors hover:text-ivory"
               title="View share quote on TradingView"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-bright opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(212,171,85,0.8)]" />
-              </span>
-              <span className="tech text-xs font-semibold tracking-wide text-gold-bright group-hover:text-ivory">
-                {company.ticker}
-              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-gold-bright" />
+              <span>{company.ticker}</span>
             </a>
             <span aria-hidden="true" className="h-3.5 w-px bg-hair-dark" />
-            <span className="tech text-xs tracking-wider text-stone-300 font-medium">
+            <span className="text-xs tracking-normal text-stone-300 font-medium">
               Timmins Gold Camp · Ontario, Canada
             </span>
           </div>

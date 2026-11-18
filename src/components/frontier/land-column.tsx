@@ -128,13 +128,13 @@ export function LandColumn({ beds }: { beds: LandBed[] }) {
       </div>
 
       {/* Detail */}
-      <article id={`${uid}-detail`} aria-live="polite" className="hud flex flex-col border border-hair-strong bg-ivory [--hud:var(--color-gold-ink)] lg:col-span-6 xl:col-span-5 xl:col-start-8">
+      <article id={`${uid}-detail`} aria-live="polite" className="flex flex-col rounded-xs border border-hair-strong bg-ivory lg:col-span-6 xl:col-span-5 xl:col-start-8">
         <div className="relative aspect-[16/8] overflow-hidden bg-ink-900">
           {beds.map((b) => (
             <Image
               key={b.slug}
               src={b.image}
-              alt={b.slug === current.slug ? `Illustrative image for the ${b.name}` : ""}
+              alt={b.slug === current.slug ? b.name : ""}
               aria-hidden={b.slug !== current.slug}
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"
@@ -143,7 +143,6 @@ export function LandColumn({ beds }: { beds: LandBed[] }) {
               }`}
             />
           ))}
-          <span className="tech absolute bottom-3 left-3 bg-ink-950/75 px-2 py-1 text-ivory/75">Illustrative image</span>
         </div>
 
         <div className="flex flex-1 flex-col p-6 sm:p-8">

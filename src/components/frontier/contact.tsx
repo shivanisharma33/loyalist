@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/forms/contact-form";
-import { ArrowUpRight } from "@/components/ui/icons";
+import { ArrowUpRight, SocialIcon } from "@/components/ui/icons";
 import { company, socials } from "@/content/site";
 import { photos } from "@/content/imagery";
 import { Chapter } from "./chapter";
@@ -55,18 +55,23 @@ export function Contact() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="tech text-xs uppercase tracking-wider text-ivory/55">Follow</dt>
-                  <dd className="mt-2">
-                    <ul className="flex flex-wrap gap-x-4 gap-y-1">
+                  <dt className="text-xs uppercase tracking-wider text-ivory/55 font-semibold">Follow</dt>
+                  <dd className="mt-3">
+                    <div className="flex flex-wrap items-center gap-2">
                       {socials.map((s) => (
-                        <li key={s.href}>
-                          <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-1 text-[0.9375rem] text-ivory/85 hover:text-gold-bright transition-colors">
-                            <span>{s.label}</span>
-                            <ArrowUpRight size={12} />
-                          </a>
-                        </li>
+                        <a
+                          key={s.href}
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={s.label}
+                          title={s.label}
+                          className="flex h-10 w-10 items-center justify-center rounded-xs border border-hair-dark bg-white/5 text-ivory/75 transition-all hover:border-gold-bright hover:bg-gold-bright/10 hover:text-gold-bright"
+                        >
+                          <SocialIcon name={s.label} size={18} />
+                        </a>
                       ))}
-                    </ul>
+                    </div>
                   </dd>
                 </div>
               </div>

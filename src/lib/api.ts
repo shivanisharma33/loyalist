@@ -42,6 +42,7 @@ export type PressRelease = {
   title: string;
   date: string;
   href: string;
+  downloadHref?: string;
   external: boolean;
   kind: "News Release" | "Corporate Update";
 };
@@ -97,7 +98,8 @@ export async function getPressReleases(): Promise<PressRelease[]> {
       id: p._id,
       title: p.title.trim(),
       date: p.date.slice(0, 10),
-      href: p.url ?? `${API_ORIGIN}/api/pdf/view/${p._id}`,
+      href: p._id ? `${API_ORIGIN}/api/pdf/view/${p._id}` : (p.url ?? ""),
+      downloadHref: p._id ? `${API_ORIGIN}/api/pdf/download/${p._id}` : (p.url ?? undefined),
       external: true,
       kind: "News Release" as const,
     })),

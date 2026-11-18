@@ -59,12 +59,12 @@ function Visual({ id }: { id: Id }) {
     );
   }
   return (
-    <figure className="dot-grid flex h-full flex-col justify-between bg-ink-950 p-7 text-ivory">
+    <figure className="flex h-full flex-col justify-between rounded-xs border border-hair-dark bg-ink-950 p-7 text-ivory">
       <p className="tech flex items-center justify-between text-ivory/60">
         <span>Tully value chain</span>
         <span className="flex items-center gap-2">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold-bright motion-safe:animate-pulse" />
-          Live status
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold-bright" />
+          Status
         </span>
       </p>
       <ol className="relative my-6">
@@ -73,16 +73,16 @@ function Visual({ id }: { id: Id }) {
             {i < chain.length - 1 && (
               <span
                 aria-hidden="true"
-                className={`absolute left-[7px] top-1/2 h-full w-[2px] ${s.state === "done" ? "bg-gold-bright shadow-[0_0_10px_rgba(212,171,85,0.6)]" : "bg-ivory/12"}`}
+                className={`absolute left-[7px] top-1/2 h-full w-[2px] ${s.state === "done" ? "bg-gold-bright" : "bg-ivory/12"}`}
               />
             )}
             <span
               aria-hidden="true"
               className={`relative z-[1] h-4 w-4 shrink-0 rounded-full border-2 ${
-                s.state === "done" ? "border-gold-bright bg-gold-bright" : s.state === "now" ? "glow border-gold-bright bg-ink-950" : "border-ivory/25 bg-ink-950"
+                s.state === "done" ? "border-gold-bright bg-gold-bright" : s.state === "now" ? "border-gold-bright bg-ink-950" : "border-ivory/25 bg-ink-950"
               }`}
             >
-              {s.state === "now" && <span className="absolute inset-[3px] rounded-full bg-gold-bright motion-safe:animate-pulse" />}
+              {s.state === "now" && <span className="absolute inset-[3px] rounded-full bg-gold-bright" />}
             </span>
             <span className={`display-sm ${s.state === "future" ? "text-ivory/45" : "text-ivory"}`}>{s.label}</span>
             <span

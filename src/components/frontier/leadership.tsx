@@ -5,108 +5,129 @@ import { ceoQuote } from "@/content/company";
 import { homeLeadership, people } from "@/content/team";
 import { Chapter } from "./chapter";
 
-/**
- * Editorial leadership spread: the CEO's portrait and his own words open the section, then the
- * leadership masthead runs as a typeset list whose rows open into full biographies.
- */
 export function Leadership() {
   const ceo = people.farr;
 
+  const leaderHighlights: Record<string, string> = {
+    farr: "35+ Yrs Finance",
+    drinkwater: "M&A & Governance",
+    mackenzie: "Ex-Agnico Eagle",
+    bresee: "45 Yrs Mining",
+  };
+
   return (
-    <section id="people" aria-labelledby="people-title" className="on-light limestone relative text-ink-900">
-      <div className="mx-auto max-w-[110rem] px-[var(--gutter)] py-24 sm:py-32">
-        <Chapter n="05" label="Leadership · Future miners" />
-
-        <div className="mt-14 grid items-center gap-y-12 lg:grid-cols-12 lg:gap-x-12">
-          <figure className="relative lg:col-span-4" data-reveal="">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-xs border border-hair-strong bg-sand p-2.5 shadow-md">
-              <div className="relative h-full w-full overflow-hidden">
-                <Image
-                  src={ceo.image!}
-                  alt={`Portrait of ${ceo.name}`}
-                  fill
-                  sizes="(min-width: 1024px) 30vw, 100vw"
-                  className="object-cover object-top [filter:grayscale(0.85)_contrast(1.05)_sepia(0.12)]"
-                />
-              </div>
+    <section id="people" aria-labelledby="people-title" className="on-light limestone relative text-ink-900 py-14 sm:py-20">
+      <div className="mx-auto max-w-[110rem] px-[var(--gutter)]">
+        {/* Section Header */}
+        <div>
+          <Chapter n="05" label="Leadership · Future Miners" />
+          <div className="mt-4 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <h2 id="people-title" className="display-md text-ink-950 font-bold">
+                Proven leadership in the <span className="text-gold-ink">Timmins Camp</span>
+              </h2>
+              <p className="mt-1.5 max-w-2xl text-sm text-stone-600">
+                Experienced mining executives and geoscientists advancing high-potential Ontario assets.
+              </p>
             </div>
-            <figcaption className="mt-3 flex items-baseline justify-between gap-4 border-b border-hair-strong pb-3">
-              <span className="display-sm font-medium">{ceo.name}</span>
-              <span className="tech text-xs text-stone-600">President &amp; CEO</span>
-            </figcaption>
-          </figure>
-
-          <blockquote className="lg:col-span-8 lg:pl-4" data-reveal="">
-            <div className="flex items-center gap-2 text-gold-ink text-2xl font-serif">
-              <span>“</span>
-            </div>
-            <p className="display-md text-balance leading-snug">
-              We intend to be <span className="serif-accent text-gold-ink">future miners.</span> Exploration remains a critical part of the process,
-              but only when it is paired with development potential does it drive long-term growth.
-            </p>
-            <details className="group mt-6">
-              <summary className="btn-label inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-stone-600 hover:text-ink-900 transition-colors [&::-webkit-details-marker]:hidden">
-                <span className="group-open:hidden">Read the full statement</span>
-                <span className="hidden group-open:inline">Hide statement</span>
-                <ArrowRight size={13} className="rotate-90 transition-transform group-open:-rotate-90" />
-              </summary>
-              <p className="body-text mt-3 max-w-[42em] text-ink-800 leading-relaxed">{ceoQuote.text}</p>
-            </details>
-            <footer className="tech mt-6 text-xs text-stone-600">
-              — {ceoQuote.author}, {ceoQuote.role}
-            </footer>
-          </blockquote>
+            <Link
+              href="/about/our-team"
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xs border border-ink-900/20 bg-white px-4 text-xs font-semibold uppercase tracking-wider text-ink-900 hover:border-gold-ink hover:text-gold-ink transition-colors shadow-xs self-start sm:self-end"
+            >
+              <span>Full Team (11)</span>
+              <ArrowRight size={13} />
+            </Link>
+          </div>
         </div>
 
-        {/* Masthead */}
-        <div className="mt-20 border-t border-hair-strong pt-14 grid gap-y-10 lg:grid-cols-12 lg:gap-x-12 sm:mt-24 sm:pt-16">
-          <div className="lg:col-span-4">
-            <h2 id="people-title" className="display-lg">
-              The <span className="serif-accent">masthead</span>
-            </h2>
-            <p className="mt-4 max-w-[24em] text-[0.9375rem] leading-relaxed text-stone-600">
-              Management and directors with decades in the Timmins camp, in mining finance and in Ontario permitting.
-            </p>
-            <div className="mt-6">
-              <Link href="/about/our-team" className="btn-label group inline-flex min-h-11 items-center gap-2 text-ink-900 hover:text-gold-ink transition-colors">
-                <span>Full team, board &amp; advisors</span>
-                <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+        {/* Compact Executive Vision & CEO Card */}
+        <div className="mt-8 rounded-xs border border-ink-900/15 bg-white p-6 sm:p-7 shadow-xs">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+            {/* Compact Photo */}
+            <div className="relative aspect-[4/5] w-36 sm:w-44 shrink-0 overflow-hidden rounded-xs bg-ink-950/10 shadow-xs mx-auto sm:mx-0">
+              <Image
+                src={ceo.image!}
+                alt={`Portrait of ${ceo.name}`}
+                fill
+                sizes="(min-width: 640px) 180px, 144px"
+                className="object-cover object-top"
+                quality={88}
+              />
+            </div>
+
+            {/* Compact Vision Statement & Attribution */}
+            <div className="flex flex-1 flex-col justify-between">
+              <div>
+                <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-gold-ink">
+                  Executive Commitment
+                </span>
+                <blockquote className="mt-2">
+                  <p className="text-base sm:text-lg font-bold leading-snug text-ink-950">
+                    “We intend to be <span className="text-gold-ink">future miners.</span> Exploration remains critical, but only paired with development potential does it drive real value.”
+                  </p>
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-stone-600">
+                    Our objective is to advance the Tully gold project towards a permitted production decision, while evaluating Loveland and Gold Rush for development opportunities across Timmins.
+                  </p>
+                </blockquote>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-3">
+                <div>
+                  <span className="text-sm font-bold text-ink-950">{ceoQuote.author}, CPA</span>
+                  <span className="ml-2 text-xs text-stone-500">President, CEO &amp; Director</span>
+                </div>
+                <Link
+                  href="/about/our-team"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-gold-ink hover:text-ink-950 transition-colors"
+                >
+                  <span>Full Bio</span>
+                  <ArrowRight size={12} />
+                </Link>
+              </div>
             </div>
           </div>
+        </div>
 
-          <ol className="border-t border-ink-900 lg:col-span-8 divide-y divide-hair-strong">
-            {homeLeadership.map((m, i) => {
-              const bio = people[m.personId]?.bio ?? [];
-              return (
-                <li key={m.personId}>
-                  <details className="group">
-                    <summary className="grid min-h-12 cursor-pointer list-none grid-cols-[2rem_minmax(0,1.2fr)_2.5rem] items-baseline gap-x-4 py-5 sm:grid-cols-[2.5rem_minmax(0,1.2fr)_minmax(0,1fr)_2.5rem] sm:gap-x-6 [&::-webkit-details-marker]:hidden">
-                      <span className="col-start-1 row-start-1 font-mono text-xs font-semibold text-gold-ink">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="col-start-2 row-start-1">
-                        <span className="display-md block transition-colors group-hover:text-gold-ink">{m.name}</span>
-                        <span className="tech mt-1.5 block text-xs text-stone-600">{m.role}</span>
-                      </span>
-                      <span className="col-start-2 row-start-2 mt-3 text-[0.9375rem] leading-snug text-ink-800 sm:col-start-3 sm:row-start-1 sm:mt-0">{m.summary}</span>
-                      <span
-                        aria-hidden="true"
-                        className="col-start-3 row-start-1 flex h-9 w-9 items-center justify-center self-start border border-hair-strong text-base transition-transform group-open:rotate-45 sm:col-start-4"
-                      >
-                        +
-                      </span>
-                    </summary>
-                    <div className="grid gap-4 pb-6 pl-[2.5rem] sm:pl-[3.5rem]">
-                      <div className="max-w-[42em] space-y-3 text-[0.9375rem] leading-relaxed text-ink-800">
-                        {bio.map((p, k) => (
-                          <p key={k}>{p}</p>
-                        ))}
-                      </div>
-                    </div>
-                  </details>
-                </li>
-              );
-            })}
-          </ol>
+        {/* Compact 4-Card Leadership Grid */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {homeLeadership.map((m, i) => (
+            <div
+              key={m.personId}
+              className="group flex flex-col justify-between rounded-xs border border-ink-900/15 bg-white p-4 sm:p-5 shadow-xs transition-all hover:border-gold-ink hover:shadow-sm"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="text-[0.6875rem] font-bold text-gold-ink font-mono">
+                    0{i + 1}
+                  </span>
+                  <span className="rounded-xs bg-stone-100 px-1.5 py-0.5 text-[0.625rem] font-medium text-stone-600">
+                    {leaderHighlights[m.personId]}
+                  </span>
+                </div>
+
+                <h4 className="text-base font-bold text-ink-950 group-hover:text-gold-ink transition-colors">
+                  {m.name}
+                </h4>
+                <span className="mt-0.5 block text-[0.6875rem] font-semibold uppercase tracking-wider text-gold-ink">
+                  {m.role}
+                </span>
+
+                <p className="mt-2.5 text-xs leading-relaxed text-stone-600 line-clamp-3">
+                  {m.summary}
+                </p>
+              </div>
+
+              <div className="mt-4 border-t border-hair pt-2.5">
+                <Link
+                  href="/about/our-team"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-gold-ink hover:text-ink-950 transition-colors"
+                >
+                  <span>Profile</span>
+                  <ArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
