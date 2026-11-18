@@ -81,10 +81,10 @@ export async function Hero() {
 
           {/* Subheading / Lede */}
           <p
-            className="hero-enter lede mt-8 max-w-2xl text-lg sm:text-xl font-normal leading-relaxed text-stone-200/90 drop-shadow-sm"
+            className="hero-enter lede mt-8 max-w-3xl text-lg sm:text-xl font-normal leading-relaxed text-stone-200/90 drop-shadow-sm"
             style={{ ["--d" as string]: 350 }}
           >
-            Loyalist acquires and advances high-potential gold and critical metals projects in the world-renowned Timmins Mining Camp — a tier-one Canadian jurisdiction with more than 70 million ounces of historic gold production.
+            Loyalist Exploration is executing a focused strategy of acquiring and advancing high-potential gold and strategic metals projects in the prolific Timmins Mining Camp – a district that has produced over 70 million ounces of gold and is host to one of the world’s largest volcanogenic massive sulfide (VMS) deposits, the Kidd Creek Mine.
           </p>
 
           {/* CTAs */}
@@ -121,21 +121,6 @@ export async function Hero() {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* ─── Subtle Scroll to Explore Indicator ─── */}
-      <div
-        className="hero-enter absolute bottom-8 left-[var(--gutter)] flex items-center gap-3 text-stone-400"
-        style={{ ["--d" as string]: 750 }}
-      >
-        <span className="h-px w-8 bg-stone-500/40" />
-        <a
-          href="#prologue"
-          className="group flex items-center gap-2 tech text-[0.6875rem] font-medium tracking-widest text-stone-300/80 uppercase transition-colors hover:text-gold-bright"
-        >
-          <span>Scroll to Explore</span>
-          <ArrowDown size={12} className="transition-transform duration-300 group-hover:translate-y-1" />
-        </a>
       </div>
     </section>
   );

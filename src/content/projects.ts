@@ -357,8 +357,8 @@ export const projects: Project[] = [
       { kind: "notice", text: QP_FERRON },
     ],
     activities: [
-      "Caracle Creek completed NI 43-101 Technical Report on Loveland Polymetallic Property (dated April 6, 2026)",
-      "Planning 2026 exploration program to test gold and nickel-copper targets",
+      "Engaged Caracle Creek to complete a 43-101 technical report",
+      "Planning 2026 exploration program",
     ],
     sidebarTable: {
       heading: "Historical Nickel-Copper Estimates",
@@ -488,9 +488,7 @@ export const projects: Project[] = [
       { kind: "notice", text: QP_FERRON },
     ],
     activities: [
-      "Option exercised June 8, 2026, giving Loyalist 100% ownership interest",
-      "Compiling historical Sanatana Resources drill data and structural mapping",
-      "Planning 2026 follow-up exploration and drilling campaign",
+      "Planning 2026 exploration program",
     ],
     sidebarTable: {
       heading: "Target Area Highlights",
@@ -611,10 +609,7 @@ export const projects: Project[] = [
       },
     ],
     activities: [
-      "Acquisition of DeSantis Property closed February 26, 2026",
-      "Completed preliminary review of 488 drill holes (101,945 m) and 21,158 gold assays in April 2026",
-      "Identified six priority drill targets in and around mine workings plus McEnaney claims",
-      "Compiling and reviewing historical exploration data to support the planning of the next diamond drill program",
+      "Compiling and reviewing historical exploration data to support the planning of the next diamond drill program.",
     ],
     sidebarTable: {
       heading: "Historical Production & Resources",

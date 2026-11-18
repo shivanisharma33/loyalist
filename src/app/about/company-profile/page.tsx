@@ -57,9 +57,9 @@ export default function CompanyProfilePage() {
       <section aria-labelledby="portfolio-title" className="on-light section bg-ivory">
         <div className="shell">
           <SectionIndex index="02" label="The Portfolio" />
-          <SplitHeading id="portfolio-title" className="display-lg mt-s4 text-ink-900" lines={["Four Timmins properties"]} />
+          <SplitHeading id="portfolio-title" className="display-lg mt-s4 text-ink-900" lines={["Strategic Timmins properties"]} />
           <ul className="mt-10 grid gap-8 sm:mt-12 md:grid-cols-2 lg:gap-10">
-            {projects.map((p, i) => (
+            {projects.filter((p) => p.slug !== "desantis").map((p, i) => (
               <li key={p.slug} data-reveal="" style={{ ["--reveal-delay" as string]: (i % 2) * 120 }}>
                 <Link
                   href={`/projects/${p.slug}`}

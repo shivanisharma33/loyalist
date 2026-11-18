@@ -98,13 +98,13 @@ export function Prologue() {
               </dl>
 
               <div className="border-t border-hair pt-3.5">
-                <a
-                  href="#tully"
+                <Link
+                  href="/projects/tully"
                   className="tech group flex items-center justify-between text-xs font-semibold text-gold-ink hover:text-ink-900 transition-colors"
                 >
                   <span>Explore Resource Breakdown</span>
                   <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-                </a>
+                </Link>
               </div>
 
               <div className="mt-3 border-t border-hair pt-2.5">
@@ -128,6 +128,12 @@ export function Prologue() {
               acquiring and advancing to production high-potential gold and strategic metals projects in the prolific Timmins Mining Camp. The
               Company holds the Tully and DeSantis gold properties, the Loveland nickel-copper-gold property and the Gold Rush gold-silver property,
               and is advancing Tully toward a production decision.
+            </p>
+            <p
+              className="body-text mt-4 max-w-[38em] text-ink-800 leading-relaxed"
+              data-reveal=""
+            >
+              We are committed to developing quality mining projects, delivering consistent value to our shareholders through fair mining practices and strong, collaborative relationships.
             </p>
             <ul className="mt-8 grid gap-x-8 gap-y-1 sm:grid-cols-2" data-reveal="">
               {pillars.map((p, i) => (

@@ -29,11 +29,10 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
   );
 }
 
-function Column({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className="tech mb-4 flex items-baseline gap-2 border-b border-hair-dark pb-3 text-ivory/50">
-        <span className="text-gold-bright">{n}</span>
+      <h2 className="tech mb-4 border-b border-hair-dark pb-3 text-ivory/50">
         {title}
       </h2>
       <ul className="grid">{children}</ul>
@@ -63,14 +62,14 @@ export function SiteFooter() {
           </div>
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:col-span-8">
-            <Column n="01" title="Company">
+            <Column title="Company">
               <li><FooterLink href="/about/company-profile">Company profile</FooterLink></li>
               <li><FooterLink href="/about/our-team">Our team</FooterLink></li>
               <li><FooterLink href="/press-release">Press releases</FooterLink></li>
               <li><FooterLink href="/contact">Contact</FooterLink></li>
               <li><FooterLink href="/disclaimer">Disclaimer</FooterLink></li>
             </Column>
-            <Column n="02" title="Projects">
+            <Column title="Projects">
               {projects.map((p) => (
                 <li key={p.slug}>
                   <FooterLink href={`/projects/${p.slug}`}>{p.name.replace(" Mine Property", "").replace(" Project", "")}</FooterLink>
@@ -78,7 +77,7 @@ export function SiteFooter() {
               ))}
               <li><FooterLink href="/projects">All projects</FooterLink></li>
             </Column>
-            <Column n="03" title="Investors">
+            <Column title="Investors">
               {investorLinks.map((l) => (
                 <li key={l.href}>
                   <FooterLink href={l.href}>{l.label.replace("Financial Statements & MD&A", "Financials & MD&A")}</FooterLink>
@@ -86,7 +85,7 @@ export function SiteFooter() {
               ))}
               <li><FooterLink href={company.quoteUrl}>{company.ticker} quote</FooterLink></li>
             </Column>
-            <Column n="04" title="Follow">
+            <Column title="Follow">
               {socials.map((s) => (
                 <li key={s.href}>
                   <FooterLink href={s.href}>{s.label}</FooterLink>

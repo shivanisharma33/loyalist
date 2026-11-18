@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/frontier/hero";
 import { Prologue } from "@/components/frontier/prologue";
-import { TullyResource } from "@/components/frontier/tully-resource";
 import { StrategyStory } from "@/components/frontier/strategy-story";
 import { District } from "@/components/frontier/district";
 import { Leadership } from "@/components/frontier/leadership";
 import { Investors } from "@/components/frontier/investors";
 import { Newsroom } from "@/components/frontier/newsroom";
 import { Contact } from "@/components/frontier/contact";
-import { DepthRail } from "@/components/frontier/depth-rail";
 import { company } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -33,14 +31,12 @@ export default function HomePage() {
     <>
       <Hero />
       <Prologue />
-      <TullyResource />
       <StrategyStory />
       <District />
       <Leadership />
       <Investors />
       <Newsroom />
       <Contact />
-      <DepthRail />
     </>
   );
 }

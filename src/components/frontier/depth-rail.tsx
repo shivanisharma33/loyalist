@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 const stations = [
   { id: "surface", label: "Surface" },
   { id: "prologue", label: "District" },
-  { id: "tully", label: "Tully" },
   { id: "strategy", label: "Strategy" },
   { id: "district", label: "Map" },
   { id: "people", label: "People" },

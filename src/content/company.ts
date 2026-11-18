@@ -67,8 +67,8 @@ export const pillars = [
 
 export const profile = {
   intro: [
-    "Loyalist Exploration Limited (CSE: PNGC) is a mineral exploration company concentrating on acquiring, exploring, and developing quality mineral properties in Canada. The Company is focused on its “Buy Timmins, Mine Timmins” strategy, with the acquisitions of the Tully and DeSantis gold properties, the Loveland nickel/copper/gold property and the Gold Rush gold/silver property, all located in the Timmins, Ontario mining district.",
-    "The Company has commenced a significant mining permit project at Tully, completed its data review of DeSantis and is conducting exploration activities on all four properties, while continuing to expand its Timmins-based property portfolio.",
+    "Loyalist Exploration Limited (CSE: PNGC) is a mineral exploration company concentrating on acquiring, exploring, and developing quality mineral properties in Canada. The Company is focused on its “Buy Timmins, Mine Timmins” strategy, with the acquisitions of the Tully gold property, the Loveland nickel/copper/gold property and the Gold Rush gold/silver property, all located in the Timmins, Ontario mining district.",
+    "The Company has commenced a significant mining permit project at Tully and is conducting exploration activities across its properties, while continuing to expand its Timmins-based property portfolio.",
   ],
   strategy: [
     "The original “Buy Timmins” initiative was centred on acquiring strategic mineral assets in and around Timmins, Ontario — one of the world's most established mining districts. The addition of “Mine Timmins” signals the Company's intention to advance its portfolio along the value chain, with a disciplined emphasis on technical de-risking, capital efficiency and potential production optionality.",
