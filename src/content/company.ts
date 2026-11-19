@@ -75,7 +75,7 @@ export const profile = {
     "Loyalist will continue to prioritize projects with scale potential, geological continuity and development relevance, and intends to evaluate strategic partnerships and development scenarios that could accelerate value realization while advancing its projects within the Timmins camp.",
   ],
   mission: [
-    "Loyalist Exploration Limited is committed to enhancing shareholder value through focused property acquisition, and exploration and development activities, while being respectful to our people, the environment and the communities we work in.",
+    "Loyalist Exploration Limited is committed to enhancing shareholder value through focused property acquisition and exploration and development activities, while being respectful to our people, the environment and the communities we work in.",
     "The Company's core values are respect for the Community, the Landowners, the environment and operating a safe workplace.",
   ],
   community:

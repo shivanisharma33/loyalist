@@ -30,11 +30,6 @@ export function DocumentLibrary({ docs }: { docs: LibraryDoc[] }) {
   const uid = useId();
 
   const years = useMemo(() => [...new Set(docs.map((d) => d.year))].sort((a, b) => b.localeCompare(a)), [docs]);
-  const counts = useMemo(() => {
-    const c: Record<string, number> = { All: docs.length };
-    for (const d of docs) c[d.category] = (c[d.category] ?? 0) + 1;
-    return c;
-  }, [docs]);
 
   const filtered = docs.filter(
     (d) => (cat === "All" || d.category === cat) && (year === "all" || d.year === year) && (!q || `${d.title} ${d.category}`.toLowerCase().includes(q))
@@ -54,12 +49,11 @@ export function DocumentLibrary({ docs }: { docs: LibraryDoc[] }) {
                 setCat(c);
                 setExpanded(false);
               }}
-              className={`group inline-flex min-h-11 items-baseline gap-1.5 px-1 py-2 text-[0.9375rem] transition-colors sm:mr-4 ${
+              className={`group inline-flex min-h-11 items-center px-1 py-2 text-[0.9375rem] font-medium transition-colors sm:mr-5 ${
                 cat === c ? "text-gold-bright" : "text-ivory/65 hover:text-ivory"
               }`}
             >
-              <span className={`border-b pb-0.5 ${cat === c ? "border-gold-bright" : "border-transparent"}`}>{c}</span>
-              <sup className="font-mono text-[0.625rem] text-ivory/45">{counts[c] ?? 0}</sup>
+              <span className={`border-b pb-0.5 ${cat === c ? "border-gold-bright font-semibold" : "border-transparent"}`}>{c}</span>
             </button>
           ))}
         </div>

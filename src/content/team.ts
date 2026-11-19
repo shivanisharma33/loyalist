@@ -222,4 +222,4 @@ export const homeLeadership: { personId: string; name: string; role: string; sum
 ];
 
 export const missionStatement =
-  "Loyalist Exploration Limited is committed to enhancing shareholder value through focused property acquisition, and exploration and development activities, while being respectful to our people, the environment and the communities we work in.";
+  "Loyalist Exploration Limited is committed to enhancing shareholder value through focused property acquisition and exploration and development activities, while being respectful to our people, the environment and the communities we work in.";

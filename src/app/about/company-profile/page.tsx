@@ -146,9 +146,9 @@ export default function CompanyProfilePage() {
             <h2 id="mission-title" className="display-lg mt-s4 text-ink-900">
               Our Mission &amp; Values
             </h2>
-            <div className="body-text measure mt-s4 grid gap-s3 text-ink-800">
+            <div className="body-text measure mt-s4 grid gap-s3 text-ink-800 [hyphens:none]">
               {profile.mission.map((p) => (
-                <p key={p.slice(0, 24)}>{p}</p>
+                <p key={p.slice(0, 24)} className="[text-wrap:pretty]">{p}</p>
               ))}
             </div>
           </div>

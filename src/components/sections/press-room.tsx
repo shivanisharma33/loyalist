@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useDeferredValue, useMemo, useState } from "react";
 import type { PressRelease } from "@/lib/api";
-import { ArrowRight, ArrowUpRight, SearchIcon, DownloadIcon } from "@/components/ui/icons";
+import { ArrowRight, ArrowUpRight, SearchIcon } from "@/components/ui/icons";
 import { formatDate } from "@/lib/format";
 
 const FILTERS = [

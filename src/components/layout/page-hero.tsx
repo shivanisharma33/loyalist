@@ -41,9 +41,9 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
 
       <div className="shell relative z-[2] pb-s6 pt-[calc(var(--header-h)+3.5rem)] sm:pt-[calc(var(--header-h)+5.5rem)] lg:pb-s7">
         <nav aria-label="Breadcrumb" className="hero-enter mb-s5 sm:mb-s6" style={{ ["--d" as string]: 0 }}>
-          <ol className="tech flex flex-wrap items-center gap-x-2 gap-y-1 text-stone-300">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold tracking-wider uppercase text-stone-300">
             <li>
-              <Link href="/" className="inline-flex min-h-8 items-center hover:text-gold-bright">
+              <Link href="/" className="inline-flex min-h-8 items-center hover:text-gold-bright transition-colors">
                 Home
               </Link>
             </li>
@@ -55,7 +55,7 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
                     {c.name}
                   </span>
                 ) : (
-                  <Link href={c.path} className="inline-flex min-h-8 items-center hover:text-gold-bright">
+                  <Link href={c.path} className="inline-flex min-h-8 items-center hover:text-gold-bright transition-colors">
                     {c.name}
                   </Link>
                 )}
@@ -65,7 +65,7 @@ export function PageHero({ title, titleText, eyebrow, lede, image = "/page-heade
         </nav>
 
         {eyebrow && (
-          <p className="tech hero-enter mb-s3 flex items-center gap-3 text-gold-bright" style={{ ["--d" as string]: 80 }}>
+          <p className="hero-enter mb-s3 flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-gold-bright" style={{ ["--d" as string]: 80 }}>
             <span aria-hidden="true" className="hero-rule h-px w-10 bg-gold" style={{ ["--d" as string]: 80 }} />
             {eyebrow}
           </p>

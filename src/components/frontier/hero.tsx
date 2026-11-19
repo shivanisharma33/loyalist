@@ -89,14 +89,14 @@ export async function Hero() {
           >
             <a
               href="#tully"
-              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs bg-gold-bright px-7 text-ink-950 font-semibold tracking-wide shadow-[0_4px_28px_rgba(212,171,85,0.3)] transition-all duration-300 hover:bg-ivory hover:shadow-[0_6px_36px_rgba(212,171,85,0.45)] hover:-translate-y-0.5"
+              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs bg-gold-bright px-7 text-ink-950 font-semibold tracking-wide transition-colors duration-200 hover:bg-ivory"
             >
               <span>The Tully Resource</span>
               <ArrowDown size={15} className="transition-transform duration-300 group-hover:translate-y-0.5" />
             </a>
             <a
               href="#district"
-              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs border border-ivory/30 bg-ink-950/60 px-7 text-ivory backdrop-blur-md transition-all duration-300 hover:border-gold-bright hover:bg-gold-bright/10 hover:text-white hover:-translate-y-0.5"
+              className="btn-label group inline-flex h-13 items-center gap-3 rounded-xs border border-ivory/30 bg-ink-950/60 px-7 text-ivory backdrop-blur-md transition-all duration-300 hover:border-gold-bright hover:bg-gold-bright/10 hover:text-white"
             >
               <span>Explore District</span>
               <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -111,7 +111,7 @@ export async function Hero() {
               <span className="flex h-8 w-8 items-center justify-center rounded-xs border border-hair-dark bg-ink-950/40 transition-colors group-hover:border-gold-bright group-hover:bg-gold-bright group-hover:text-ink-950">
                 <DownloadIcon size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               </span>
-              <span className="tech uppercase tracking-wider text-[0.6875rem]">Investor Deck</span>
+              <span className="text-[0.6875rem] font-bold uppercase tracking-wider">Investor Deck</span>
               <span className="sr-only">(PDF, opens in a new tab)</span>
             </a>
           </div>

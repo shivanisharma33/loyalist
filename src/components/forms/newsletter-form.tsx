@@ -6,7 +6,13 @@ import { ArrowRight } from "@/components/ui/icons";
 
 const initial: FormState = { status: "idle", message: "" };
 
-export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function NewsletterForm({
+  tone = "dark",
+  showLabel = true,
+}: {
+  tone?: "dark" | "light";
+  showLabel?: boolean;
+}) {
   const [state, action, pending] = useActionState(subscribe, initial);
   const id = useId();
   const dark = tone === "dark";
@@ -14,23 +20,32 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
   if (state.status === "success") {
     return (
-      <p role="status" className={`border-l-2 px-5 py-4 text-[0.9375rem] ${dark ? "border-gold-bright text-ivory" : "border-gold-ink text-ink-900"}`}>
+      <p
+        role="status"
+        className={`rounded-xs border-l-2 px-5 py-4 text-[0.9375rem] ${
+          dark ? "border-gold-bright bg-white/5 text-ivory" : "border-gold-ink bg-black/5 text-ink-900"
+        }`}
+      >
         {state.message}
       </p>
     );
   }
 
-
-
-
-
-  
   return (
     <form action={action} noValidate className="w-full">
-      <label htmlFor={`${id}-email`} className={`tech mb-2 block ${dark ? "text-stone-300" : "text-stone-600"}`}>
+      <label
+        htmlFor={`${id}-email`}
+        className={
+          showLabel
+            ? `mb-2 block text-xs font-semibold uppercase tracking-wider ${
+                dark ? "text-stone-300" : "text-stone-600"
+              }`
+            : "sr-only"
+        }
+      >
         Email address
       </label>
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-2.5 sm:flex-row">
         <input
           id={`${id}-email`}
           name="email"
@@ -39,13 +54,13 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
           autoComplete="email"
           required
           defaultValue={state.values?.email}
-          placeholder="you@example.com"
+          placeholder="Enter your email address"
           aria-invalid={error ? true : undefined}
           aria-describedby={`${id}-msg`}
-          className={`h-12 min-w-0 flex-1 border px-5 text-base outline-none transition-colors ${
+          className={`h-11 min-w-0 flex-1 rounded-xs border px-4 text-sm outline-none transition-colors ${
             dark
-              ? "border-hair-dark-strong bg-white/[0.04] text-ivory placeholder:text-stone focus:border-gold-bright"
-              : "border-hair-strong bg-white text-ink-900 placeholder:text-stone focus:border-gold-ink"
+              ? "border-hair-dark-strong bg-white/[0.05] text-ivory placeholder:text-stone-400 focus:border-gold-bright"
+              : "border-hair-strong bg-white text-ink-900 placeholder:text-stone-500 focus:border-gold-ink"
           } aria-[invalid=true]:border-[#e0806a]`}
         />
         {/* Honeypot: hidden from people, filled by bots. */}
@@ -53,13 +68,17 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex h-12 items-center justify-center gap-3 border border-gold-bright bg-gold-bright px-7 btn-label text-ink-950 transition-colors hover:bg-transparent hover:text-gold-bright disabled:opacity-60"
+          className="group inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xs border border-gold-bright bg-gold-bright px-6 text-xs font-bold uppercase tracking-wider text-ink-950 transition-colors hover:bg-ivory hover:border-ivory disabled:opacity-60"
         >
-          {pending ? "Subscribing…" : "Subscribe"}
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          <span>{pending ? "Subscribing…" : "Subscribe"}</span>
+          <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
         </button>
       </div>
-      <p id={`${id}-msg`} role={state.status === "error" ? "alert" : undefined} className={`mt-3 min-h-5 text-sm ${dark ? "text-[#f0a493]" : "text-[#a13a22]"}`}>
+      <p
+        id={`${id}-msg`}
+        role={state.status === "error" ? "alert" : undefined}
+        className={`mt-2 min-h-5 text-xs ${dark ? "text-[#f0a493]" : "text-[#a13a22]"}`}
+      >
         {state.status === "error" ? state.message : ""}
       </p>
     </form>

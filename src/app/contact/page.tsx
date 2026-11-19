@@ -15,7 +15,6 @@ export default function ContactPage() {
     <>
       <PageHero
         title="Contact Us"
-        eyebrow="Get in Touch"
         lede="Have questions? We're here to help. Reach out via the form or directly using the details below."
         image="/projects/desantis.png"
         crumbs={[{ name: "Contact", path: "/contact" }]}

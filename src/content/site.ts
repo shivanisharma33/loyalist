@@ -21,8 +21,8 @@ export const company = {
   tagline: "Buy Timmins, Mine Timmins",
   description:
     "Loyalist Exploration Limited (CSE: PNGC) is a mineral development and exploration company focused on a “Buy Timmins, Mine Timmins” strategy in the Timmins Mining Camp, Ontario.",
-  email: "info@loyalistexploration.com",
-  phoneDisplay: "+1-647-296-1270",
+  email: "efarr@loyalistexploration.com",
+  phoneDisplay: "+1 647-296-1270",
   phoneHref: "tel:+16472961270",
   address: {
     street: "110 Yonge Street, Suite 1601",

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/forms/contact-form";
-import { ArrowUpRight, SocialIcon } from "@/components/ui/icons";
+import { SocialIcon } from "@/components/ui/icons";
 import { company, socials } from "@/content/site";
 import { photos } from "@/content/imagery";
 import { Chapter } from "./chapter";
